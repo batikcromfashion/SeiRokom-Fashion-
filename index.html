@@ -2154,17 +2154,15 @@ a,button{-webkit-tap-highlight-color:transparent}
 
 <!-- ===== SEIROKOM FASHION WELCOME BANNER ===== -->
 <div class="bcf-welcome-banner">
-  <span class="bcf-sparkle" style="left:5%;  animation-delay:0s;">✨</span>
-  <span class="bcf-sparkle" style="left:15%; animation-delay:0.4s;">⭐</span>
-  <span class="bcf-sparkle" style="left:30%; animation-delay:0.8s;">✨</span>
-  <span class="bcf-sparkle" style="left:70%; animation-delay:0.3s;">⭐</span>
-  <span class="bcf-sparkle" style="left:85%; animation-delay:0.7s;">✨</span>
-  <span class="bcf-sparkle" style="left:95%; animation-delay:1s;">⭐</span>
+  <span class="bcf-sparkle" style="left:8%;  animation-delay:0s;">✨</span>
+  <span class="bcf-sparkle" style="left:20%; animation-delay:0.4s;">⭐</span>
+  <span class="bcf-sparkle" style="left:80%; animation-delay:0.7s;">⭐</span>
+  <span class="bcf-sparkle" style="left:92%; animation-delay:1s;">✨</span>
 
   <p class="bcf-welcome-text">
     <span class="bcf-brand bcf-bn">আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহি ওয়া বারাকাতুহ</span><br>
     <span class="bcf-plain bcf-ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span><br>
-    <span class="bcf-plain bcf-bn">আল্লাহু আকবার، আল্লাহই ভরসা</span> <span class="bcf-emoji">🤲🇧🇩❤️</span>
+    <span class="bcf-plain2 bcf-ar">اللّٰهُ أَكْبَر ، اللّٰهُ المُستعان</span> <span class="bcf-emoji">🤲🇧🇩❤️</span>
   </p>
 </div>
 
@@ -2173,7 +2171,7 @@ a,button{-webkit-tap-highlight-color:transparent}
   position:relative;
   overflow:hidden;
   text-align:center;
-  padding:12px 16px;
+  padding:6px 14px;
   background:linear-gradient(270deg,#c0392b,#ff5e4d,#e63946,#c0392b);
   background-size:600% 600%;
   animation:bcfBgMove 6s ease infinite;
@@ -2185,8 +2183,8 @@ a,button{-webkit-tap-highlight-color:transparent}
 }
 .bcf-welcome-text{
   margin:0;
-  font-size:1.45rem;
-  line-height:1.55;
+  font-size:0.95rem;
+  line-height:1.35;
   font-weight:800;
   letter-spacing:.3px;
 }
@@ -2203,6 +2201,18 @@ a,button{-webkit-tap-highlight-color:transparent}
   animation:bcfShine 4s linear infinite;
   filter:drop-shadow(0 0 8px rgba(255,255,255,.45));
 }
+@keyframes bcfShine2{ to{background-position:400% center} }
+.bcf-plain2{
+  display:inline-block;
+  font-weight:800;
+  background:linear-gradient(90deg,#d9ffb0,#5be49b,#39d1ff,#d9ffb0,#ffd166,#d9ffb0);
+  background-size:400% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:bcfShine2 3s linear infinite;
+  filter:drop-shadow(0 0 8px rgba(255,255,255,.45));
+}
 .bcf-emoji{
   -webkit-text-fill-color:initial;
   background:none;
@@ -2211,8 +2221,8 @@ a,button{-webkit-tap-highlight-color:transparent}
 }
 .bcf-sparkle{
   position:absolute;
-  top:6px;
-  font-size:.9rem;
+  top:4px;
+  font-size:.55rem;
   opacity:0;
   animation:bcfTwinkle 1.6s ease-in-out infinite;
   pointer-events:none;
@@ -2221,7 +2231,7 @@ a,button{-webkit-tap-highlight-color:transparent}
   0%,100%{opacity:0;transform:scale(.4) rotate(0deg)}
   50%{opacity:1;transform:scale(1.1) rotate(180deg)}
 }
-@media (max-width:480px){ .bcf-welcome-text{font-size:1.25rem} }
+@media (max-width:480px){ .bcf-welcome-text{font-size:0.85rem} }
 
 
 /* ---------- Mobile typography & safe side spacing ---------- */
