@@ -2161,9 +2161,18 @@ a,button{-webkit-tap-highlight-color:transparent}
 
   <p class="bcf-welcome-text">
     <span class="bcf-brand bcf-bn">আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহি ওয়া বারাকাতুহ</span><br>
-    <span class="bcf-plain bcf-ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span><br>
-    <span class="bcf-plain2 bcf-ar">اللّٰهُ أَكْبَر ، اللّٰهُ المُستعان</span> <span class="bcf-emoji">🤲🇧🇩❤️</span>
+    <span class="bcf-plain bcf-ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
   </p>
+
+  <div class="bcf-side-row">
+    <span class="bcf-plain2 bcf-ar">اللّٰهُ أَكْبَر</span>
+    <span class="bcf-plain2 bcf-ar">اللّٰهُ المُستعان</span>
+  </div>
+  <div class="bcf-emoji-row"><span class="bcf-emoji">🤲🇧🇩❤️</span></div>
+
+  <div class="bcf-banner-image-wrap">
+    <img src="welcome-banner.jpg" alt="SeiRokom Fashion — Welcome" class="bcf-banner-image" loading="lazy">
+  </div>
 </div>
 
 <style>
@@ -2232,6 +2241,41 @@ a,button{-webkit-tap-highlight-color:transparent}
   50%{opacity:1;transform:scale(1.1) rotate(180deg)}
 }
 @media (max-width:480px){ .bcf-welcome-text{font-size:0.85rem} }
+
+.bcf-side-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:6px;
+  padding:0 10px;
+}
+.bcf-side-row .bcf-plain2{ font-size:1rem; }
+.bcf-emoji-row{
+  text-align:center;
+  margin-top:4px;
+}
+.bcf-emoji-row .bcf-emoji{ font-size:1.15em; }
+
+.bcf-banner-image-wrap{
+  position:relative;
+  margin:12px auto 4px;
+  max-width:520px;
+  padding:4px;
+  border-radius:16px;
+  background:linear-gradient(270deg,#ff5e4d,#ffd166,#5be49b,#39d1ff,#a479e2,#ff5e4d);
+  background-size:600% 600%;
+  animation:bcfBgMove 5s ease infinite;
+  box-shadow:0 0 18px rgba(255,255,255,.35);
+}
+.bcf-banner-image{
+  display:block;
+  width:100%;
+  border-radius:13px;
+}
+@media (max-width:480px){
+  .bcf-side-row .bcf-plain2{ font-size:0.85rem; }
+  .bcf-banner-image-wrap{ margin:10px auto 2px; }
+}
 
 
 /* ---------- Mobile typography & safe side spacing ---------- */
