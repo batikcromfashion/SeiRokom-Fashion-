@@ -3662,6 +3662,7 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
         }
       } catch (err) {
         console.error("Notification error:", err);
+        alert("Error: " + (err && err.message ? err.message : err));
       }
     });
   }
