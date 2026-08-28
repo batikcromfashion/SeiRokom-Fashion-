@@ -2147,6 +2147,8 @@ a,button{-webkit-tap-highlight-color:transparent}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SeiRokom">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 </head>
 <body>
 
@@ -3109,16 +3111,16 @@ a,button{-webkit-tap-highlight-color:transparent}
 
 
 <script>
+  /* Google Maps / Review destination — single source of truth */
+  window.SEIROKOM_GOOGLE_MAPS_URL = "https://maps.app.goo.gl/V7oz8MYkwuSWp8sA9";
   function openGoogleReview(event){
     if(event) event.preventDefault();
-    const url = "https://maps.app.goo.gl/V7oz8MYkwuSWp8sA9";
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.open(window.SEIROKOM_GOOGLE_MAPS_URL, "_blank", "noopener,noreferrer");
     return false;
   }
   function openGoogleMaps(event){
     if(event) event.preventDefault();
-    const url = "https://maps.app.goo.gl/V7oz8MYkwuSWp8sA9";
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.open(window.SEIROKOM_GOOGLE_MAPS_URL, "_blank", "noopener,noreferrer");
     return false;
   }
 </script>
@@ -3569,7 +3571,7 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('service-worker.js').catch(function(err){
+      navigator.serviceWorker.register('service-worker.js', {updateViaCache:'none'}).catch(function(err){
         console.log('SW registration failed:', err);
       });
     });
