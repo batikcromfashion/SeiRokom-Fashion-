@@ -3615,5 +3615,60 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
   window.addEventListener('load',hideSplash,{once:true});
 })();
 </script>
+<button id="notifyBtn" style="padding:10px 20px;background:#000;color:#fff;border:none;border-radius:6px;">🔔 Notification চালু করুন</button>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdDiP0NAtmSQt5a8I-DEY8G44rAp4z_-M",
+    authDomain: "seirokom-fashion.firebaseapp.com",
+    projectId: "seirokom-fashion",
+    storageBucket: "seirokom-fashion.firebasestorage.app",
+    messagingSenderId: "1051300000338",
+    appId: "1:1051300000338:web:27f8dd549b0f222bfc658b",
+    measurementId: "G-7DYHCWW0YG"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+  const db = getFirestore(app);
+
+  const btn = document.getElementById("notifyBtn");
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          const registration = await navigator.serviceWorker.register("/SeiRokom-Fashion-/firebase-messaging-sw.js");
+          const token = await getToken(messaging, {
+            vapidKey: "BPCcF96lHtq3c9whbyrqvJ70VSTd1nXFQAzF2-C9HyZQ_G4XpNhIrk_wXMzABQVVlGB8JORGXCgNTCdXysYQaZM",
+            serviceWorkerRegistration: registration
+          });
+          if (token) {
+            await setDoc(doc(db, "subscribers", token), {
+              token: token,
+              subscribedAt: new Date().toISOString()
+            });
+            btn.textContent = "🔔 Subscribed!";
+            btn.disabled = true;
+          }
+        } else {
+          alert("নোটিফিকেশন পারমিশন দেওয়া হয়নি।");
+        }
+      } catch (err) {
+        console.error("Notification error:", err);
+      }
+    });
+  }
+
+  onMessage(messaging, (payload) => {
+    const title = payload.notification.title;
+    const body = payload.notification.body;
+    new Notification(title, { body: body, icon: "/SeiRokom-Fashion-/icon-192.png" });
+  });
+</script>
 </body>
 </html>
