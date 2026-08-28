@@ -2140,6 +2140,13 @@ a,button{-webkit-tap-highlight-color:transparent}
 </style>
 <!-- ===== END SEIROKOM PREMIUM VISUAL LAYER (style) ===== -->
 
+<!-- ===== PWA SETUP ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c9a24a">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SeiRokom">
 </head>
 <body>
 
@@ -3559,5 +3566,14 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
   }
 </style>
 
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('service-worker.js').catch(function(err){
+        console.log('SW registration failed:', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
