@@ -1,6 +1,6 @@
 {
   "name": "SeiRokom Fashion — Style For Everyone",
-  "short_name": "SeiRokom",
+  "short_name": "SeiRokom Fashion",
   "description": "SeiRokom Fashion — পুরুষ, মহিলা ও শিশুদের ফ্যাশন।",
   "start_url": "./",
   "scope": "./",
@@ -11,7 +11,17 @@
   "lang": "bn-BD",
   "dir": "ltr",
   "icons": [
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

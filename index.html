@@ -2149,8 +2149,33 @@ a,button{-webkit-tap-highlight-color:transparent}
 <meta name="apple-mobile-web-app-title" content="SeiRokom">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<style id="seirokom-pwa-splash-style">
+  #seirokomSplash{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 35%,#3a2a08 0,#111 42%,#050505 100%);opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+  #seirokomSplash.hide{opacity:0;visibility:hidden;pointer-events:none}
+  .sr-splash-inner{text-align:center;padding:24px;animation:srSplashIn .7s ease both}
+  .sr-splash-logo{width:112px;height:112px;border-radius:28px;object-fit:cover;box-shadow:0 0 0 2px rgba(201,162,74,.45),0 0 35px rgba(201,162,74,.38);background:#111}
+  .sr-splash-title{margin-top:18px;color:#f4d889;font-size:27px;font-weight:800;letter-spacing:.2px}
+  .sr-splash-sub{margin-top:7px;color:#fff;opacity:.82;font-size:14px}
+  .sr-splash-loader{width:120px;height:3px;margin:22px auto 0;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.14)}
+  .sr-splash-loader span{display:block;width:42%;height:100%;background:linear-gradient(90deg,#c9a24a,#ffe7a0,#c9a24a);animation:srSplashLoad 1.1s ease-in-out infinite}
+  @keyframes srSplashIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+  @keyframes srSplashLoad{0%{transform:translateX(-120%)}50%{transform:translateX(130%)}100%{transform:translateX(290%)}}
+  @media(prefers-reduced-motion:reduce){#seirokomSplash,.sr-splash-inner,.sr-splash-loader span{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
+
+<!-- SeiRokom Fashion PWA Splash Screen -->
+<div id="seirokomSplash" role="status" aria-label="SeiRokom Fashion লোড হচ্ছে">
+  <div class="sr-splash-inner">
+    <img class="sr-splash-logo" src="icon-192.png" alt="SeiRokom Fashion">
+    <div class="sr-splash-title">SeiRokom Fashion</div>
+    <div class="sr-splash-sub">Style For Everyone ❤️🇧🇩</div>
+    <div class="sr-splash-loader" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+
 
 <div class="sr-progress" id="srProgress"></div>
 <div class="sr-particles" id="srParticles" aria-hidden="true"></div>
@@ -3576,6 +3601,19 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
       });
     });
   }
+</script>
+
+<script id="seirokom-pwa-enhancements">
+(function(){
+  var splash=document.getElementById('seirokomSplash');
+  function hideSplash(){
+    if(!splash) return;
+    setTimeout(function(){ splash.classList.add('hide'); setTimeout(function(){splash.remove();},500); },700);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',hideSplash,{once:true});
+  else hideSplash();
+  window.addEventListener('load',hideSplash,{once:true});
+})();
 </script>
 </body>
 </html>
