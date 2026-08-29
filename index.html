@@ -2922,11 +2922,15 @@ a,button{-webkit-tap-highlight-color:transparent}
 <button class="wa-float" id="srQuick4Btn" type="button" aria-label="আরও অপশন" style="border:none;cursor:pointer;">
   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2" fill="#fff"/><circle cx="12" cy="12" r="2" fill="#fff"/><circle cx="12" cy="19" r="2" fill="#fff"/></svg>
 </button>
-<div id="srQuick4Panel" style="display:none;position:fixed;bottom:86px;right:20px;z-index:61;background:#fff;border:1px solid #eadfca;border-radius:16px;box-shadow:0 18px 45px rgba(0,0,0,.28);overflow:hidden;width:200px;font-family:'Hind Siliguri',sans-serif;">
-  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🎁 আজকের অফার</button>
-  <button type="button" data-q4="review" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">⭐ কাস্টমার রিভিউ</button>
-  <a href="size-guide.html" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;text-decoration:none;border-bottom:1px solid #f2ead6;">📏 সাইজ গাইড</a>
-  <button type="button" data-q4="notify" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;">🔔 নোটিফিকেশন চালু করুন</button>
+<div id="srQuick4Panel" style="display:none;position:fixed;bottom:20px;left:16px;right:auto;z-index:61;background:#fff;border:1px solid #eadfca;border-radius:16px;box-shadow:0 18px 45px rgba(0,0,0,.28);overflow:hidden;width:230px;font-family:'Hind Siliguri',sans-serif;">
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🎁 নিয়মিত অফার দেখুন</button>
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🤝 ড্রপশিপিং+ডিলারশিপ ২০% অফার</button>
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🚚 ডেলিভারি ৫% অফার</button>
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">💳 স্টাফ কার্ড ৫% অফার</button>
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🛍️ কন্টিনিউ কেনাকাটা ৫% অফার</button>
+  <button type="button" data-q4="review" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">⭐ কাস্টমার রিভিউ ২% অফার</button>
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">📲 App Download ২% অফার</button>
+  <button type="button" data-q4="notify" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:11px 14px;font-size:.78rem;color:#3b0d52;cursor:pointer;">🔔 নোটিফিকেশন অন ১% অফার</button>
 </div>
 <script>
 (function(){
@@ -3674,22 +3678,19 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
     <button id="srOfferClose" style="position:absolute;top:10px;right:12px;border:0;background:none;font-size:22px;color:#888;cursor:pointer;">×</button>
     <div style="font-size:2.2rem;">🎁</div>
     <h3 style="margin:8px 0 6px;font-family:'Hind Siliguri',sans-serif;color:#3b0d52;">আজকের বিশেষ অফার!</h3>
-    <p style="font-size:.85rem;color:#5d481e;margin:0 0 16px;">নতুন কালেকশনে সীমিত সময়ের জন্য বিশেষ মূল্যছাড় চলছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>
+    <ul style="list-style:none;margin:0 0 16px;padding:0;text-align:left;font-size:.82rem;color:#5d481e;">
+      <li style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:#fffef8;border:1px solid #f0e2b8;border-radius:10px;margin-bottom:8px;">🤝 <span><b>ড্রপশিপিং + ডিলারশিপে</b> ২০% অফার</span></li>
+      <li style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:#fffef8;border:1px solid #f0e2b8;border-radius:10px;margin-bottom:8px;">🚚 <span><b>ডেলিভারিতে</b> ৫% ছাড়</span></li>
+      <li style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:#fffef8;border:1px solid #f0e2b8;border-radius:10px;margin-bottom:8px;">💳 <span><b>স্টাফ কার্ডে</b> ৫% ছাড়</span></li>
+      <li style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;background:#fffef8;border:1px solid #f0e2b8;border-radius:10px;">🛍️ <span><b>Continue শপিং-এ</b> ৫% ছাড়</span></li>
+    </ul>
     <a href="https://wa.me/8801645008919" style="display:inline-block;background:#111;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.8rem;">WhatsApp-এ জানুন</a>
   </div>
 </div>
 <script>
 (function(){
   try{
-    if(!sessionStorage.getItem('srOfferShown')){
-      window.addEventListener('load',function(){
-        setTimeout(function(){
-          var ov=document.getElementById('srOfferOverlay');
-          if(ov) ov.style.display='flex';
-          sessionStorage.setItem('srOfferShown','1');
-        },2500);
-      });
-    }
+    // অফার পপআপ এখন স্বয়ংক্রিয়ভাবে দেখাবে না, শুধু ৪-অপশন মেনু থেকে ক্লিক করলে খুলবে
     var oc=document.getElementById('srOfferClose');
     if(oc) oc.addEventListener('click',function(){
       document.getElementById('srOfferOverlay').style.display='none';
