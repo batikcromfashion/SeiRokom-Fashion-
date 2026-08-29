@@ -2919,7 +2919,46 @@ a,button{-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 </footer>
-<a class="wa-float" href="https://wa.me/8801645008919" target="_blank" rel="noopener" aria-label="WhatsApp-এ যোগাযোগ করুন"><svg viewBox="0 0 24 24"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg></a>
+<button class="wa-float" id="srQuick4Btn" type="button" aria-label="আরও অপশন" style="border:none;cursor:pointer;">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2" fill="#fff"/><circle cx="12" cy="12" r="2" fill="#fff"/><circle cx="12" cy="19" r="2" fill="#fff"/></svg>
+</button>
+<div id="srQuick4Panel" style="display:none;position:fixed;bottom:86px;right:20px;z-index:61;background:#fff;border:1px solid #eadfca;border-radius:16px;box-shadow:0 18px 45px rgba(0,0,0,.28);overflow:hidden;width:200px;font-family:'Hind Siliguri',sans-serif;">
+  <button type="button" data-q4="offer" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">🎁 আজকের অফার</button>
+  <button type="button" data-q4="review" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;border-bottom:1px solid #f2ead6;">⭐ কাস্টমার রিভিউ</button>
+  <a href="size-guide.html" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;text-decoration:none;border-bottom:1px solid #f2ead6;">📏 সাইজ গাইড</a>
+  <button type="button" data-q4="notify" style="display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:.8rem;color:#3b0d52;cursor:pointer;">🔔 নোটিফিকেশন চালু করুন</button>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('srQuick4Btn'),panel=document.getElementById('srQuick4Panel');
+  if(!btn||!panel) return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    panel.style.display=(panel.style.display==='none')?'block':'none';
+  });
+  document.addEventListener('click',function(e){
+    if(panel.style.display==='block' && !panel.contains(e.target) && e.target!==btn){
+      panel.style.display='none';
+    }
+  });
+  panel.querySelectorAll('[data-q4]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var act=b.getAttribute('data-q4');
+      panel.style.display='none';
+      if(act==='offer'){
+        var ov=document.getElementById('srOfferOverlay');
+        if(ov) ov.style.display='flex';
+      }else if(act==='review'){
+        var rv=document.getElementById('srReviewSlider');
+        if(rv) rv.scrollIntoView({behavior:'smooth',block:'center'});
+      }else if(act==='notify'){
+        var nb=document.getElementById('notifyBtn');
+        if(nb){ nb.scrollIntoView({behavior:'smooth',block:'center'}); }
+      }
+    });
+  });
+})();
+</script>
 <script>
 (function(){
   const year=document.getElementById('footerYear'); if(year) year.textContent=new Date().getFullYear();
@@ -3451,6 +3490,7 @@ function openTrustFallbackModal(detail){
     <button class="sr-ai-chip" data-q="পুরুষদের জন্য কী আছে?">👔 পুরুষ</button>
     <button class="sr-ai-chip" data-q="মহিলাদের জন্য কী সাজেস্ট করবেন?">👗 মহিলা</button>
     <button class="sr-ai-chip" data-q="বাচ্চাদের জন্য কী আছে?">🧒 শিশু</button>
+    <button class="sr-ai-chip" data-q="আমার সাইজ কত হবে?">📏 সাইজ</button>
     <button class="sr-ai-chip" data-q="আমি কীভাবে অর্ডার করব?">🛍️ অর্ডার</button>
     <button class="sr-ai-chip" data-q="ডেলিভারি ও পেমেন্ট কীভাবে?">🚚 ডেলিভারি</button>
   </div>
@@ -3546,6 +3586,19 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
         addReco(label,href,text);
         return;
       }
+      if(/সাইজ|size|উচ্চতা|ওজন/.test(x)){
+        var h=window.prompt('আপনার উচ্চতা কত (সেন্টিমিটারে)? যেমন: 170','170');
+        var w=window.prompt('আপনার ওজন কত (কেজিতে)? যেমন: 65','65');
+        var hn=parseFloat(h)||170, wn=parseFloat(w)||65;
+        var sizeRes='M';
+        if(hn<160 && wn<55) sizeRes='S';
+        else if(hn<170 && wn<70) sizeRes='M';
+        else if(hn<180 && wn<85) sizeRes='L';
+        else sizeRes='XL';
+        msg('আপনার উচ্চতা ('+hn+' সেমি) ও ওজন ('+wn+' কেজি) অনুযায়ী সাধারণত **'+sizeRes+'** সাইজ মানানসই হতে পারে। তবে পোশাকভেদে সাইজ কিছুটা আলাদা হতে পারে, তাই বিস্তারিত চার্ট দেখে নিশ্চিত হয়ে নিন।','bot');
+        addReco('সম্পূর্ণ সাইজ গাইড','size-guide.html','সব পোশাকের সঠিক মাপ ও সাইজ চার্ট এখানে দেখুন।');
+        return;
+      }
       if(/দাম|মূল্য|price|টাকা|বাজেট/.test(x)){
         msg('আপনার বাজেট জানালে কোন ক্যাটাগরিতে খুঁজবেন তা গাইড করতে পারি। নির্দিষ্ট পণ্যের দাম যোগ হওয়ার পরই সঠিক মূল্য দেখানো হবে—ভুল দাম দেখিয়ে বিভ্রান্ত করা হবে না।','bot');
         addReco('WhatsApp-এ বাজেট জানান',WA,'যেমন: “১৫০০ টাকার মধ্যে ছেলেদের পোশাক চাই” লিখুন।');
@@ -3615,7 +3668,71 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
   window.addEventListener('load',hideSplash,{once:true});
 })();
 </script>
-<div style="text-align:center; margin:40px auto 180px auto; padding:0 20px; position:relative; z-index:5;">
+<!-- ===== OFFER POPUP ===== -->
+<div id="srOfferOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10050;align-items:center;justify-content:center;padding:16px;">
+  <div style="background:linear-gradient(135deg,#fff8e8,#fffaf0);border:1px solid #e9cd8b;border-radius:18px;max-width:340px;width:100%;padding:24px 20px;text-align:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+    <button id="srOfferClose" style="position:absolute;top:10px;right:12px;border:0;background:none;font-size:22px;color:#888;cursor:pointer;">×</button>
+    <div style="font-size:2.2rem;">🎁</div>
+    <h3 style="margin:8px 0 6px;font-family:'Hind Siliguri',sans-serif;color:#3b0d52;">আজকের বিশেষ অফার!</h3>
+    <p style="font-size:.85rem;color:#5d481e;margin:0 0 16px;">নতুন কালেকশনে সীমিত সময়ের জন্য বিশেষ মূল্যছাড় চলছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>
+    <a href="https://wa.me/8801645008919" style="display:inline-block;background:#111;color:#fff;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.8rem;">WhatsApp-এ জানুন</a>
+  </div>
+</div>
+<script>
+(function(){
+  try{
+    if(!sessionStorage.getItem('srOfferShown')){
+      window.addEventListener('load',function(){
+        setTimeout(function(){
+          var ov=document.getElementById('srOfferOverlay');
+          if(ov) ov.style.display='flex';
+          sessionStorage.setItem('srOfferShown','1');
+        },2500);
+      });
+    }
+    var oc=document.getElementById('srOfferClose');
+    if(oc) oc.addEventListener('click',function(){
+      document.getElementById('srOfferOverlay').style.display='none';
+    });
+  }catch(e){}
+})();
+</script>
+
+<!-- ===== CUSTOMER REVIEWS SLIDER ===== -->
+<div style="max-width:600px;margin:40px auto;padding:0 20px;">
+  <h3 style="text-align:center;font-family:'Hind Siliguri',sans-serif;color:#c9a24a;margin-bottom:14px;">⭐ কাস্টমার রিভিউ</h3>
+  <div id="srReviewSlider" style="background:#fff8e8;border:1px solid #ead9b4;border-radius:14px;padding:18px;min-height:90px;display:flex;flex-direction:column;justify-content:center;">
+    <div id="srReviewText" style="font-size:.85rem;color:#3b0d52;line-height:1.6;"></div>
+    <div id="srReviewAuthor" style="margin-top:8px;font-size:.75rem;font-weight:700;color:#8a6a26;"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var reviews=[
+    {t:'⭐⭐⭐⭐⭐ পণ্যের মান খুবই ভালো, ডেলিভারিও সময়মতো পেয়েছি।',a:'— রাহাত, ঢাকা'},
+    {t:'⭐⭐⭐⭐⭐ কাপড়ের ফেব্রিক খুব আরামদায়ক, দ্বিতীয়বার অর্ডার করলাম।',a:'— সুমাইয়া, চট্টগ্রাম'},
+    {t:'⭐⭐⭐⭐ দাম অনুযায়ী মানানসই, তবে সাইজ গাইড দেখে অর্ডার করাই ভালো।',a:'— ইমরান, সিলেট'}
+  ];
+  var i=0;
+  var textEl=document.getElementById('srReviewText');
+  var authEl=document.getElementById('srReviewAuthor');
+  function show(){
+    if(!textEl) return;
+    textEl.textContent=reviews[i].t;
+    authEl.textContent=reviews[i].a;
+    i=(i+1)%reviews.length;
+  }
+  show();
+  setInterval(show,4500);
+})();
+</script>
+
+<!-- ===== NEW ARRIVAL NOTIFY BANNER ===== -->
+<div style="text-align:center;padding:0 20px;">
+  <p style="font-size:.78rem;color:#8a6a26;font-family:'Hind Siliguri',sans-serif;">🆕 নতুন প্রোডাক্ট আসার সাথে সাথে জানতে চান? নিচের বাটনে ক্লিক করুন 👇</p>
+</div>
+
+<div style="text-align:center; margin:0 auto 180px auto; padding:0 20px; position:relative; z-index:5;">
   <button id="notifyBtn" style="padding:16px 32px;background:linear-gradient(135deg,#ffefb4,#c9a24a);color:#111;border:none;border-radius:30px;font-size:16px;font-weight:700;box-shadow:0 8px 24px rgba(201,162,74,.4);cursor:pointer;">🔔 Notification চালু করুন</button>
 </div>
 
@@ -3645,23 +3762,19 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
       alert("সমস্যা: notifyBtn খুঁজে পাওয়া যায়নি!");
     } else {
       btn.addEventListener("click", function () {
-        alert("ধাপ ১: বাটন ক্লিক হয়েছে");
         Notification.requestPermission().then(function (permission) {
-          alert("ধাপ ২: Permission = " + permission);
           if (permission !== "granted") {
             alert("নোটিফিকেশন পারমিশন দেওয়া হয়নি।");
             return;
           }
           navigator.serviceWorker.register("/SeiRokom-Fashion-/firebase-messaging-sw.js")
             .then(function (registration) {
-              alert("ধাপ ৩: Service Worker রেজিস্টার হয়েছে, এখন Token আনতে যাচ্ছি...");
               return messaging.getToken({
                 vapidKey: "BPCcF96lHtq3c9whbyrqvJ70VSTd1nXFQAzF2-C9HyZQ_G4XpNhIrk_wXMzABQVVlGB8JORGXCgNTCdXysYQaZM",
                 serviceWorkerRegistration: registration
               });
             })
             .then(function (token) {
-              alert("ধাপ ৪: Token পাওয়া গেছে: " + (token ? token.substring(0, 20) + "..." : "খালি!"));
               if (!token) {
                 alert("টোকেন পাওয়া যায়নি।");
                 return;
@@ -3670,16 +3783,16 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
                 token: token,
                 subscribedAt: new Date().toISOString()
               }).then(function () {
-                alert("ধাপ ৫: Firestore-এ সেভ হয়েছে - সম্পূর্ণ সফল!");
                 btn.textContent = "🔔 Subscribed!";
                 btn.disabled = true;
               });
             })
             .catch(function (err) {
-              alert("Error হয়েছে: " + (err && err.message ? err.message : err) + " | Code: " + (err && err.code ? err.code : "N/A"));
+              console.error(err);
+              alert("সমস্যা হয়েছে, একটু পরে আবার চেষ্টা করুন।");
             });
         }).catch(function (err) {
-          alert("Permission Error: " + (err && err.message ? err.message : err));
+          console.error(err);
         });
       });
     }
