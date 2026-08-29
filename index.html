@@ -3645,20 +3645,23 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
       alert("সমস্যা: notifyBtn খুঁজে পাওয়া যায়নি!");
     } else {
       btn.addEventListener("click", function () {
-        alert("বাটন ক্লিক হয়েছে, প্রসেস শুরু হচ্ছে...");
+        alert("ধাপ ১: বাটন ক্লিক হয়েছে");
         Notification.requestPermission().then(function (permission) {
+          alert("ধাপ ২: Permission = " + permission);
           if (permission !== "granted") {
             alert("নোটিফিকেশন পারমিশন দেওয়া হয়নি।");
             return;
           }
           navigator.serviceWorker.register("/SeiRokom-Fashion-/firebase-messaging-sw.js")
             .then(function (registration) {
+              alert("ধাপ ৩: Service Worker রেজিস্টার হয়েছে, এখন Token আনতে যাচ্ছি...");
               return messaging.getToken({
                 vapidKey: "BPCcF96lHtq3c9whbyrqvJ70VSTd1nXFQAzF2-C9HyZQ_G4XpNhIrk_wXMzABQVVlGB8JORGXCgNTCdXysYQaZM",
                 serviceWorkerRegistration: registration
               });
             })
             .then(function (token) {
+              alert("ধাপ ৪: Token পাওয়া গেছে: " + (token ? token.substring(0, 20) + "..." : "খালি!"));
               if (!token) {
                 alert("টোকেন পাওয়া যায়নি।");
                 return;
@@ -3667,13 +3670,13 @@ var GEN_ENDPOINT=(window.SEIROKOM_AI_ENDPOINT||'https://YOUR-VERCEL-PROJECT.verc
                 token: token,
                 subscribedAt: new Date().toISOString()
               }).then(function () {
+                alert("ধাপ ৫: Firestore-এ সেভ হয়েছে - সম্পূর্ণ সফল!");
                 btn.textContent = "🔔 Subscribed!";
                 btn.disabled = true;
-                alert("সফলভাবে সাবস্ক্রাইব হয়েছে!");
               });
             })
             .catch(function (err) {
-              alert("Error: " + (err && err.message ? err.message : err));
+              alert("Error হয়েছে: " + (err && err.message ? err.message : err) + " | Code: " + (err && err.code ? err.code : "N/A"));
             });
         }).catch(function (err) {
           alert("Permission Error: " + (err && err.message ? err.message : err));
