@@ -4048,5 +4048,93 @@ function openTrustFallbackModal(detail){
   }
 })();
 </script>
+
+<!-- SeiRokom Fashion: Share + App Download -->
+<style id="sr-share-app-position-fix">
+  /* Share + App: move to the left circled area and stack vertically. */
+  #srShareBar{
+    position:fixed !important;
+    left:14px !important;
+    bottom:84px !important;
+    transform:none !important;
+    z-index:99999 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:7px !important;
+    align-items:stretch !important;
+    padding:6px !important;
+    border:1px solid rgba(255,215,100,.35) !important;
+    border-radius:18px !important;
+    background:rgba(12,12,12,.94) !important;
+    box-shadow:0 8px 30px rgba(0,0,0,.35) !important;
+    backdrop-filter:blur(10px);
+  }
+  #srShareBar button{
+    width:94px !important;
+    min-height:48px !important;
+    padding:9px 10px !important;
+    border-radius:12px !important;
+    font-size:.78rem !important;
+    white-space:nowrap;
+  }
+  @media(max-width:560px){
+    #srShareBar{left:10px !important;bottom:82px !important;}
+    #srShareBar button{width:92px !important;min-height:46px !important;}
+  }
+</style>
+<div id="srShareBar" style="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99999;display:flex;gap:8px;align-items:center;padding:9px 12px;border:1px solid rgba(255,215,100,.35);border-radius:18px;background:rgba(12,12,12,.94);box-shadow:0 8px 30px rgba(0,0,0,.35);backdrop-filter:blur(10px);font-family:inherit">
+<button type="button" onclick="srShare()" style="border:0;border-radius:12px;padding:10px 13px;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:800;cursor:pointer">📤 Share</button>
+<button type="button" onclick="srInstallApp()" style="border:0;border-radius:12px;padding:10px 13px;background:linear-gradient(135deg,#6f42c1,#b07cff);color:#fff;font-weight:800;cursor:pointer">📲 App</button>
+</div>
+<div id="srShareModal" style="display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.65);align-items:center;justify-content:center;padding:20px">
+<div style="width:min(430px,100%);background:#111;color:#fff;border:1px solid rgba(255,215,100,.35);border-radius:22px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.5)">
+<h3 style="margin:0 0 8px;color:#ffe7a0">📤 SeiRokom Fashion শেয়ার করুন</h3>
+<p style="margin:0 0 16px;opacity:.8">WhatsApp, Facebook, Messenger অথবা লিংক কপি করুন।</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<button onclick="srShareTo('whatsapp')" style="padding:12px;border:0;border-radius:12px;background:#25D366;color:#fff;font-weight:800">🟢 WhatsApp</button>
+<button onclick="srShareTo('facebook')" style="padding:12px;border:0;border-radius:12px;background:#1877F2;color:#fff;font-weight:800">🔵 Facebook</button>
+<button onclick="srShareTo('messenger')" style="padding:12px;border:0;border-radius:12px;background:#0084FF;color:#fff;font-weight:800">💬 Messenger</button>
+<button onclick="srCopyLink()" style="padding:12px;border:0;border-radius:12px;background:#333;color:#fff;font-weight:800">📋 Copy Link</button>
+</div>
+<button onclick="document.getElementById('srShareModal').style.display='none'" style="margin-top:14px;width:100%;padding:11px;border:1px solid #555;border-radius:12px;background:transparent;color:#fff">বন্ধ করুন</button>
+</div></div>
+<script>
+(function(){
+const u=location.href.split('#')[0],t='SeiRokom Fashion — Style For Everyone ❤️🇧🇩';
+window.srShare=function(){const m=document.getElementById('srShareModal');if(navigator.share){navigator.share({title:t,text:'SeiRokom Fashion দেখুন ❤️🇧🇩',url:u}).catch(()=>{});}else m.style.display='flex';};
+window.srShareTo=function(x){let q='';if(x==='whatsapp')q='https://wa.me/?text='+encodeURIComponent(t+'\n'+u);else if(x==='facebook')q='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);else q='https://www.facebook.com/dialog/send?link='+encodeURIComponent(u);window.open(q,'_blank','noopener,noreferrer');};
+window.srCopyLink=function(){navigator.clipboard?.writeText(u).then(()=>alert('✅ লিংক কপি হয়েছে। এখন WhatsApp/Facebook/Messenger-এ পেস্ট করুন।')).catch(()=>prompt('এই লিংকটি কপি করুন:',u));};
+})();
+</script>
+
+<!-- Final floating button placement: fill the lower left/right empty spaces -->
+<style id="sr-final-bottom-button-position">
+  /* Left side: Share first, App directly underneath, moved down */
+  #srShareBar{
+    left:10px !important;
+    bottom:4px !important;
+  }
+
+  /* Right side: keep the same order, move the whole stack downward */
+  .srq-fab{
+    right:10px !important;
+    bottom:6px !important;
+  }
+  .sr-ai-fab{
+    right:10px !important;
+    bottom:56px !important;
+  }
+  .quick-menu-trigger{
+    right:14px !important;
+    bottom:98px !important;
+  }
+
+  @media(max-width:560px){
+    #srShareBar{left:10px !important;bottom:4px !important;}
+    .srq-fab{right:10px !important;bottom:6px !important;}
+    .sr-ai-fab{right:10px !important;bottom:56px !important;}
+    .quick-menu-trigger{right:14px !important;bottom:98px !important;}
+  }
+</style>
 </body>
 </html>
