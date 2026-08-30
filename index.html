@@ -2950,7 +2950,7 @@ a,button{-webkit-tap-highlight-color:transparent}
   .srq-fab{bottom:70px;z-index:10060 !important;pointer-events:auto !important;}
   @media(max-width:560px){ .srq-fab{right:10px;bottom:68px;padding:9px 13px;font-size:.76rem;z-index:10060 !important;} }
 </style>
-<button class="srq-fab" id="srQuick4Btn" type="button" aria-label="Your Offers" onclick="var p=document.getElementById('srQuick4Panel');if(p){p.style.display=p.style.display==='block'?'none':'block';p.style.zIndex='10070';}">
+<button class="srq-fab" id="srQuick4Btn" type="button" aria-label="Your Offers">
   🎁 Your Offers
 </button>
 <div id="srQuick4Panel" style="display:none;position:fixed;bottom:142px;left:auto;right:10px;z-index:10070;pointer-events:auto;border-radius:16px;box-shadow:0 18px 45px rgba(0,0,0,.35);overflow:hidden;width:250px;">
@@ -3876,8 +3876,6 @@ function openTrustFallbackModal(detail){
   overlay.addEventListener('click',function(e){if(e.target===overlay)closeOffer();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeOffer();});
 
-  btn.addEventListener('click',function(e){e.stopPropagation();panel.style.display=(panel.style.display==='none')?'block':'none';});
-  document.addEventListener('click',function(e){if(panel.style.display==='block'&&!panel.contains(e.target)&&e.target!==btn)panel.style.display='none';});
   panel.querySelectorAll('[data-q4]').forEach(function(b){
     b.addEventListener('click',function(e){
       e.preventDefault();
@@ -3891,9 +3889,21 @@ function openTrustFallbackModal(detail){
   var deferredPrompt=null;
   var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
+  var installRequested = /(?:[?&])install=1(?:&|$)/.test(window.location.search);
+
   window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault();
     deferredPrompt=e;
+    if(installRequested){
+      installRequested=false;
+      setTimeout(function(){ window.srInstallApp(); },350);
+    }
+  });
+
+  window.addEventListener('appinstalled',function(){
+    deferredPrompt=null;
+    var n=document.getElementById('srAppNote');
+    if(n) n.textContent='✅ SeiRokom Fashion App সফলভাবে ইনস্টল হয়েছে।';
   });
 
   window.srInstallApp=function(){
@@ -3905,15 +3915,28 @@ function openTrustFallbackModal(detail){
     }
 
     if(deferredPrompt){
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(choice){
+      try{
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(choice){
+          deferredPrompt=null;
+          if(note){
+            note.textContent = choice && choice.outcome === 'accepted'
+              ? '✅ SeiRokom Fashion App ইনস্টল হচ্ছে/হয়ে গেছে।'
+              : 'ℹ️ Install বাতিল করা হয়েছে। চাইলে আবার বাটনে চাপুন।';
+          }
+        }).catch(function(){ deferredPrompt=null; });
+      }catch(err){
         deferredPrompt=null;
-        if(note){
-          note.textContent = choice && choice.outcome === 'accepted'
-            ? '✅ SeiRokom Fashion App ইনস্টল হচ্ছে/হয়ে গেছে।'
-            : 'ℹ️ Install বাতিল করা হয়েছে। চাইলে আবার বাটনে চাপুন।';
-        }
-      });
+      }
+      return false;
+    }
+
+    /* If this HTML was opened as a local/content file, Chrome cannot show a PWA
+       install prompt. Send the user to the real HTTPS site instead. */
+    if(location.protocol!=='http:' && location.protocol!=='https:'){
+      var live='https://batikcromfashion.github.io/SeiRokom-Fashion-/?install=1';
+      if(note) note.textContent='🌐 আসল ওয়েবসাইটে খুলে App Install চালু করা হচ্ছে…';
+      window.open(live,'_blank','noopener');
       return false;
     }
 
