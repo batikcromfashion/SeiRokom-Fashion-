@@ -3886,31 +3886,56 @@ function openTrustFallbackModal(detail){
     });
   });
 
-  var deferredPrompt=null;
-  var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  /* The real, always-working HTTPS address of this site/PWA. Every "download the
+     app" and "share the app" action below always points here, so App Install and
+     Share stay reliable no matter how this page was opened (live page, saved
+     local file, or an in-app browser). */
+  window.SR_LIVE_URL='https://batikcromfashion.github.io/SeiRokom-Fashion-/';
 
-  var installRequested = /(?:[?&])install=1(?:&|$)/.test(window.location.search);
+  var deferredPrompt=null;
+  var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  var onLiveSite = location.href.indexOf('batikcromfashion.github.io/SeiRokom-Fashion-')!==-1;
 
   window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault();
     deferredPrompt=e;
-    if(installRequested){
-      installRequested=false;
-      setTimeout(function(){ window.srInstallApp(); },350);
-    }
   });
 
   window.addEventListener('appinstalled',function(){
     deferredPrompt=null;
-    var n=document.getElementById('srAppNote');
-    if(n) n.textContent='✅ SeiRokom Fashion App সফলভাবে ইনস্টল হয়েছে।';
+    srAppMessage('✅ SeiRokom Fashion App সফলভাবে ইনস্টল হয়েছে। এখন হোম-স্ক্রিন থেকে চালু করতে পারবেন।');
   });
 
-  window.srInstallApp=function(){
+  /* Shows install/help text in the app-offer note (if that popup is open) AND
+     as a floating message box, so the App button always gives visible
+     feedback -- including from the bottom-left floating button, which has no
+     note element nearby. */
+  function srAppMessage(html){
     var note=document.getElementById('srAppNote');
+    if(note) note.innerHTML=html;
+    var box=document.getElementById('srAppMsgBox');
+    if(!box){
+      box=document.createElement('div');
+      box.id='srAppMsgBox';
+      box.style.cssText='position:fixed;left:50%;bottom:100px;transform:translateX(-50%);z-index:2147483647;max-width:calc(100vw - 32px);width:340px;padding:16px 18px;border-radius:16px;background:#171717;color:#fff;border:1px solid rgba(255,215,100,.45);box-shadow:0 12px 35px rgba(0,0,0,.45);font:600 13.5px/1.65 "Hind Siliguri",Arial,sans-serif;text-align:left;';
+      document.body.appendChild(box);
+    }
+    box.innerHTML=html+'<div style="text-align:right;margin-top:10px"><button type="button" onclick="document.getElementById(\'srAppMsgBox\').remove()" style="border:0;border-radius:10px;padding:6px 12px;background:#333;color:#fff;font-weight:700;cursor:pointer">বন্ধ করুন ✕</button></div>';
+    clearTimeout(window.__srAppMsgTimer);
+    window.__srAppMsgTimer=setTimeout(function(){ if(box) box.remove(); },9000);
+  }
 
+  window.srInstallApp=function(){
     if(isStandalone){
-      if(note) note.textContent='✅ SeiRokom Fashion ইতিমধ্যে আপনার মোবাইলে App হিসেবে ইনস্টল করা আছে।';
+      srAppMessage('✅ SeiRokom Fashion App ইতিমধ্যে আপনার মোবাইলে ইনস্টল করা আছে।');
+      return false;
+    }
+
+    /* Not on the real hosted site (e.g. this HTML opened as a local/preview
+       file) -- a browser can never show an install prompt from there, so send
+       the user to the real HTTPS site where installation actually works. */
+    if(!onLiveSite){
+      window.location.href=window.SR_LIVE_URL+'?install=1';
       return false;
     }
 
@@ -3919,69 +3944,30 @@ function openTrustFallbackModal(detail){
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(function(choice){
           deferredPrompt=null;
-          if(note){
-            note.textContent = choice && choice.outcome === 'accepted'
-              ? '✅ SeiRokom Fashion App ইনস্টল হচ্ছে/হয়ে গেছে।'
-              : 'ℹ️ Install বাতিল করা হয়েছে। চাইলে আবার বাটনে চাপুন।';
-          }
+          srAppMessage(choice && choice.outcome==='accepted'
+            ? '✅ SeiRokom Fashion App ইনস্টল হচ্ছে/হয়ে গেছে।'
+            : 'ℹ️ Install বাতিল করা হয়েছে। চাইলে আবার App বাটনে চাপুন, অথবা নিচের ধাপ অনুসরণ করুন।');
         }).catch(function(){ deferredPrompt=null; });
+        return false;
       }catch(err){
         deferredPrompt=null;
       }
-      return false;
     }
 
-    /* If this HTML was opened as a local/content file, Chrome cannot show a PWA
-       install prompt. Send the user to the real HTTPS site instead. */
-    if(location.protocol!=='http:' && location.protocol!=='https:'){
-      var live='https://batikcromfashion.github.io/SeiRokom-Fashion-/?install=1';
-      if(note) note.textContent='🌐 আসল ওয়েবসাইটে খুলে App Install চালু করা হচ্ছে…';
-      /* Do not use window.open here: Chrome may block it from a content:// page.
-         Same-tab navigation is reliable and keeps the App button functional. */
-      window.location.href=live;
-      return false;
-    }
+    var ua=navigator.userAgent||'';
+    var isIOS=/iphone|ipad|ipod/i.test(ua);
+    var isAndroid=/android/i.test(ua);
+    var isInAppBrowser=/FBAN|FBAV|FB_IAB|Instagram|Line\/|Messenger/i.test(ua);
 
-    var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-    var isAndroid=/android/i.test(navigator.userAgent);
-
-    /* No native prompt is currently available. The bottom App button has no
-       srAppNote element, so make the action visible instead of silently doing nothing.
-       Re-open the real HTTPS PWA URL with install=1; on a Chrome/PWA-eligible page
-       the beforeinstallprompt handler above will automatically trigger the prompt. */
-    if(!note){
-      var liveInstall='https://batikcromfashion.github.io/SeiRokom-Fashion-/?install=1';
-      if(location.protocol!=='https:' || location.href.indexOf('batikcromfashion.github.io/SeiRokom-Fashion-')===-1){
-        window.location.href=liveInstall;
-        return false;
-      }
-      /* We are already on the live site but Chrome did not expose the native
-         prompt. Reload once with install=1 so beforeinstallprompt gets a fresh
-         chance to fire. */
-      if(!/(?:[?&])install=1(?:&|$)/.test(location.search)){
-        window.location.href=liveInstall;
-        return false;
-      }
-      var toast=document.getElementById('srAppToast');
-      if(!toast){
-        toast=document.createElement('div');
-        toast.id='srAppToast';
-        toast.style.cssText='position:fixed;left:50%;bottom:105px;transform:translateX(-50%);z-index:2147483647;max-width:calc(100vw - 32px);padding:13px 16px;border-radius:14px;background:#171717;color:#fff;border:1px solid rgba(255,215,100,.45);box-shadow:0 12px 35px rgba(0,0,0,.45);font:700 14px/1.45 Arial,sans-serif;text-align:center;';
-        document.body.appendChild(toast);
-      }
-      toast.innerHTML='📲 Chrome-এর <b>⋮ Menu</b> খুলে <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন।';
-      clearTimeout(window.__srAppToastTimer);
-      window.__srAppToastTimer=setTimeout(function(){if(toast)toast.remove();},6000);
-      return false;
-    }
-    if(isIOS){
-      note.innerHTML='📱 iPhone/iPad: <b>Share</b> বাটনে চাপুন → <b>Add to Home Screen</b> → <b>Add</b>।';
+    if(isInAppBrowser){
+      srAppMessage('⚠️ লিংকটি এখন Facebook/Messenger/Instagram-এর ভেতরের ব্রাউজারে খোলা আছে, তাই সরাসরি App Install কাজ নাও করতে পারে।<br><br>উপরে ⋮ বা ⋯ বাটনে চেপে <b>"Open in Browser / Chrome"</b> সিলেক্ট করুন, তারপর আবার App বাটনে চাপুন।');
+    }else if(isIOS){
+      srAppMessage('📱 <b>iPhone/iPad</b>-এ App রাখতে:<br>1️⃣ নিচের <b>Share</b> আইকনে চাপুন (□ থেকে ↑)<br>2️⃣ <b>"Add to Home Screen"</b> সিলেক্ট করুন<br>3️⃣ উপরে ডানে <b>Add</b>-এ চাপুন');
     }else if(isAndroid){
-      note.innerHTML='📱 Android: Chrome-এর <b>⋮ Menu</b> খুলুন → <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন। তারপর <b>Add/Install</b> দিন।';
+      srAppMessage('📱 <b>Android</b>-এ App রাখতে:<br>Chrome-এর উপরে ডানদিকে <b>⋮ Menu</b> বাটনে চাপুন → <b>"Install app"</b> অথবা <b>"Add to Home screen"</b> সিলেক্ট করুন → <b>Install/Add</b> চাপুন।');
     }else{
-      note.innerHTML='💻 আপনার ব্রাউজারের Menu থেকে <b>Install</b> বা <b>Add to Home Screen</b> নির্বাচন করুন।';
+      srAppMessage('💻 আপনার ব্রাউজারের ঠিকানা-বারের পাশে অথবা মেনুতে <b>Install</b> / <b>Add to Home Screen</b> অপশনটি বেছে নিন।');
     }
-    note.scrollIntoView({behavior:'smooth',block:'center'});
     return false;
   };
 
@@ -4140,22 +4126,53 @@ function openTrustFallbackModal(detail){
 </div>
 <div id="srShareModal" style="display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.65);align-items:center;justify-content:center;padding:20px">
 <div style="width:min(430px,100%);background:#111;color:#fff;border:1px solid rgba(255,215,100,.35);border-radius:22px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.5)">
-<h3 style="margin:0 0 8px;color:#ffe7a0">📤 SeiRokom Fashion শেয়ার করুন</h3>
-<p style="margin:0 0 16px;opacity:.8">WhatsApp, Facebook, Messenger অথবা লিংক কপি করুন।</p>
+<h3 style="margin:0 0 8px;color:#ffe7a0">📤 SeiRokom Fashion App শেয়ার করুন</h3>
+<p style="margin:0 0 12px;opacity:.8">WhatsApp, Facebook, Messenger-এ সরাসরি পাঠান, অথবা লিংক কপি করে IMO/অন্য যেকোনো অ্যাপে পেস্ট করুন।</p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <button onclick="srShareTo('whatsapp')" style="padding:12px;border:0;border-radius:12px;background:#25D366;color:#fff;font-weight:800">🟢 WhatsApp</button>
 <button onclick="srShareTo('facebook')" style="padding:12px;border:0;border-radius:12px;background:#1877F2;color:#fff;font-weight:800">🔵 Facebook</button>
 <button onclick="srShareTo('messenger')" style="padding:12px;border:0;border-radius:12px;background:#0084FF;color:#fff;font-weight:800">💬 Messenger</button>
-<button onclick="srCopyLink()" style="padding:12px;border:0;border-radius:12px;background:#333;color:#fff;font-weight:800">📋 Copy Link</button>
+<button onclick="srCopyLink('imo')" style="padding:12px;border:0;border-radius:12px;background:#8b5cf6;color:#fff;font-weight:800">🟣 IMO (Copy Link)</button>
 </div>
+<button onclick="srCopyLink()" style="margin-top:10px;width:100%;padding:12px;border:0;border-radius:12px;background:#333;color:#fff;font-weight:800">📋 লিংক কপি করুন</button>
+<div style="margin-top:10px;font-size:.72rem;opacity:.75;word-break:break-all;user-select:all;" id="srShareLinkText"></div>
 <button onclick="document.getElementById('srShareModal').style.display='none'" style="margin-top:14px;width:100%;padding:11px;border:1px solid #555;border-radius:12px;background:transparent;color:#fff">বন্ধ করুন</button>
 </div></div>
 <script>
 (function(){
-const u=location.href.split('#')[0],t='SeiRokom Fashion — Style For Everyone ❤️🇧🇩';
-window.srShare=function(){const m=document.getElementById('srShareModal');if(navigator.share){navigator.share({title:t,text:'SeiRokom Fashion দেখুন ❤️🇧🇩',url:u}).catch(()=>{});}else m.style.display='flex';};
-window.srShareTo=function(x){let q='';if(x==='whatsapp')q='https://wa.me/?text='+encodeURIComponent(t+'\n'+u);else if(x==='facebook')q='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);else q='https://www.facebook.com/dialog/send?link='+encodeURIComponent(u);window.open(q,'_blank','noopener,noreferrer');};
-window.srCopyLink=function(){navigator.clipboard?.writeText(u).then(()=>alert('✅ লিংক কপি হয়েছে। এখন WhatsApp/Facebook/Messenger-এ পেস্ট করুন।')).catch(()=>prompt('এই লিংকটি কপি করুন:',u));};
+/* Always share the real, working HTTPS app link (window.SR_LIVE_URL, set by the
+   App-install script above) instead of location.href -- this way the shared
+   link always opens correctly for whoever receives it, even if this page
+   itself is currently open as a local/preview file. */
+var u=(window.SR_LIVE_URL)||location.href.split('#')[0];
+var t='SeiRokom Fashion — Style For Everyone ❤️🇧🇩';
+var linkEl=document.getElementById('srShareLinkText');
+if(linkEl) linkEl.textContent=u;
+window.srShare=function(){
+  var m=document.getElementById('srShareModal');
+  if(navigator.share){
+    navigator.share({title:t,text:'SeiRokom Fashion App/Website দেখুন ❤️🇧🇩',url:u}).catch(function(){ if(m) m.style.display='flex'; });
+  }else if(m){
+    m.style.display='flex';
+  }
+};
+window.srShareTo=function(x){
+  var q='';
+  if(x==='whatsapp') q='https://wa.me/?text='+encodeURIComponent(t+'\n'+u);
+  else if(x==='facebook') q='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);
+  else q='https://www.facebook.com/dialog/send?link='+encodeURIComponent(u);
+  window.open(q,'_blank','noopener,noreferrer');
+};
+window.srCopyLink=function(forApp){
+  var msg = forApp==='imo'
+    ? '✅ লিংক কপি হয়েছে। এখন IMO খুলে যেই চ্যাটে পাঠাতে চান সেখানে পেস্ট (Paste) করে Send করুন।'
+    : '✅ লিংক কপি হয়েছে। এখন IMO/WhatsApp/Facebook/Messenger যেকোনো অ্যাপে পেস্ট করুন।';
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(u).then(function(){ alert(msg); }).catch(function(){ prompt('এই লিংকটি কপি করুন:',u); });
+  }else{
+    prompt('এই লিংকটি কপি করুন:',u);
+  }
+};
 })();
 </script>
 
@@ -4201,9 +4218,10 @@ window.srCopyLink=function(){navigator.clipboard?.writeText(u).then(()=>alert('�
 <script>
 (function(){
   'use strict';
-  var LIVE='https://batikcromfashion.github.io/SeiRokom-Fashion-/';
+  var LIVE=window.SR_LIVE_URL||'https://batikcromfashion.github.io/SeiRokom-Fashion-/';
 
-  /* Guaranteed App handler. The normal PWA handler is kept when available. */
+  /* Guaranteed App handler (safety net only -- the real handler defined above
+     always wins since it is set first). */
   if(typeof window.srInstallApp!=='function'){
     window.srInstallApp=function(){
       var note=document.getElementById('srAppNote');
