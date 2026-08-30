@@ -3936,23 +3936,52 @@ function openTrustFallbackModal(detail){
     if(location.protocol!=='http:' && location.protocol!=='https:'){
       var live='https://batikcromfashion.github.io/SeiRokom-Fashion-/?install=1';
       if(note) note.textContent='🌐 আসল ওয়েবসাইটে খুলে App Install চালু করা হচ্ছে…';
-      window.open(live,'_blank','noopener');
+      /* Do not use window.open here: Chrome may block it from a content:// page.
+         Same-tab navigation is reliable and keeps the App button functional. */
+      window.location.href=live;
       return false;
     }
 
     var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
     var isAndroid=/android/i.test(navigator.userAgent);
 
-    if(note){
-      if(isIOS){
-        note.innerHTML='📱 iPhone/iPad: <b>Share</b> বাটনে চাপুন → <b>Add to Home Screen</b> → <b>Add</b>।';
-      }else if(isAndroid){
-        note.innerHTML='📱 Android: Chrome-এর <b>⋮ Menu</b> খুলুন → <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন। তারপর <b>Add/Install</b> দিন।';
-      }else{
-        note.innerHTML='💻 আপনার ব্রাউজারের Menu থেকে <b>Install</b> বা <b>Add to Home Screen</b> নির্বাচন করুন।';
+    /* No native prompt is currently available. The bottom App button has no
+       srAppNote element, so make the action visible instead of silently doing nothing.
+       Re-open the real HTTPS PWA URL with install=1; on a Chrome/PWA-eligible page
+       the beforeinstallprompt handler above will automatically trigger the prompt. */
+    if(!note){
+      var liveInstall='https://batikcromfashion.github.io/SeiRokom-Fashion-/?install=1';
+      if(location.protocol!=='https:' || location.href.indexOf('batikcromfashion.github.io/SeiRokom-Fashion-')===-1){
+        window.location.href=liveInstall;
+        return false;
       }
-      note.scrollIntoView({behavior:'smooth',block:'center'});
+      /* We are already on the live site but Chrome did not expose the native
+         prompt. Reload once with install=1 so beforeinstallprompt gets a fresh
+         chance to fire. */
+      if(!/(?:[?&])install=1(?:&|$)/.test(location.search)){
+        window.location.href=liveInstall;
+        return false;
+      }
+      var toast=document.getElementById('srAppToast');
+      if(!toast){
+        toast=document.createElement('div');
+        toast.id='srAppToast';
+        toast.style.cssText='position:fixed;left:50%;bottom:105px;transform:translateX(-50%);z-index:2147483647;max-width:calc(100vw - 32px);padding:13px 16px;border-radius:14px;background:#171717;color:#fff;border:1px solid rgba(255,215,100,.45);box-shadow:0 12px 35px rgba(0,0,0,.45);font:700 14px/1.45 Arial,sans-serif;text-align:center;';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML='📲 Chrome-এর <b>⋮ Menu</b> খুলে <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন।';
+      clearTimeout(window.__srAppToastTimer);
+      window.__srAppToastTimer=setTimeout(function(){if(toast)toast.remove();},6000);
+      return false;
     }
+    if(isIOS){
+      note.innerHTML='📱 iPhone/iPad: <b>Share</b> বাটনে চাপুন → <b>Add to Home Screen</b> → <b>Add</b>।';
+    }else if(isAndroid){
+      note.innerHTML='📱 Android: Chrome-এর <b>⋮ Menu</b> খুলুন → <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন। তারপর <b>Add/Install</b> দিন।';
+    }else{
+      note.innerHTML='💻 আপনার ব্রাউজারের Menu থেকে <b>Install</b> বা <b>Add to Home Screen</b> নির্বাচন করুন।';
+    }
+    note.scrollIntoView({behavior:'smooth',block:'center'});
     return false;
   };
 
