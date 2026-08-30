@@ -3933,7 +3933,7 @@ function openTrustFallbackModal(detail){
     return false;
   };
 
-  window.srEnableNotification=function({
+  window.srEnableNotification=function(){
     var n=document.getElementById('notifyBtn');closeOffer();if(n){n.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){n.click();},450);}return false;
   };
 })();
