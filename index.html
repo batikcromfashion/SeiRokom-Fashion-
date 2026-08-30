@@ -3854,7 +3854,7 @@ function openTrustFallbackModal(detail){
       '<div class="sr-offer-highlight">📲 SeiRokom Fashion App/PWA মোবাইলে ইনস্টল করে রাখুন—দ্রুত অ্যাক্সেস ও নতুন আপডেটের সঙ্গে যুক্ত থাকুন!</div>'+ 
       '<p>যারা SeiRokom Fashion-এর App/PWA মোবাইলে Download/Install করে রাখবেন এবং প্রয়োজন হলে ইনস্টল করা অ্যাপ দেখিয়ে যাচাই করবেন, তাদের জন্য যোগ্য অর্ডারে ২% ডিসকাউন্টের সুযোগ রাখা হয়েছে।</p>'+ 
       '<ul class="sr-offer-benefits"><li>📱 মোবাইলের হোমস্ক্রিন থেকে দ্রুত প্রবেশ</li><li>🔔 নতুন কালেকশন/আপডেটের সুবিধা পেতে সহজ</li><li>🎁 অ্যাপ ইনস্টল দেখাতে পারলে <b>২% ডিসকাউন্ট</b> প্রযোজ্য হতে পারে</li><li>🇧🇩 SeiRokom Fashion সবসময় আপনার হাতের কাছে</li></ul>'+ 
-      '<div class="sr-offer-cta"><button class="sr-offer-btn sr-offer-purple" type="button" onclick="return window.srInstallApp?window.srInstallApp():false;">📲 SeiRokom Fashion App Download</button></div>'+ 
+      '<div class="sr-offer-cta"><button class="sr-offer-btn sr-offer-purple" type="button" onclick="return window.srInstallApp?window.srInstallApp():false;">📲 SeiRokom Fashion App Install</button></div>'+ 
       '<div class="sr-offer-note" id="srAppNote">💡 যদি Install App অপশন না আসে, আপনার Chrome-এর মেনু থেকে “Add to Home screen”/“Install app” অপশন ব্যবহার করুন।</div>'},
     notify:{icon:'🔔',title:'নোটিফিকেশন অন',sub:'১% • নতুন কিছু আগে জানতে চান?',html:
       '<div class="sr-offer-highlight">🔔 নতুন কালেকশন, গুরুত্বপূর্ণ আপডেট ও বিশেষ অফারের খবর সবার আগে পেতে Notification চালু করুন!</div>'+ 
@@ -3889,12 +3889,51 @@ function openTrustFallbackModal(detail){
   });
 
   var deferredPrompt=null;
-  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;});
+  var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    deferredPrompt=e;
+  });
+
   window.srInstallApp=function(){
-    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});return false;}
-    var note=document.getElementById('srAppNote');if(note)note.textContent='📱 আপনার ব্রাউজারে সরাসরি Install Prompt এখন পাওয়া যাচ্ছে না। Chrome মেনু থেকে “Add to Home screen” বা “Install app” নির্বাচন করুন।';return false;
+    var note=document.getElementById('srAppNote');
+
+    if(isStandalone){
+      if(note) note.textContent='✅ SeiRokom Fashion ইতিমধ্যে আপনার মোবাইলে App হিসেবে ইনস্টল করা আছে।';
+      return false;
+    }
+
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(choice){
+        deferredPrompt=null;
+        if(note){
+          note.textContent = choice && choice.outcome === 'accepted'
+            ? '✅ SeiRokom Fashion App ইনস্টল হচ্ছে/হয়ে গেছে।'
+            : 'ℹ️ Install বাতিল করা হয়েছে। চাইলে আবার বাটনে চাপুন।';
+        }
+      });
+      return false;
+    }
+
+    var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    var isAndroid=/android/i.test(navigator.userAgent);
+
+    if(note){
+      if(isIOS){
+        note.innerHTML='📱 iPhone/iPad: <b>Share</b> বাটনে চাপুন → <b>Add to Home Screen</b> → <b>Add</b>।';
+      }else if(isAndroid){
+        note.innerHTML='📱 Android: Chrome-এর <b>⋮ Menu</b> খুলুন → <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন। তারপর <b>Add/Install</b> দিন।';
+      }else{
+        note.innerHTML='💻 আপনার ব্রাউজারের Menu থেকে <b>Install</b> বা <b>Add to Home Screen</b> নির্বাচন করুন।';
+      }
+      note.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    return false;
   };
-  window.srEnableNotification=function(){
+
+  window.srEnableNotification=function({
     var n=document.getElementById('notifyBtn');closeOffer();if(n){n.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){n.click();},450);}return false;
   };
 })();
