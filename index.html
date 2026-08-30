@@ -4159,5 +4159,68 @@ window.srCopyLink=function(){navigator.clipboard?.writeText(u).then(()=>alert('�
     .quick-menu-trigger{right:14px !important;bottom:98px !important;}
   }
 </style>
+
+<!-- ===== FINAL MOBILE CLICK SAFETY FIX ===== -->
+<style id="sr-mobile-click-safety">
+  /* Keep the four floating controls above every page layer on mobile. */
+  #srShareBar{z-index:2147483000 !important;pointer-events:auto !important;}
+  #srShareBar button{pointer-events:auto !important;position:relative;z-index:1;}
+  #srQuick4Btn{z-index:2147482998 !important;pointer-events:auto !important;}
+  #srQuick4Panel{z-index:2147482999 !important;pointer-events:auto !important;}
+  .sr-ai-fab{z-index:2147482997 !important;pointer-events:auto !important;}
+</style>
+<script>
+(function(){
+  'use strict';
+  var LIVE='https://batikcromfashion.github.io/SeiRokom-Fashion-/';
+
+  /* Guaranteed App handler. The normal PWA handler is kept when available. */
+  if(typeof window.srInstallApp!=='function'){
+    window.srInstallApp=function(){
+      var note=document.getElementById('srAppNote');
+      if(note) note.textContent='🌐 SeiRokom Fashion-এর আসল HTTPS সাইটে App Install চালু করা হচ্ছে…';
+      if(location.protocol!=='http:' && location.protocol!=='https:'){
+        window.location.href=LIVE+'?install=1';
+        return false;
+      }
+      if(note) note.innerHTML='📱 Chrome-এর <b>⋮ Menu</b> → <b>Install app</b> অথবা <b>Add to Home screen</b> চাপুন।';
+      return false;
+    };
+  }
+
+  /* Your Offers: use one capture-phase handler so other page scripts cannot cancel it. */
+  document.addEventListener('click',function(e){
+    var offersBtn=e.target && e.target.closest ? e.target.closest('#srQuick4Btn') : null;
+    if(offersBtn){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      var panel=document.getElementById('srQuick4Panel');
+      if(panel){
+        var open=panel.style.display==='block';
+        panel.style.display=open?'none':'block';
+        panel.style.visibility=open?'hidden':'visible';
+        panel.style.opacity=open?'0':'1';
+        panel.style.zIndex='2147482999';
+      }
+      return;
+    }
+
+    /* Bottom-left App button: stop duplicate/competing handlers and run the App action. */
+    var appBtn=e.target && e.target.closest ? e.target.closest('#srShareBar button') : null;
+    if(appBtn){
+      var text=(appBtn.textContent||'').toLowerCase();
+      if(text.indexOf('app')!==-1){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        try{ window.srInstallApp(); }catch(err){
+          var live=LIVE+'?install=1';
+          if(location.protocol!=='http:' && location.protocol!=='https:') window.location.href=live;
+        }
+      }
+    }
+  },true);
+})();
+</script>
+
 </body>
 </html>
