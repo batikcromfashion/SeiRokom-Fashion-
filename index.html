@@ -3728,10 +3728,65 @@ function openTrustFallbackModal(detail){
 </style>
 
 <script>
+  /* ===== AUTO UPDATE DETECTOR =====
+     Why "3 buttons" can show in a normal Chrome tab while a fresh Incognito
+     tab shows "5 buttons": Incognito never has an old Service Worker/cache
+     from before, so it always loads the newest files. A normal tab keeps
+     using whatever Service Worker + cache it installed on an earlier visit
+     until it is told a new version exists. This script checks for a newer
+     Service Worker in the background and -- once ready -- shows a small
+     "নতুন ভার্সন এসেছে" banner so returning visitors can update with one tap
+     instead of staying stuck on the old cached version. */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('service-worker.js', {updateViaCache:'none'}).catch(function(err){
+      navigator.serviceWorker.register('service-worker.js', {updateViaCache:'none'}).then(function(reg){
+        if(!reg) return;
+
+        function showUpdateBanner(worker){
+          if(document.getElementById('srUpdateBanner')) return;
+          var bar=document.createElement('div');
+          bar.id='srUpdateBanner';
+          bar.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483647;background:#171717;color:#fff;border:1px solid rgba(255,215,100,.45);border-radius:14px;padding:12px 14px;box-shadow:0 12px 35px rgba(0,0,0,.45);font:600 13.5px/1.5 "Hind Siliguri",Arial,sans-serif;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;';
+          bar.innerHTML='<span>🔄 SeiRokom Fashion-এর নতুন ভার্সন এসেছে।</span>'+
+            '<button type="button" id="srUpdateBtn" style="border:0;border-radius:10px;padding:8px 14px;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:800;cursor:pointer">এখনই আপডেট করুন</button>';
+          document.body.appendChild(bar);
+          document.getElementById('srUpdateBtn').addEventListener('click',function(){
+            if(worker) worker.postMessage({type:'SKIP_WAITING'});
+            setTimeout(function(){ window.location.reload(); },300);
+          });
+        }
+
+        /* A version was already waiting before this page finished loading. */
+        if(reg.waiting){ showUpdateBanner(reg.waiting); }
+
+        /* A new version finished installing just now. */
+        reg.addEventListener('updatefound', function(){
+          var installing=reg.installing;
+          if(!installing) return;
+          installing.addEventListener('statechange', function(){
+            if(installing.state==='installed' && navigator.serviceWorker.controller){
+              showUpdateBanner(installing);
+            }
+          });
+        });
+
+        /* Ask the browser to check for a newer service-worker.js right away,
+           and again whenever the tab becomes visible/active. */
+        reg.update().catch(function(){});
+        document.addEventListener('visibilitychange', function(){
+          if(document.visibilityState==='visible') reg.update().catch(function(){});
+        });
+      }).catch(function(err){
         console.log('SW registration failed:', err);
+      });
+
+      /* Reload automatically once the new Service Worker actually takes
+         control, so the "আপডেট করুন" tap reliably shows the new page. */
+      var refreshing=false;
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(refreshing) return;
+        refreshing=true;
+        window.location.reload();
       });
     });
   }
