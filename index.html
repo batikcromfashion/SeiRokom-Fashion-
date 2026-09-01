@@ -4072,6 +4072,7 @@ function openTrustFallbackModal(detail){
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js" onerror="alert('Firebase app script load failed!')"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js" onerror="alert('Firebase messaging script load failed!')"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js" onerror="alert('Firebase firestore script load failed!')"></script>
 
 <script>
@@ -4088,6 +4089,7 @@ function openTrustFallbackModal(detail){
     };
 
     firebase.initializeApp(firebaseConfig);
+    try{ firebase.analytics(); }catch(e){ console.error('Analytics init failed:',e); }
     var messaging = firebase.messaging();
     var db = firebase.firestore();
 
