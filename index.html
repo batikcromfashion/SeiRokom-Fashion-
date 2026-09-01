@@ -4089,7 +4089,7 @@ function openTrustFallbackModal(detail){
     };
 
     firebase.initializeApp(firebaseConfig);
-    try{ firebase.analytics(); }catch(e){ console.error('Analytics init failed:',e); }
+    try{ firebase.analytics(); alert('Analytics চালু হয়েছে ✅'); }catch(e){ alert('Analytics Error: ' + (e && e.message ? e.message : e)); }
     var messaging = firebase.messaging();
     var db = firebase.firestore();
 
