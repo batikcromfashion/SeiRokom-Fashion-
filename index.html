@@ -2163,6 +2163,23 @@ a,button{-webkit-tap-highlight-color:transparent}
   @keyframes srSplashLoad{0%{transform:translateX(-120%)}50%{transform:translateX(130%)}100%{transform:translateX(290%)}}
   @media(prefers-reduced-motion:reduce){#seirokomSplash,.sr-splash-inner,.sr-splash-loader span{animation:none!important;transition:none!important}}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '901496787684861');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -4089,7 +4106,7 @@ function openTrustFallbackModal(detail){
     };
 
     firebase.initializeApp(firebaseConfig);
-    try{ firebase.analytics(); alert('Analytics চালু হয়েছে ✅'); }catch(e){ alert('Analytics Error: ' + (e && e.message ? e.message : e)); }
+    try{ firebase.analytics(); }catch(e){ console.error('Analytics init failed:',e); }
     var messaging = firebase.messaging();
     var db = firebase.firestore();
 
