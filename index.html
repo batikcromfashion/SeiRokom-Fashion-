@@ -2484,6 +2484,9 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
         <svg viewBox="0 0 24 24" width="17" height="17" stroke="#e9cd8b" fill="none" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
         <span class="srf-wish-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#c9a24a;color:#111;font-size:0.62rem;font-weight:700;min-width:15px;height:15px;border-radius:50%;align-items:center;justify-content:center;padding:0 3px;">0</span>
       </a>
+      <a href="order-tracking.html" class="icon-btn" aria-label="অর্ডার ট্র্যাক" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.08);">
+        <svg viewBox="0 0 24 24" width="17" height="17" stroke="#e9cd8b" fill="none" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l9-4 9 4"/></svg>
+      </a>
       <a href="https://wa.me/8801645008919" class="btn-wa hide-mobile" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg>
         <span>WhatsApp</span>
@@ -2640,6 +2643,60 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
   </div>
 </section>
 
+
+<section id="flash-sale" style="background:linear-gradient(135deg,#1a1006,#0d0d0d);border-top:1px solid rgba(201,162,74,0.25);border-bottom:1px solid rgba(201,162,74,0.25);padding:26px 18px;">
+  <div class="wrap" style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:1.6rem;">🔥</span>
+      <div>
+        <div style="color:#e9cd8b;font-weight:700;font-size:1.05rem;">আজকের বিশেষ ফ্ল্যাশ সেল</div>
+        <div style="color:#cfc9bd;font-size:0.85rem;">নির্বাচিত পণ্যে সর্বোচ্চ ৩০% পর্যন্ত ছাড় — সীমিত সময়ের জন্য</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="fs-timer" style="display:flex;gap:8px;font-family:'Hind Siliguri',sans-serif;">
+        <div style="background:#161616;border:1px solid rgba(201,162,74,0.4);border-radius:8px;padding:8px 12px;text-align:center;min-width:52px;">
+          <div id="fs-h" style="color:#e9cd8b;font-weight:700;font-size:1.15rem;">00</div>
+          <div style="color:#8a857a;font-size:0.65rem;">ঘণ্টা</div>
+        </div>
+        <div style="background:#161616;border:1px solid rgba(201,162,74,0.4);border-radius:8px;padding:8px 12px;text-align:center;min-width:52px;">
+          <div id="fs-m" style="color:#e9cd8b;font-weight:700;font-size:1.15rem;">00</div>
+          <div style="color:#8a857a;font-size:0.65rem;">মিনিট</div>
+        </div>
+        <div style="background:#161616;border:1px solid rgba(201,162,74,0.4);border-radius:8px;padding:8px 12px;text-align:center;min-width:52px;">
+          <div id="fs-s" style="color:#e9cd8b;font-weight:700;font-size:1.15rem;">00</div>
+          <div style="color:#8a857a;font-size:0.65rem;">সেকেন্ড</div>
+        </div>
+      </div>
+      <a href="#collections" style="background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;padding:11px 20px;border-radius:30px;text-decoration:none;font-size:0.88rem;white-space:nowrap;">এখনই দেখুন</a>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  function nextMidnight(){
+    var d = new Date();
+    d.setHours(24,0,0,0);
+    return d;
+  }
+  function tick(){
+    var diff = nextMidnight() - new Date();
+    if (diff < 0) diff = 0;
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    var pad = function(n){ return String(n).padStart(2,'0'); };
+    var hEl = document.getElementById('fs-h');
+    var mEl = document.getElementById('fs-m');
+    var sEl = document.getElementById('fs-s');
+    if (hEl) hEl.textContent = pad(h);
+    if (mEl) mEl.textContent = pad(m);
+    if (sEl) sEl.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
 
 <section id="collections">
   <div class="wrap">
