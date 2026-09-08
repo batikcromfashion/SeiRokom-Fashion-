@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>চেকআউট | SeiRokom Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --gold:#c9a24a; --gold-light:#e9cd8b; --cream:#faf8f4; }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Hind Siliguri',sans-serif;background:#0d0d0d;color:var(--cream);}
+  header{position:sticky;top:0;z-index:10;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(201,162,74,0.25);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+  header a.logo{color:var(--gold-light);text-decoration:none;font-size:1.1rem;font-weight:600;letter-spacing:1px;}
+  header a.back{color:var(--cream);text-decoration:none;font-size:0.85rem;border:1px solid rgba(201,162,74,0.4);padding:6px 14px;border-radius:30px;}
+  .wrap{max-width:640px;margin:0 auto;padding:30px 18px 80px;}
+  h1{color:var(--gold-light);font-size:1.5rem;margin-bottom:6px;}
+  .sub{color:#a8a196;font-size:0.88rem;margin-bottom:24px;}
+  label{display:block;font-size:0.85rem;color:#cfc9bd;margin:14px 0 6px;}
+  input, textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(201,162,74,0.3);background:#161616;color:var(--cream);font-family:inherit;font-size:0.95rem;}
+  textarea{min-height:70px;resize:vertical;}
+  .order-summary{background:#161616;border:1px solid rgba(201,162,74,0.25);border-radius:12px;padding:16px;margin:22px 0;}
+  .order-summary .line{display:flex;justify-content:space-between;font-size:0.9rem;padding:5px 0;}
+  .order-summary .total{font-weight:700;color:var(--gold-light);border-top:1px solid rgba(255,255,255,0.1);margin-top:8px;padding-top:10px;}
+  .pay-option{display:flex;align-items:center;gap:10px;background:#161616;border:1px solid rgba(201,162,74,0.3);border-radius:10px;padding:12px 14px;margin-top:14px;}
+  .btn{display:block;width:100%;text-align:center;padding:15px;border-radius:30px;font-weight:700;text-decoration:none;margin-top:22px;border:none;cursor:pointer;font-size:1rem;}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0d0d0d;}
+  .note{font-size:0.78rem;color:#8a857a;text-align:center;margin-top:10px;}
+  .empty{text-align:center;padding:60px 20px;color:#a8a196;}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">SR &nbsp;SEIROKOM FASHION</a>
+  <a class="back" href="cart.html">← কার্টে ফিরুন</a>
+</header>
+
+<div class="wrap" id="checkout-wrap">
+  <h1>চেকআউট</h1>
+  <div class="sub">অর্ডার নিশ্চিত করতে আপনার তথ্য দিন — WhatsApp-এ অর্ডার পাঠানো হবে।</div>
+
+  <div id="order-summary"></div>
+
+  <form id="checkout-form">
+    <label for="name">পূর্ণ নাম *</label>
+    <input type="text" id="name" required placeholder="আপনার নাম">
+
+    <label for="phone">মোবাইল নম্বর *</label>
+    <input type="tel" id="phone" required placeholder="01XXXXXXXXX">
+
+    <label for="address">সম্পূর্ণ ঠিকানা *</label>
+    <textarea id="address" required placeholder="বাসা/রোড, এলাকা, থানা, জেলা"></textarea>
+
+    <label for="note">বিশেষ নির্দেশনা (ঐচ্ছিক)</label>
+    <textarea id="note" placeholder="সাইজ, রঙ বা অন্য কোনো নোট"></textarea>
+
+    <label style="margin-top:20px;">পেমেন্ট পদ্ধতি *</label>
+    <div class="pay-option">
+      <input type="radio" name="paymethod" value="cod" id="pay-cod" checked> <label for="pay-cod" style="margin:0;color:var(--cream);font-size:0.92rem;">ক্যাশ অন ডেলিভারি (COD)</label>
+    </div>
+    <div class="pay-option">
+      <input type="radio" name="paymethod" value="bkash" id="pay-bkash"> <label for="pay-bkash" style="margin:0;color:var(--cream);font-size:0.92rem;">বিকাশ (bKash) — Send Money</label>
+    </div>
+    <div class="pay-option">
+      <input type="radio" name="paymethod" value="nagad" id="pay-nagad"> <label for="pay-nagad" style="margin:0;color:var(--cream);font-size:0.92rem;">নগদ (Nagad) — Send Money</label>
+    </div>
+
+    <div id="pay-instructions" style="display:none;background:#1a1a1a;border:1px dashed rgba(201,162,74,0.4);border-radius:10px;padding:14px;margin-top:12px;font-size:0.85rem;color:#cfc9bd;">
+      <div id="pay-instructions-text"></div>
+      <label for="txnid" style="margin-top:10px;">Transaction ID *</label>
+      <input type="text" id="txnid" placeholder="যেমন: 8N7A6X5C4D">
+    </div>
+
+    <button type="submit" class="btn btn-gold">অর্ডার কনফার্ম করুন (WhatsApp-এ পাঠান)</button>
+    <div class="note">অর্ডার কনফার্ম করলে আপনার অর্ডার তথ্যসহ WhatsApp খুলবে — সেখান থেকে মেসেজ পাঠিয়ে অর্ডার সম্পন্ন করুন।</div>
+  </form>
+</div>
+
+<script src="cart.js"></script>
+<script>
+function renderSummary() {
+  const cart = SRFCart.getCart();
+  const wrap = document.getElementById('checkout-wrap');
+  const summaryEl = document.getElementById('order-summary');
+  const form = document.getElementById('checkout-form');
+
+  if (cart.length === 0) {
+    summaryEl.innerHTML = '<div class="empty">আপনার কার্ট খালি — অর্ডার করার আগে পণ্য যোগ করুন।<br><br><a href="index.html" style="color:#e9cd8b;">শপিং শুরু করুন →</a></div>';
+    form.style.display = 'none';
+    return;
+  }
+
+  let rows = cart.map(function(item) {
+    return '<div class="line"><span>' + item.name + ' x' + item.qty + '</span><span>' + SRFCart.formatTaka(item.price * item.qty) + '</span></div>';
+  }).join('');
+
+  summaryEl.innerHTML =
+    '<div class="order-summary">' + rows +
+    '<div class="line total"><span>সর্বমোট</span><span>' + SRFCart.formatTaka(SRFCart.getCartTotal()) + '</span></div>' +
+    '</div>';
+}
+
+function generateOrderId() {
+  const d = new Date();
+  const ymd = d.getFullYear().toString().slice(2) + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return 'SRF-' + ymd + '-' + rand;
+}
+
+document.addEventListener('DOMContentLoaded', renderSummary);
+
+const PAY_NUMBERS = { bkash: '01645-008919 (Personal)', nagad: '01645-008919 (Personal)' };
+
+document.querySelectorAll('input[name="paymethod"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    const box = document.getElementById('pay-instructions');
+    const textEl = document.getElementById('pay-instructions-text');
+    const method = this.value;
+    if (method === 'bkash' || method === 'nagad') {
+      const label = method === 'bkash' ? 'বিকাশ' : 'নগদ';
+      textEl.textContent = 'এই ' + label + ' নম্বরে সেন্ড মানি করুন: ' + PAY_NUMBERS[method] + ' — তারপর Transaction ID নিচে লিখুন।';
+      box.style.display = 'block';
+      document.getElementById('txnid').required = true;
+    } else {
+      box.style.display = 'none';
+      document.getElementById('txnid').required = false;
+    }
+  });
+});
+
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const note = document.getElementById('note').value.trim();
+  const payMethodEl = document.querySelector('input[name="paymethod"]:checked');
+  const payMethod = payMethodEl ? payMethodEl.value : 'cod';
+  const txnid = document.getElementById('txnid').value.trim();
+
+  if (!name || !phone || !address) return;
+  if ((payMethod === 'bkash' || payMethod === 'nagad') && !txnid) {
+    alert('অনুগ্রহ করে Transaction ID লিখুন।');
+    return;
+  }
+
+  const orderId = generateOrderId();
+  const payLabel = payMethod === 'cod' ? 'ক্যাশ অন ডেলিভারি (COD)' : (payMethod === 'bkash' ? 'বিকাশ' : 'নগদ') + ' — Txn ID: ' + txnid;
+  const customer = { name: name, phone: phone, address: address, note: note };
+  let text = '*নতুন অর্ডার - SeiRokom Fashion*\n';
+  text += 'অর্ডার আইডি: ' + orderId + '\n';
+  let bodyLines = SRFCart.buildWhatsAppOrderText(customer).split('\n').slice(1);
+  bodyLines = bodyLines.map(function(line) {
+    return line.startsWith('পেমেন্ট:') ? 'পেমেন্ট: ' + payLabel : line;
+  });
+  text += bodyLines.join('\n');
+
+  const url = 'https://wa.me/8801645008919?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+});
+</script>
+</body>
+</html>
