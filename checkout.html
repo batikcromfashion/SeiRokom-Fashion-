@@ -53,8 +53,21 @@
     <label for="note">বিশেষ নির্দেশনা (ঐচ্ছিক)</label>
     <textarea id="note" placeholder="সাইজ, রঙ বা অন্য কোনো নোট"></textarea>
 
+    <label style="margin-top:20px;">পেমেন্ট পদ্ধতি *</label>
     <div class="pay-option">
-      <input type="radio" checked readonly> <span>ক্যাশ অন ডেলিভারি (COD)</span>
+      <input type="radio" name="paymethod" value="cod" id="pay-cod" checked> <label for="pay-cod" style="margin:0;color:var(--cream);font-size:0.92rem;">ক্যাশ অন ডেলিভারি (COD)</label>
+    </div>
+    <div class="pay-option">
+      <input type="radio" name="paymethod" value="bkash" id="pay-bkash"> <label for="pay-bkash" style="margin:0;color:var(--cream);font-size:0.92rem;">বিকাশ (bKash) — Send Money</label>
+    </div>
+    <div class="pay-option">
+      <input type="radio" name="paymethod" value="nagad" id="pay-nagad"> <label for="pay-nagad" style="margin:0;color:var(--cream);font-size:0.92rem;">নগদ (Nagad) — Send Money</label>
+    </div>
+
+    <div id="pay-instructions" style="display:none;background:#1a1a1a;border:1px dashed rgba(201,162,74,0.4);border-radius:10px;padding:14px;margin-top:12px;font-size:0.85rem;color:#cfc9bd;">
+      <div id="pay-instructions-text"></div>
+      <label for="txnid" style="margin-top:10px;">Transaction ID *</label>
+      <input type="text" id="txnid" placeholder="যেমন: 8N7A6X5C4D">
     </div>
 
     <button type="submit" class="btn btn-gold">অর্ডার কনফার্ম করুন (WhatsApp-এ পাঠান)</button>
@@ -80,20 +93,38 @@ function renderSummary() {
     return '<div class="line"><span>' + item.name + ' x' + item.qty + '</span><span>' + SRFCart.formatTaka(item.price * item.qty) + '</span></div>';
   }).join('');
 
+  const coupon = SRFCart.getAppliedCoupon();
+  rows += '<div class="line"><span>সাবটোটাল</span><span>' + SRFCart.formatTaka(SRFCart.getCartTotal()) + '</span></div>';
+  if (coupon) {
+    rows += '<div class="line" style="color:#7bc47f;"><span>কুপন (' + coupon.code + ')</span><span>-' + SRFCart.formatTaka(SRFCart.getDiscountAmount()) + '</span></div>';
+  }
+
   summaryEl.innerHTML =
     '<div class="order-summary">' + rows +
-    '<div class="line total"><span>সর্বমোট</span><span>' + SRFCart.formatTaka(SRFCart.getCartTotal()) + '</span></div>' +
+    '<div class="line total"><span>সর্বমোট</span><span>' + SRFCart.formatTaka(SRFCart.getFinalTotal()) + '</span></div>' +
     '</div>';
 }
 
-function generateOrderId() {
-  const d = new Date();
-  const ymd = d.getFullYear().toString().slice(2) + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
-  const rand = Math.floor(1000 + Math.random() * 9000);
-  return 'SRF-' + ymd + '-' + rand;
-}
-
 document.addEventListener('DOMContentLoaded', renderSummary);
+
+const PAY_NUMBERS = { bkash: '01645-008919 (Personal)', nagad: '01645-008919 (Personal)' };
+
+document.querySelectorAll('input[name="paymethod"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    const box = document.getElementById('pay-instructions');
+    const textEl = document.getElementById('pay-instructions-text');
+    const method = this.value;
+    if (method === 'bkash' || method === 'nagad') {
+      const label = method === 'bkash' ? 'বিকাশ' : 'নগদ';
+      textEl.textContent = 'এই ' + label + ' নম্বরে সেন্ড মানি করুন: ' + PAY_NUMBERS[method] + ' — তারপর Transaction ID নিচে লিখুন।';
+      box.style.display = 'block';
+      document.getElementById('txnid').required = true;
+    } else {
+      box.style.display = 'none';
+      document.getElementById('txnid').required = false;
+    }
+  });
+});
 
 document.getElementById('checkout-form').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -101,17 +132,43 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
   const phone = document.getElementById('phone').value.trim();
   const address = document.getElementById('address').value.trim();
   const note = document.getElementById('note').value.trim();
+  const payMethodEl = document.querySelector('input[name="paymethod"]:checked');
+  const payMethod = payMethodEl ? payMethodEl.value : 'cod';
+  const txnid = document.getElementById('txnid').value.trim();
 
   if (!name || !phone || !address) return;
+  if ((payMethod === 'bkash' || payMethod === 'nagad') && !txnid) {
+    alert('অনুগ্রহ করে Transaction ID লিখুন।');
+    return;
+  }
 
-  const orderId = generateOrderId();
+  const orderId = SRFCart.generateOrderId();
+  const payLabel = payMethod === 'cod' ? 'ক্যাশ অন ডেলিভারি (COD)' : (payMethod === 'bkash' ? 'বিকাশ' : 'নগদ') + ' — Txn ID: ' + txnid;
   const customer = { name: name, phone: phone, address: address, note: note };
   let text = '*নতুন অর্ডার - SeiRokom Fashion*\n';
   text += 'অর্ডার আইডি: ' + orderId + '\n';
-  text += SRFCart.buildWhatsAppOrderText(customer).split('\n').slice(1).join('\n');
+  let bodyLines = SRFCart.buildWhatsAppOrderText(customer).split('\n').slice(1);
+  bodyLines = bodyLines.map(function(line) {
+    return line.startsWith('পেমেন্ট:') ? 'পেমেন্ট: ' + payLabel : line;
+  });
+  text += bodyLines.join('\n');
 
   const url = 'https://wa.me/8801645008919?text=' + encodeURIComponent(text);
   window.open(url, '_blank');
+
+  SRFCart.saveMyOrder(orderId);
+  SRFCart.clearCart();
+  SRFCart.removeCoupon();
+
+  document.getElementById('checkout-wrap').innerHTML =
+    '<div style="text-align:center;padding:50px 10px;">' +
+      '<div style="font-size:2.4rem;">✅</div>' +
+      '<h1 style="margin-top:14px;">অর্ডার তথ্য পাঠানো হয়েছে</h1>' +
+      '<p style="color:#cfc9bd;font-size:0.9rem;">WhatsApp-এ মেসেজটি পাঠিয়ে অর্ডার সম্পন্ন করুন। আপনার অর্ডার আইডি:</p>' +
+      '<div style="font-size:1.3rem;color:#e9cd8b;font-weight:700;margin:10px 0 24px;">' + orderId + '</div>' +
+      '<a href="order-tracking.html?id=' + orderId + '" style="display:inline-block;background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;">অর্ডার ট্র্যাক করুন</a>' +
+      '<br><br><a href="index.html" style="color:#a8a196;font-size:0.85rem;">হোমপেজে ফিরুন</a>' +
+    '</div>';
 });
 </script>
 </body>

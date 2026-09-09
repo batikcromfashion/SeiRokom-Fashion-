@@ -1,0 +1,7 @@
+{
+  "_readme": "এই ফাইলটি অর্ডার ট্র্যাকিং-এর জন্য। WhatsApp-এ নতুন অর্ডার পেলে এখানে অর্ডার আইডি যোগ করুন এবং status পরিবর্তন করে GitHub-এ আপডেট করুন। সম্ভাব্য status মান: confirmed, processing, packed, shipped, delivered",
+  "SRF-260101-1234": {
+    "status": "delivered",
+    "note": "উদাহরণ অর্ডার — আসল অর্ডার এলে এভাবে যোগ করুন"
+  }
+}

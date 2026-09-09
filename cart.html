@@ -29,11 +29,19 @@
   .btn{display:block;width:100%;text-align:center;padding:14px;border-radius:30px;font-weight:600;text-decoration:none;margin-top:16px;}
   .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0d0d0d;}
   .btn-outline{border:1px solid rgba(250,248,244,0.4);color:var(--cream);background:none;cursor:pointer;}
+  .coupon-row{display:flex;gap:8px;margin-top:18px;}
+  .coupon-row input{flex:1;padding:11px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.3);background:#161616;color:var(--cream);font-family:inherit;}
+  .coupon-row button{padding:0 18px;border-radius:8px;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-weight:600;cursor:pointer;}
+  .coupon-msg{font-size:0.8rem;margin-top:8px;}
+  .coupon-msg.ok{color:#7bc47f;}
+  .coupon-msg.err{color:#e07a7a;}
+  .discount-row{color:#7bc47f;}
 </style>
 </head>
 <body>
 <header>
   <a class="logo" href="index.html">SR &nbsp;SEIROKOM FASHION</a>
+  <a class="back" href="order-tracking.html" style="margin-right:8px;">📦 ট্র্যাক করুন</a>
   <a class="back" href="index.html">← শপিং চালিয়ে যান</a>
 </header>
 
@@ -42,21 +50,40 @@
   <div class="sub">অর্ডার সম্পন্ন করার আগে পণ্যগুলো একবার দেখে নিন।</div>
 
   <div id="cart-items"></div>
+  <div id="coupon-box" style="display:none;">
+    <div class="coupon-row">
+      <input type="text" id="coupon-input" placeholder="কুপন কোড দিন (যেমন: SEIROKOM10)">
+      <button type="button" onclick="handleApplyCoupon()">প্রয়োগ করুন</button>
+    </div>
+    <div id="coupon-msg" class="coupon-msg"></div>
+  </div>
   <div id="cart-summary"></div>
 </div>
 
 <script src="cart.js"></script>
 <script>
+function handleApplyCoupon(){
+  const code = document.getElementById('coupon-input').value;
+  const result = SRFCart.applyCoupon(code);
+  const msgEl = document.getElementById('coupon-msg');
+  msgEl.textContent = result.message;
+  msgEl.className = 'coupon-msg ' + (result.ok ? 'ok' : 'err');
+  if (result.ok) renderCartPage();
+}
+
 function renderCartPage() {
   const cart = SRFCart.getCart();
   const itemsEl = document.getElementById('cart-items');
   const summaryEl = document.getElementById('cart-summary');
+  const couponBox = document.getElementById('coupon-box');
 
   if (cart.length === 0) {
     itemsEl.innerHTML = '<div class="empty">আপনার কার্ট খালি।<br><br><a href="index.html" style="color:#e9cd8b;">শপিং শুরু করুন →</a></div>';
     summaryEl.innerHTML = '';
+    couponBox.style.display = 'none';
     return;
   }
+  couponBox.style.display = 'block';
 
   itemsEl.innerHTML = cart.map(function(item) {
     return '<div class="cart-item">' +
@@ -73,11 +100,20 @@ function renderCartPage() {
     '</div>';
   }).join('');
 
-  const total = SRFCart.getCartTotal();
+  const subtotal = SRFCart.getCartTotal();
+  const coupon = SRFCart.getAppliedCoupon();
+  const discount = SRFCart.getDiscountAmount();
+  const finalTotal = SRFCart.getFinalTotal();
+
+  let rows = '<div class="row"><span>মোট আইটেম</span><span>' + SRFCart.getCartCount() + '</span></div>';
+  rows += '<div class="row"><span>সাবটোটাল</span><span>' + SRFCart.formatTaka(subtotal) + '</span></div>';
+  if (coupon) {
+    rows += '<div class="row discount-row"><span>কুপন (' + coupon.code + ')</span><span>-' + SRFCart.formatTaka(discount) + '</span></div>';
+  }
+  rows += '<div class="row total"><span>সর্বমোট</span><span>' + SRFCart.formatTaka(finalTotal) + '</span></div>';
+
   summaryEl.innerHTML =
-    '<div class="summary">' +
-      '<div class="row"><span>মোট আইটেম</span><span>' + SRFCart.getCartCount() + '</span></div>' +
-      '<div class="row total"><span>সর্বমোট</span><span>' + SRFCart.formatTaka(total) + '</span></div>' +
+    '<div class="summary">' + rows +
       '<a class="btn btn-gold" href="checkout.html">চেকআউট করুন →</a>' +
       '<button class="btn btn-outline" onclick="if(confirm(\'কার্ট খালি করবেন?\')) SRFCart.clearCart();">কার্ট খালি করুন</button>' +
     '</div>';
