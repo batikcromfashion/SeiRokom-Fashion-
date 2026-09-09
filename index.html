@@ -2110,6 +2110,19 @@ a,button{-webkit-tap-highlight-color:transparent}
     text-shadow:0 1px 4px rgba(0,0,0,.35);
     text-align:center;
   }
+  .partner-btn-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  @media(max-width:420px){
+    .partner-btn-grid{ grid-template-columns:1fr; }
+  }
+  .partner-btn-grid .btn-outline-dropship{
+    grid-column:auto !important;
+    margin:0 !important;
+    white-space:nowrap;
+  }
 
   /* Review card: same deep-blue animated background as hero, for brand consistency */
   .review-action-card{
@@ -2567,8 +2580,13 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
           <span class="social-btn-text"><b>Instagram ID</b><small>seirokom fashion</small></span>
         </a>
         <div class="dropship-block">
-          <p class="dropship-desc">নিজের দোকান বা পেজ থেকে বিক্রি করতে চান? পাইকারি দামে প্রোডাক্ট নিন, স্টক ছাড়াই ব্যবসা শুরু করুন — বিস্তারিত জানতে বাটনে ক্লিক করুন।</p>
-          <a href="dropship.html" class="btn btn-outline-dropship" aria-label="ড্রোপসিপিং ও ডিলারসিপিং বিস্তারিত">🤝 ড্রোপসিপিং + ডিলারসিপিং</a>
+          <p class="dropship-desc">নিজের দোকান বা পেজ থেকে বিক্রি করতে চান, স্টক থেকে আয় করতে চান, বা ডেলিভারি করে বাড়তি কমিশন নিতে চান? আপনার জন্য উপযুক্ত প্রোগ্রামটি বেছে নিন।</p>
+          <div class="partner-btn-grid">
+            <a href="dropship.html" class="btn btn-outline-dropship" aria-label="ড্রপশিপিং বিস্তারিত">🤝 ড্রপশিপিং</a>
+            <a href="dealership-dashboard.html" class="btn btn-outline-dropship" aria-label="ডিলারশিপ বিস্তারিত">🏬 ডিলারশিপ</a>
+            <a href="stock-partner.html" class="btn btn-outline-dropship" aria-label="স্টক পার্টনার বিস্তারিত">📦 স্টক পার্টনার</a>
+            <a href="delivery-partner.html" class="btn btn-outline-dropship" aria-label="ডেলিভারি পার্টনার বিস্তারিত">🛵 ডেলিভারি পার্টনার</a>
+          </div>
         </div>
       </div>
       </div>
