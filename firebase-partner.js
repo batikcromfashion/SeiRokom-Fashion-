@@ -145,6 +145,121 @@ function wireEntryForm() {
   });
 }
 
+// ---------- Stock items (stock partner only): tracks pieces received/sold/returned ----------
+function wireStockForm() {
+  const form = $("stockForm");
+  if (!form) return;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return;
+    const itemName = $("stock-item").value.trim();
+    const quantity = parseInt($("stock-qty").value) || 0;
+    const status = $("stock-status").value;
+    try {
+      await addDoc(collection(db, "stock_items"), {
+        partnerId: user.uid, itemName, quantity, status, createdAt: Date.now()
+      });
+      form.reset();
+      loadStockItems(user.uid);
+      const okMsg = $("stock-ok");
+      if (okMsg) { okMsg.style.display = "block"; setTimeout(() => okMsg.style.display = "none", 2500); }
+    } catch (err) {
+      alert("স্টক এন্ট্রি যোগ করা যায়নি, আবার চেষ্টা করুন।");
+    }
+  });
+}
+
+async function loadStockItems(uid) {
+  const q = query(collection(db, "stock_items"), where("partnerId", "==", uid));
+  const snap = await getDocs(q);
+  let inStock = 0, sold = 0, returned = 0;
+  const rows = [];
+  snap.forEach((d) => {
+    const o = d.data();
+    const qty = o.quantity || 0;
+    if (o.status === "in_stock") inStock += qty;
+    if (o.status === "sold") sold += qty;
+    if (o.status === "returned") returned += qty;
+    rows.push({ id: d.id, name: o.itemName || "-", status: o.status || "-", qty, ts: o.createdAt || 0 });
+  });
+  setText("stat-1", inStock);
+  lastStats.stockInStock = inStock;
+  lastStats.stockSold = sold;
+  lastStats.stockReturned = returned;
+  rows.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  const tbody = $("stock-tbody");
+  if (tbody) {
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#9a917f;padding:14px;">এখনো কোনো স্টক যোগ হয়নি</td></tr>';
+    } else {
+      const statusLabel = { in_stock: "স্টকে আছে", sold: "বিক্রি হয়েছে", returned: "রিটার্ন/অবিক্রিত" };
+      tbody.innerHTML = rows.map(r =>
+        `<tr><td>${r.id.slice(0, 6)}</td><td>${escapeHtml(r.name)}</td><td>${escapeHtml(statusLabel[r.status] || r.status)}</td><td>${r.qty}</td></tr>`
+      ).join("");
+    }
+  }
+}
+
+// ---------- Dealer applications (dealer only): new sub-dealer/reseller applicants ----------
+function wireDealerAppForm() {
+  const form = $("dealerAppForm");
+  if (!form) return;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return;
+    const applicantName = $("da-name").value.trim();
+    const phone = $("da-phone").value.trim();
+    const area = $("da-area").value.trim();
+    try {
+      await addDoc(collection(db, "dealer_applications"), {
+        dealerId: user.uid, applicantName, phone, area, status: "pending", createdAt: Date.now()
+      });
+      form.reset();
+      loadDealerApplications(user.uid);
+    } catch (err) {
+      alert("আবেদন যোগ করা যায়নি, আবার চেষ্টা করুন।");
+    }
+  });
+}
+
+async function loadDealerApplications(uid) {
+  const q = query(collection(db, "dealer_applications"), where("dealerId", "==", uid));
+  const snap = await getDocs(q);
+  const rows = [];
+  snap.forEach((d) => {
+    const o = d.data();
+    rows.push({ id: d.id, name: o.applicantName || "-", phone: o.phone || "-", area: o.area || "-", status: o.status || "pending", ts: o.createdAt || 0 });
+  });
+  rows.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  lastStats.pendingApplications = rows.filter(r => r.status === "pending").length;
+  const tbody = $("dealerapp-tbody");
+  if (!tbody) return;
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9a917f;padding:14px;">এখনো কোনো আবেদন নেই</td></tr>';
+    return;
+  }
+  const statusLabel = { pending: "পেন্ডিং", approved: "অনুমোদিত", rejected: "বাতিল" };
+  tbody.innerHTML = rows.map(r => {
+    const actions = r.status === "pending"
+      ? `<button class="btn gold" style="padding:5px 8px;font-size:.65rem;margin-right:4px" onclick="updateDealerApp('${r.id}','approved')">✔ অনুমোদন</button><button class="btn" style="padding:5px 8px;font-size:.65rem" onclick="updateDealerApp('${r.id}','rejected')">✘ বাতিল</button>`
+      : (statusLabel[r.status] || r.status);
+    return `<tr><td>${escapeHtml(r.name)}</td><td>${escapeHtml(r.phone)}</td><td>${escapeHtml(r.area)}</td><td>${escapeHtml(statusLabel[r.status] || r.status)}</td><td>${actions}</td></tr>`;
+  }).join("");
+}
+
+window.updateDealerApp = async function (id, status) {
+  const user = auth.currentUser;
+  if (!user) return;
+  try {
+    await setDoc(doc(db, "dealer_applications", id), { status }, { merge: true });
+    loadDealerApplications(user.uid);
+  } catch (err) {
+    alert("আপডেট করা যায়নি, আবার চেষ্টা করুন।");
+  }
+};
+
 // ---------- Live stats + table ----------
 let lastStats = {};
 
@@ -244,6 +359,14 @@ window.quickAction = function (kind) {
     if (form) form.scrollIntoView({ behavior: "smooth", block: "center" });
   } else if (kind === "report") {
     alert(buildReportText());
+  } else if (kind === "view-stock") {
+    const table = $("stock-tbody");
+    const panel = table ? table.closest("section") : null;
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else if (kind === "view-dealerapp") {
+    const table = $("dealerapp-tbody");
+    const panel = table ? table.closest("section") : null;
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 };
 
@@ -280,6 +403,8 @@ onAuthStateChanged(auth, async (user) => {
       setText("live-partner-id", data ? data.partnerId : "—");
       setText("live-partner-name", data ? ("স্বাগতম, " + data.name) : "");
       await loadStats(user.uid);
+      if (TYPE === "stock") await loadStockItems(user.uid);
+      if (TYPE === "dealer") await loadDealerApplications(user.uid);
     } catch (err) {
       setText("live-partner-id", "—");
     }
@@ -292,3 +417,5 @@ onAuthStateChanged(auth, async (user) => {
 
 wireAuthForms();
 wireEntryForm();
+wireStockForm();
+wireDealerAppForm();

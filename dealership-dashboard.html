@@ -24,44 +24,7 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 @media(max-width:600px){.verified-card{flex-direction:column;align-items:flex-start}}
 
 </style><script>window.PARTNER_TYPE='dealer';</script></head><body>
-<header class="top"><div class="wrap"><div class="brand"><div class="logo">🤝</div><div><h1>ডিলারশিপ ড্যাশবোর্ড</h1><p class="sub">ডিলার অর্ডার, পাইকারি মূল্য ও ব্যবসায়িক হিসাব</p></div></div><a class="back" href="index.html">← SeiRokom Fashion-এ ফিরে যান</a><button id="logout-btn" class="back" style="display:none;border:0;cursor:pointer;">🚪 লগআউট</button></div></header><div id="auth-gate" class="auth-wrap"><div class="auth-card">
-<h2>🔐 ডিলার লগইন</h2>
-<div id="auth-error" class="auth-error"></div>
-<form id="loginForm">
-<input type="email" id="li-email" placeholder="ইমেইল" required>
-<input type="password" id="li-pass" placeholder="পাসওয়ার্ড" required>
-<button type="submit">লগইন করুন</button>
-</form>
-<p id="toggle-register" class="auth-switch">নতুন পার্টনার? <a href="#" id="show-register">এখানে অ্যাকাউন্ট খুলুন</a></p>
-<form id="registerForm" style="display:none;">
-<input type="text" id="rg-name" placeholder="আপনার নাম" required>
-<input type="tel" id="rg-phone" placeholder="মোবাইল নম্বর" required>
-<input type="text" id="rg-area" placeholder="এলাকা/শহর" required>
-<input type="email" id="rg-email" placeholder="ইমেইল" required>
-<input type="password" id="rg-pass" placeholder="পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)" required>
-<button type="submit">অ্যাকাউন্ট খুলুন</button>
-</form>
-<p id="toggle-login" class="auth-switch" style="display:none;">আগে থেকে অ্যাকাউন্ট আছে? <a href="#" id="show-login">লগইন করুন</a></p>
-</div></div>
-<main class="wrap" id="dashboard-app" style="display:none"><div class="verified-card"><div class="verified-badge"><div class="vb-icon">✅</div><div><b>Verified Dealer Partner</b><small>পার্টনার আইডি: <span id="live-partner-id">লোড হচ্ছে...</span></small></div></div><div class="trust-pills"><span>📝 লিখিত চুক্তি</span><span>💰 নিয়মিত পেমেন্ট</span><span>📞 ২৪ ঘণ্টা রেসপন্স</span><span>🔄 সহজ শর্তে প্রস্থান</span></div></div><div class="grid"><div class="stat"><b id="stat-1">0</b><span>মোট অর্ডার</span></div><div class="stat"><b id="stat-2">0</b><span>নতুন অর্ডার</span></div><div class="stat"><b id="stat-3">0</b><span>চলমান</span></div><div class="stat"><b id="stat-4">৳0</b><span>মোট বিক্রি</span></div></div><section class="panel"><h2>➕ নতুন এন্ট্রি যোগ করুন</h2>
-<div id="entry-ok" class="entry-ok">✅ সফলভাবে যোগ হয়েছে!</div>
-<form id="entryForm" style="display:grid;gap:10px;">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-<input type="text" id="entry-name" placeholder="কাস্টমার/দোকানের নাম" required style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
-<input type="text" id="entry-detail" placeholder="ফোন/এলাকা" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-<input type="number" id="entry-amount" placeholder="অর্ডার মূল্য (৳)" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
-<input type="number" id="entry-commission" placeholder="আপনার লাভ (৳)" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
-</div>
-<select id="entry-status" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
-<option value="pending">পেন্ডিং</option><option value="processing">প্রসেসিং</option><option value="completed">সম্পন্ন</option>
-</select>
-<button type="submit" class="btn gold" style="padding:13px;font-size:.85rem;">➕ যোগ করুন</button>
-</form>
-</section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards"><div class="action"><b>🤝 ডিলার আবেদন</b><small>নতুন ডিলার/রিসেলার আবেদন যাচাই করুন</small><button class="btn gold" type="button" onclick="quickAction('view')">আবেদন দেখুন</button></div><div class="action"><b>📦 পাইকারি অর্ডার</b><small>ডিলারদের অর্ডার ও স্ট্যাটাস দেখুন</small><button class="btn " type="button" onclick="quickAction('view')">অর্ডার দেখুন</button></div><div class="action"><b>📊 বিক্রয় রিপোর্ট</b><small>বিক্রয় ও বকেয়া হিসাবের সারাংশ</small><button class="btn " type="button" onclick="quickAction('report')">রিপোর্ট দেখুন</button></div></div></section>
-<section class="panel"><h2>📋 সাম্প্রতিক তথ্য</h2><table class="table"><thead><tr><th>আইডি</th><th>নাম/এলাকা</th><th>স্ট্যাটাস</th><th>পরিমাণ</th></tr></thead><tbody id="live-tbody"><tr><td colspan="4" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table></section>
-<section class="panel"><h2>🤝 ডিলারশিপ কেন নেবেন? (যা আর কোথাও পাবেন না)</h2>
+<header class="top"><div class="wrap"><div class="brand"><div class="logo">🤝</div><div><h1>ডিলারশিপ ড্যাশবোর্ড</h1><p class="sub">ডিলার অর্ডার, পাইকারি মূল্য ও ব্যবসায়িক হিসাব</p></div></div><a class="back" href="index.html">← SeiRokom Fashion-এ ফিরে যান</a><button id="logout-btn" class="back" style="display:none;border:0;cursor:pointer;">🚪 লগআউট</button></div></header><div class="wrap" style="padding:18px 12px 0"><section class="panel"><h2>🤝 ডিলারশিপ কেন নেবেন? (যা আর কোথাও পাবেন না)</h2>
 <div style="display:inline-block;margin-bottom:10px;background:linear-gradient(120deg,#ff5e8a,#ffb347);color:#1c150b;font-weight:800;font-size:.78rem;padding:8px 14px;border-radius:8px;">🎯 এই সপ্তাহে মাত্র ১ জন নতুন ডিলার নেওয়া হচ্ছে — সিট সীমিত</div>
 <p style="font-size:.78rem;color:#5c5344;line-height:1.8;">SeiRokom Fashion-এর সাথে ডিলার হিসেবে যুক্ত হলে আপনি শুধু পণ্য কিনে বিক্রি করা এজেন্ট নন — আপনি একজন <b>অঞ্চলভিত্তিক ব্যবসায়িক অংশীদার</b>। আমরা বিশ্বাস করি একজন ডিলারের সাফল্যই আমাদের সাফল্য, তাই সাধারণ পাইকারি সম্পর্কের চেয়ে বেশি কিছু দিই।</p>
 <div class="cards">
@@ -108,5 +71,52 @@ document.getElementById('dealerForm').addEventListener('submit', function(e){
   window.open('https://wa.me/8801645008919?text='+encodeURIComponent(msg), '_blank');
 });
 </script>
+</div><div id="auth-gate" class="auth-wrap"><div class="auth-card">
+<h2>🔐 ডিলার লগইন</h2>
+<div id="auth-error" class="auth-error"></div>
+<form id="loginForm">
+<input type="email" id="li-email" placeholder="ইমেইল" required>
+<input type="password" id="li-pass" placeholder="পাসওয়ার্ড" required>
+<button type="submit">লগইন করুন</button>
+</form>
+<p id="toggle-register" class="auth-switch">নতুন পার্টনার? <a href="#" id="show-register">এখানে অ্যাকাউন্ট খুলুন</a></p>
+<form id="registerForm" style="display:none;">
+<input type="text" id="rg-name" placeholder="আপনার নাম" required>
+<input type="tel" id="rg-phone" placeholder="মোবাইল নম্বর" required>
+<input type="text" id="rg-area" placeholder="এলাকা/শহর" required>
+<input type="email" id="rg-email" placeholder="ইমেইল" required>
+<input type="password" id="rg-pass" placeholder="পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)" required>
+<button type="submit">অ্যাকাউন্ট খুলুন</button>
+</form>
+<p id="toggle-login" class="auth-switch" style="display:none;">আগে থেকে অ্যাকাউন্ট আছে? <a href="#" id="show-login">লগইন করুন</a></p>
+</div></div>
+<main class="wrap" id="dashboard-app" style="display:none"><div class="verified-card"><div class="verified-badge"><div class="vb-icon">✅</div><div><b>Verified Dealer Partner</b><small>পার্টনার আইডি: <span id="live-partner-id">লোড হচ্ছে...</span></small></div></div><div class="trust-pills"><span>📝 লিখিত চুক্তি</span><span>💰 নিয়মিত পেমেন্ট</span><span>📞 ২৪ ঘণ্টা রেসপন্স</span><span>🔄 সহজ শর্তে প্রস্থান</span></div></div><div class="grid"><div class="stat"><b id="stat-1">0</b><span>মোট অর্ডার</span></div><div class="stat"><b id="stat-2">0</b><span>নতুন অর্ডার</span></div><div class="stat"><b id="stat-3">0</b><span>চলমান</span></div><div class="stat"><b id="stat-4">৳0</b><span>মোট বিক্রি</span></div></div><section class="panel"><h2>➕ নতুন এন্ট্রি যোগ করুন</h2>
+<div id="entry-ok" class="entry-ok">✅ সফলভাবে যোগ হয়েছে!</div>
+<form id="entryForm" style="display:grid;gap:10px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<input type="text" id="entry-name" placeholder="কাস্টমার/দোকানের নাম" required style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<input type="text" id="entry-detail" placeholder="ফোন/এলাকা" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<input type="number" id="entry-amount" placeholder="অর্ডার মূল্য (৳)" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<input type="number" id="entry-commission" placeholder="আপনার লাভ (৳)" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+</div>
+<select id="entry-status" style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<option value="pending">পেন্ডিং</option><option value="processing">প্রসেসিং</option><option value="completed">সম্পন্ন</option>
+</select>
+<button type="submit" class="btn gold" style="padding:13px;font-size:.85rem;">➕ যোগ করুন</button>
+</form>
+</section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards"><div class="action"><b>🤝 ডিলার আবেদন</b><small>নতুন ডিলার/রিসেলার আবেদন যাচাই করুন</small><button class="btn gold" type="button" onclick="quickAction('view-dealerapp')">আবেদন দেখুন</button></div><div class="action"><b>📦 পাইকারি অর্ডার</b><small>ডিলারদের অর্ডার ও স্ট্যাটাস দেখুন</small><button class="btn " type="button" onclick="quickAction('view')">অর্ডার দেখুন</button></div><div class="action"><b>📊 বিক্রয় রিপোর্ট</b><small>বিক্রয় ও বকেয়া হিসাবের সারাংশ</small><button class="btn " type="button" onclick="quickAction('report')">রিপোর্ট দেখুন</button></div></div></section>
+<section class="panel"><h2>🤝 নতুন ডিলার/রিসেলার আবেদন যোগ করুন ও যাচাই করুন</h2>
+<p style="font-size:.72rem;color:#776b5c;margin:0 0 10px;">আপনার অধীনে কেউ রিসেলার/সাব-ডিলার হতে চাইলে এখানে তার তথ্য যোগ করুন, তারপর অনুমোদন বা বাতিল করে যাচাই সম্পন্ন করুন।</p>
+<form id="dealerAppForm" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:16px;">
+<input type="text" id="da-name" placeholder="আবেদনকারীর নাম" required style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<input type="tel" id="da-phone" placeholder="মোবাইল নম্বর" required style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<input type="text" id="da-area" placeholder="এলাকা" required style="padding:11px 13px;border:1px solid #eadfca;border-radius:8px;font-family:inherit;font-size:.82rem;">
+<button type="submit" class="btn gold" style="padding:11px 16px;font-size:.78rem;">➕ যোগ করুন</button>
+</form>
+<table class="table"><thead><tr><th>নাম</th><th>ফোন</th><th>এলাকা</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr></thead><tbody id="dealerapp-tbody"><tr><td colspan="5" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table>
+</section>
+<section class="panel"><h2>📋 সাম্প্রতিক তথ্য</h2><table class="table"><thead><tr><th>আইডি</th><th>নাম/এলাকা</th><th>স্ট্যাটাস</th><th>পরিমাণ</th></tr></thead><tbody id="live-tbody"><tr><td colspan="4" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table></section>
 <section class="panel"><div class="note">✅ লাইভ অর্ডার, কমিশন ও ইউজার লগইন Firebase-এর মাধ্যমে সচল আছে। লগইন করে উপরের ফর্ম থেকে এন্ট্রি যোগ করলে তা সাথে সাথে এখানে দেখা যাবে।</div></section></main>
 <script type="module" src="firebase-partner.js"></script></body></html>
