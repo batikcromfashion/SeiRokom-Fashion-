@@ -2110,35 +2110,66 @@ a,button{-webkit-tap-highlight-color:transparent}
     text-shadow:0 1px 4px rgba(0,0,0,.35);
     text-align:center;
   }
-  .partner-btn-grid{
+  .partner-btn-grid{grid-template-columns:repeat(2,minmax(0,1fr));
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
   }
   @media(max-width:420px){
-    .partner-btn-grid{ grid-template-columns:1fr; }
+    .partner-btn-grid{grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-columns:1fr; }
   }
   .partner-btn-grid .btn-outline-dropship{
     grid-column:auto !important;
     margin:0 !important;
     white-space:nowrap;
   }
-  .partner-trust-strip{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    justify-content:center;
-    margin-top:12px;
+
+  /* Clickable partner-benefit cards */
+  .partner-benefit-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;
   }
-  .partner-trust-strip span{
-    background:rgba(255,255,255,.85);
-    border:1px solid rgba(255,255,255,.6);
-    border-radius:999px;
-    padding:6px 11px;
-    font-size:.66rem;
-    font-weight:700;
-    color:#3a2f1c;
-    white-space:nowrap;
+  .partner-benefit-btn{
+    appearance:none; border:1px solid rgba(255,255,255,.28); border-radius:14px;
+    padding:12px 10px; min-height:50px; cursor:pointer;
+    color:#fff; font-weight:800; font-size:.82rem; line-height:1.25;
+    background:linear-gradient(135deg,rgba(8,44,90,.96),rgba(28,105,177,.96),rgba(8,44,90,.96));
+    background-size:220% 220%; box-shadow:0 7px 18px rgba(0,0,0,.18);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    animation:partnerBenefitShift 6s ease-in-out infinite;
+  }
+  .partner-benefit-btn:hover,.partner-benefit-btn:focus-visible{
+    transform:translateY(-3px) scale(1.015); box-shadow:0 12px 24px rgba(0,0,0,.25);
+    border-color:rgba(255,215,106,.75); outline:none;
+  }
+  @keyframes partnerBenefitShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .partner-benefit-overlay{
+    position:fixed; inset:0; z-index:2147483000; display:none; align-items:center; justify-content:center;
+    padding:18px; background:rgba(2,12,25,.72); backdrop-filter:blur(8px);
+  }
+  .partner-benefit-overlay.show{display:flex; animation:partnerFadeIn .25s ease both}
+  @keyframes partnerFadeIn{from{opacity:0}to{opacity:1}}
+  .partner-benefit-modal{
+    width:min(560px,100%); max-height:min(82vh,720px); overflow:auto; position:relative;
+    border-radius:22px; padding:24px 20px 20px; color:#fff;
+    background:linear-gradient(145deg,#071b36,#124a82,#0a2a52,#1b659f);
+    background-size:300% 300%; animation:partnerModalBg 9s ease infinite, partnerModalIn .35s ease both;
+    border:1px solid rgba(255,215,106,.48); box-shadow:0 24px 70px rgba(0,0,0,.45);
+  }
+  @keyframes partnerModalBg{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  @keyframes partnerModalIn{from{transform:translateY(18px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+  .partner-benefit-close{
+    position:absolute; top:10px; right:12px; width:38px; height:38px; border:0; border-radius:50%;
+    cursor:pointer; color:#fff; background:rgba(255,255,255,.14); font-size:24px; line-height:1;
+  }
+  .partner-benefit-modal h3{margin:0 44px 8px 0; font-size:1.18rem; color:#ffe39a}
+  .partner-benefit-sub{margin:0 0 12px; color:#dcecff; font-weight:700}
+  .partner-benefit-modal p{margin:0 0 12px; line-height:1.65; color:#f4f8ff}
+  .partner-benefit-modal ul{margin:8px 0 16px; padding-left:20px; color:#f4f8ff}
+  .partner-benefit-modal li{margin:7px 0; line-height:1.5}
+  .partner-benefit-note{padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.10); font-size:.78rem; color:#d9e9fb}
+  @media(max-width:420px){
+    .partner-benefit-grid{grid-template-columns:1fr 1fr; gap:8px}
+    .partner-benefit-btn{font-size:.76rem; padding:10px 7px}
   }
 
   /* Review card: same deep-blue animated background as hero, for brand consistency */
@@ -2210,6 +2241,21 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<style id="sr-complaint-style">
+.hero-contact-stack{display:flex;flex-direction:column;align-items:stretch;gap:8px;flex:0 0 auto;min-width:180px}
+.hero-contact-stack .hero-youtube{min-width:180px}
+.sr-complaint-btn{position:relative;min-height:42px;padding:8px 14px;border:1px solid rgba(255,255,255,.35);border-radius:22px;background:linear-gradient(135deg,#fff7d6,#ffd166,#ff9f68);color:#5a2600;font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(255,159,0,.22);transition:transform .2s ease,box-shadow .2s ease;overflow:hidden}
+.sr-complaint-btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px rgba(255,159,0,.32)}
+.sr-complaint-btn:after{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:srComplaintShine 3.8s infinite}
+@keyframes srComplaintShine{0%,55%{left:-80%}75%,100%{left:130%}}
+.sr-complaint-overlay{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,18,30,.68);backdrop-filter:blur(5px)}
+.sr-complaint-overlay.open{display:flex}
+.sr-complaint-modal{width:min(560px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:linear-gradient(145deg,#ffffff,#f7fbff);box-shadow:0 24px 70px rgba(0,0,0,.3);padding:22px;animation:srComplaintIn .28s ease}
+@keyframes srComplaintIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.sr-complaint-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}.sr-complaint-head-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#fff1c1,#ffd166);font-size:25px}.sr-complaint-head h3{margin:0;color:#172033;font-size:1.2rem}.sr-complaint-head p{margin:3px 0 0;color:#5d6878;font-size:.78rem}.sr-complaint-close{margin-left:auto;border:0;background:#eef2f7;color:#475569;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}.sr-complaint-note{padding:10px 12px;border-radius:13px;background:#eef8f2;color:#245c3d;font-size:.78rem;line-height:1.5;margin-bottom:14px}.sr-complaint-form label{display:block;margin:10px 0 5px;color:#263244;font-size:.78rem;font-weight:700}.sr-complaint-form input,.sr-complaint-form select,.sr-complaint-form textarea{width:100%;box-sizing:border-box;border:1px solid #d8e0ea;border-radius:12px;padding:11px 12px;font-family:inherit;font-size:.84rem;background:#fff;outline:none}.sr-complaint-form textarea{min-height:120px;resize:vertical}.sr-complaint-form input:focus,.sr-complaint-form select:focus,.sr-complaint-form textarea:focus{border-color:#25a56a;box-shadow:0 0 0 3px rgba(37,165,106,.1)}.sr-complaint-submit{width:100%;margin-top:14px;border:0;border-radius:14px;padding:12px;background:linear-gradient(135deg,#148f58,#25b76e);color:#fff;font-family:inherit;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(20,143,88,.22)}.sr-complaint-foot{margin-top:10px;text-align:center;color:#7a8492;font-size:.68rem;line-height:1.45}
+@media(max-width:640px){.hero-contact-stack{min-width:145px}.hero-contact-stack .hero-youtube{min-width:145px;padding:0 10px}.sr-complaint-btn{font-size:.7rem;padding:7px 8px}.sr-complaint-modal{padding:17px;border-radius:20px}}
+</style>
 </head>
 <body>
 
@@ -2563,10 +2609,15 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
     <div>
       <div class="hero-eyebrow-row">
         <div class="eyebrow">স্টাইলের নতুন ঠিকানা</div>
-        <a href="https://wa.me/8801645008919" class="hero-youtube" target="_blank" rel="noopener noreferrer" style="background:#25D366;" aria-label="WhatsApp-এ যোগাযোগ করুন">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg>
-          <span class="social-btn-text"><b>WhatsApp-এ যোগাযোগ করুন</b></span>
-        </a>
+        <div class="hero-contact-stack">
+          <a href="https://wa.me/8801645008919" class="hero-youtube" target="_blank" rel="noopener noreferrer" style="background:#25D366;" aria-label="WhatsApp-এ যোগাযোগ করুন">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg>
+            <span class="social-btn-text"><b>WhatsApp-এ যোগাযোগ করুন</b></span>
+          </a>
+          <button type="button" class="sr-complaint-btn" onclick="openComplaintBox()" aria-label="অভিযোগ বা মতামত জানান">
+            <span aria-hidden="true">🛡️</span><span>অভিযোগ / মতামত জানান</span>
+          </button>
+        </div>
       </div>
       <div class="hero-greeting"><span class="rainbow-text">স্বাগতম ✦ Welcome</span></div>
       <h1>SeiRokom Fashion</h1>
@@ -2597,18 +2648,18 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
           <span class="social-btn-text"><b>Instagram ID</b><small>seirokom fashion</small></span>
         </a>
         <div class="dropship-block">
-          <p class="dropship-desc">নিজের দোকান বা পেজ থেকে বিক্রি করতে চান, স্টক থেকে আয় করতে চান, বা ডেলিভারি করে বাড়তি কমিশন নিতে চান? আপনার জন্য উপযুক্ত প্রোগ্রামটি বেছে নিন।</p>
+          <p class="dropship-desc">নিজের দোকান বা পেজ থেকে বিক্রি করতে চান, স্টক থেকে আয় করতে চান, বা ডেলিভারি করে বাড়তি কমিশন নিতে চান? আপনার জন্য উপযুক্ত প্রোগ্রামটি বেছে নিন। নিচের বাটনে ক্লিক করুন।</p>
           <div class="partner-btn-grid">
             <a href="dropship.html" class="btn btn-outline-dropship" aria-label="ড্রপশিপিং বিস্তারিত">🤝 ড্রপশিপিং</a>
             <a href="dealership-dashboard.html" class="btn btn-outline-dropship" aria-label="ডিলারশিপ বিস্তারিত">🏬 ডিলারশিপ</a>
             <a href="stock-partner.html" class="btn btn-outline-dropship" aria-label="স্টক পার্টনার বিস্তারিত">📦 স্টক পার্টনার</a>
-            <a href="delivery-partner.html" class="btn btn-outline-dropship" aria-label="ডেলিভারি পার্টনার বিস্তারিত">🛵 ডেলিভারি পার্টনার</a>
+            <a href="delivery-partner.html" class="btn btn-outline-dropship" aria-label="ডেলিভারি ম্যান বিস্তারিত">🛵 ডেলিভারি ম্যান</a>
           </div>
-          <div class="partner-trust-strip">
-            <span>📝 লিখিত চুক্তি</span>
-            <span>💰 নিয়মিত পেমেন্ট</span>
-            <span>📞 ২৪ ঘণ্টা রেসপন্স</span>
-            <span>🔄 সহজ শর্তে প্রস্থান</span>
+          <div class="partner-benefit-grid" aria-label="পার্টনার সুবিধা">
+            <button type="button" class="partner-benefit-btn" data-partner-benefit="1">📝 লিখিত চুক্তি</button>
+            <button type="button" class="partner-benefit-btn" data-partner-benefit="2">💰 নিয়মিত পেমেন্ট</button>
+            <button type="button" class="partner-benefit-btn" data-partner-benefit="3">⚡ ২৪ ঘণ্টা রেসপন্স</button>
+            <button type="button" class="partner-benefit-btn" data-partner-benefit="4">🔄 সহজ শর্তে প্রস্থান</button>
           </div>
         </div>
       </div>
@@ -4452,5 +4503,75 @@ window.srCopyLink=function(forApp){
 
 <script src="cart.js"></script>
 <script src="extras.js"></script>
+  <!-- Partner benefit details modal -->
+  <div class="partner-benefit-overlay" id="partnerBenefitOverlay" role="dialog" aria-modal="true" aria-labelledby="partnerBenefitTitle">
+    <div class="partner-benefit-modal">
+      <button type="button" class="partner-benefit-close" id="partnerBenefitClose" aria-label="বন্ধ করুন">×</button>
+      <h3 id="partnerBenefitTitle">পার্টনার সুবিধা</h3>
+      <div class="partner-benefit-sub" id="partnerBenefitSub"></div>
+      <p id="partnerBenefitText"></p>
+      <ul id="partnerBenefitList"></ul>
+      <div class="partner-benefit-note" id="partnerBenefitNote"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const overlay=document.getElementById('partnerBenefitOverlay');
+  const closeBtn=document.getElementById('partnerBenefitClose');
+  const title=document.getElementById('partnerBenefitTitle');
+  const sub=document.getElementById('partnerBenefitSub');
+  const text=document.getElementById('partnerBenefitText');
+  const list=document.getElementById('partnerBenefitList');
+  const note=document.getElementById('partnerBenefitNote');
+  const details={
+    '1':{title:'📝 লিখিত চুক্তি',sub:'শর্ত ও দায়িত্ব স্পষ্ট রাখার ব্যবস্থা',text:'পার্টনার প্রোগ্রামে যোগদানের আগে প্রযোজ্য নিয়ম, দায়িত্ব, পেমেন্ট/কমিশন এবং প্রয়োজনীয় শর্ত লিখিতভাবে দেখে নেওয়ার সুযোগ থাকবে।',list:['দুই পক্ষের দায়িত্ব ও নিয়ম স্পষ্ট করা','প্রযোজ্য প্রোগ্রামের শর্ত ও কাগজপত্র সম্পর্কে ধারণা','চুক্তির গুরুত্বপূর্ণ বিষয় আগে বুঝে নেওয়ার সুযোগ'],note:'চুক্তির নির্দিষ্ট শর্ত প্রোগ্রামভেদে আলাদা হতে পারে।'} ,
+    '2':{title:'💰 নিয়মিত পেমেন্ট',sub:'কমিশন ও পেমেন্ট ব্যবস্থাপনা',text:'পার্টনারের প্রাপ্য কমিশন বা পেমেন্ট প্রযোজ্য প্রোগ্রাম, সম্পন্ন কাজ/অর্ডার এবং যাচাইয়ের নিয়ম অনুযায়ী হিসাব করে দেওয়া হবে।',list:['কমিশন/পেমেন্টের নিয়ম আগে জানানো','অর্ডার বা কাজ সম্পন্ন হওয়ার পর হিসাব','পেমেন্ট সংক্রান্ত সহায়তার জন্য যোগাযোগের সুযোগ'],note:'পেমেন্টের সময়সূচি ও মাধ্যম প্রোগ্রামভেদে নিশ্চিত করা হবে।'} ,
+    '3':{title:'⚡ ২৪ ঘণ্টা রেসপন্স',sub:'দ্রুত যোগাযোগ ও সহায়তা',text:'পার্টনারদের আবেদন, প্রশ্ন বা প্রয়োজনীয় সহায়তার বিষয়ে দ্রুত যোগাযোগের ব্যবস্থা রাখার লক্ষ্য থাকবে, যাতে কাজের সময় অপ্রয়োজনীয় অপেক্ষা কমে।',list:['আবেদন ও প্রোগ্রাম-সংক্রান্ত প্রশ্নে যোগাযোগ','সমস্যা হলে প্রয়োজনীয় নির্দেশনা নেওয়ার সুযোগ','WhatsApp/নির্ধারিত যোগাযোগ মাধ্যমে সহায়তা'],note:'রেসপন্সের সময় পরিস্থিতি, মেসেজের ধরন ও যোগাযোগের সময় অনুযায়ী পরিবর্তিত হতে পারে।'} ,
+    '4':{title:'🔄 সহজ শর্তে প্রস্থান',sub:'প্রোগ্রাম থেকে বের হওয়ার পরিষ্কার নিয়ম',text:'কাজ চালিয়ে যাওয়া সম্ভব না হলে প্রযোজ্য চুক্তি ও নিয়ম মেনে পার্টনারশিপ শেষ করার সুযোগ থাকবে।',list:['চুক্তির বাতিল/সমাপ্তির নিয়ম আগে জানা','বকেয়া হিসাব ও প্রাপ্য বিষয় নিষ্পত্তির সুযোগ','প্রযোজ্য হলে অবিক্রিত পণ্যের ফেরত/সমন্বয়ের নিয়ম'],note:'প্রোগ্রামভেদে নোটিশ ও সমাপ্তির শর্ত আলাদা হতে পারে; যোগদানের আগে সংশ্লিষ্ট চুক্তি দেখে নিন।'}
+  };
+  function openBenefit(key){
+    const d=details[key]; if(!d||!overlay)return;
+    title.textContent=d.title; sub.textContent=d.sub; text.textContent=d.text; note.textContent=d.note;
+    list.innerHTML=d.list.map(x=>'<li>'+x+'</li>').join('');
+    overlay.classList.add('show'); document.body.style.overflow='hidden'; closeBtn.focus();
+  }
+  function closeBenefit(){if(!overlay)return; overlay.classList.remove('show'); document.body.style.overflow='';}
+  document.querySelectorAll('.partner-benefit-btn').forEach(btn=>btn.addEventListener('click',()=>openBenefit(btn.dataset.partnerBenefit)));
+  closeBtn&&closeBtn.addEventListener('click',closeBenefit);
+  overlay&&overlay.addEventListener('click',e=>{if(e.target===overlay)closeBenefit();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('show'))closeBenefit();});
+})();
+</script>
+
+<div class="sr-complaint-overlay" id="srComplaintOverlay" onclick="if(event.target===this) closeComplaintBox()">
+  <div class="sr-complaint-modal" role="dialog" aria-modal="true" aria-labelledby="srComplaintTitle">
+    <div class="sr-complaint-head">
+      <div class="sr-complaint-head-icon">🛡️</div>
+      <div><h3 id="srComplaintTitle">অভিযোগ / মতামত জানান</h3><p>আপনার কথা আমাদের কাছে গুরুত্বপূর্ণ</p></div>
+      <button type="button" class="sr-complaint-close" onclick="closeComplaintBox()" aria-label="বন্ধ করুন">×</button>
+    </div>
+    <div class="sr-complaint-note">যেকোনো ক্রয়, পণ্য, ডেলিভারি, পেমেন্ট, পার্টনার প্রোগ্রাম, আচরণ বা সেবাসংক্রান্ত অভিযোগ জানাতে পারেন। অভিযোগ করার জন্য কোনো নির্দিষ্ট কারণ বেছে নেওয়া বাধ্যতামূলক নয়।</div>
+    <form class="sr-complaint-form" id="srComplaintForm" onsubmit="submitComplaint(event)">
+      <label for="srComplaintType">অভিযোগ / বিষয়</label>
+      <select id="srComplaintType"><option>সাধারণ অভিযোগ</option><option>পণ্য বা মান</option><option>অর্ডার বা ডেলিভারি</option><option>পেমেন্ট / কমিশন</option><option>পার্টনার প্রোগ্রাম</option><option>আচরণ / সেবা</option><option>অন্যান্য</option></select>
+      <label for="srComplaintName">আপনার নাম <span style="font-weight:400;color:#8a94a3">(ঐচ্ছিক)</span></label>
+      <input id="srComplaintName" type="text" placeholder="নাম লিখুন">
+      <label for="srComplaintPhone">মোবাইল নম্বর <span style="font-weight:400;color:#8a94a3">(ঐচ্ছিক)</span></label>
+      <input id="srComplaintPhone" type="tel" placeholder="যোগাযোগের নম্বর, প্রয়োজন হলে">
+      <label for="srComplaintText">বিস্তারিত লিখুন <span style="color:#d33">*</span></label>
+      <textarea id="srComplaintText" required placeholder="কি ঘটেছে বা কোন বিষয়ে অভিযোগ/মতামত—সহজভাবে লিখুন..."></textarea>
+      <button type="submit" class="sr-complaint-submit">📩 WhatsApp-এর মাধ্যমে অভিযোগ পাঠান</button>
+    </form>
+    <div class="sr-complaint-foot">আপনার দেওয়া তথ্য শুধু অভিযোগটি বুঝতে ও যোগাযোগের প্রয়োজনে ব্যবহার করার উদ্দেশ্যে নেওয়া হচ্ছে।</div>
+  </div>
+</div>
+
+<script id="sr-complaint-script">
+function openComplaintBox(){var o=document.getElementById('srComplaintOverlay');if(o){o.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){document.getElementById('srComplaintText')?.focus()},120)}}
+function closeComplaintBox(){var o=document.getElementById('srComplaintOverlay');if(o){o.classList.remove('open');document.body.style.overflow=''}}
+function submitComplaint(e){e.preventDefault();var type=document.getElementById('srComplaintType').value,name=document.getElementById('srComplaintName').value.trim(),phone=document.getElementById('srComplaintPhone').value.trim(),text=document.getElementById('srComplaintText').value.trim();if(!text)return;var msg='🛡️ SeiRokom Fashion — অভিযোগ / মতামত\n\nবিষয়: '+type+'\nনাম: '+(name||'উল্লেখ করেননি')+'\nমোবাইল: '+(phone||'উল্লেখ করেননি')+'\n\nবিস্তারিত:\n'+text+'\n\nআমি SeiRokom Fashion-এর কাছে এই অভিযোগ/মতামত জানাচ্ছি।';window.open('https://wa.me/8801645008919?text='+encodeURIComponent(msg),'_blank','noopener');closeComplaintBox();}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplaintBox()});
+</script>
 </body>
 </html>
