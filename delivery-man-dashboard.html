@@ -23,7 +23,10 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 .trust-pills span{background:#fff;border:1px solid #eadfca;border-radius:999px;padding:5px 10px;font-size:.64rem;color:#5c5344;font-weight:600;white-space:nowrap}
 @media(max-width:600px){.verified-card{flex-direction:column;align-items:flex-start}}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.split iframe{width:100%;height:900px;border:1px solid #eadfca;border-radius:14px;background:#fff}@media(max-width:760px){.split{grid-template-columns:1fr}}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.split iframe{width:100%;height:900px;border:1px solid #f0dfa8;border-radius:14px;background:#fff}@media(max-width:760px){.split{grid-template-columns:1fr}}
+
+.promo-panel{background:linear-gradient(-45deg,#20180e,#a97922,#e9cd8b,#3a2811);background-size:300% 300%;animation:promoShift 8s ease infinite;border:1px solid #a97922;box-shadow:0 10px 30px rgba(48,36,18,.25)}
+@keyframes promoShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 </style><script>window.PARTNER_TYPE='delivery';</script></head><body>
 <header class="top"><div class="wrap"><div class="brand"><div class="logo">🚚</div><div><h1>ডেলিভারি ম্যান ড্যাশবোর্ড</h1><p class="sub">অ্যাসাইনমেন্ট, ডেলিভারি স্ট্যাটাস ও ডেলিভারি হিসাব</p></div></div><a class="back" href="index.html">← SeiRokom Fashion-এ ফিরে যান</a><button id="logout-btn" class="back" style="display:none;border:0;cursor:pointer;">🚪 লগআউট</button></div></header><div id="auth-gate" class="auth-wrap"><div class="auth-card">
 <h2>🔐 ডেলিভারি ম্যান লগইন</h2>
@@ -44,7 +47,7 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 </form>
 <p id="toggle-login" class="auth-switch" style="display:none;">আগে থেকে অ্যাকাউন্ট আছে? <a href="#" id="show-login">লগইন করুন</a></p>
 </div></div>
-<main class="wrap" id="dashboard-app" style="display:none"><div class="verified-card"><div class="verified-badge"><div class="vb-icon">✅</div><div><b>Verified Delivery Partner</b><small>পার্টনার আইডি: <span id="live-partner-id">লোড হচ্ছে...</span></small></div></div><div class="trust-pills"><span>📝 লিখিত চুক্তি</span><span>💰 নিয়মিত পেমেন্ট</span><span>📞 ২৪ ঘণ্টা রেসপন্স</span><span>🔄 সহজ শর্তে প্রস্থান</span></div></div><div class="grid"><div class="stat"><b id="stat-1">0</b><span>নতুন অ্যাসাইনমেন্ট</span></div><div class="stat"><b id="stat-2">0</b><span>আজকের ডেলিভারি</span></div><div class="stat"><b id="stat-3">0</b><span>সম্পন্ন</span></div><div class="stat"><b id="stat-4">৳0</b><span>ডেলিভারি আয়</span></div></div><section class="panel"><h2>➕ নতুন এন্ট্রি যোগ করুন</h2>
+<main class="wrap" id="dashboard-app" style="display:none"><div class="verified-card"><div class="verified-badge"><div class="vb-icon">✅</div><div><b>Verified Delivery Man</b><small>পার্টনার আইডি: <span id="live-partner-id">লোড হচ্ছে...</span></small></div></div><div class="trust-pills"><span>📝 লিখিত চুক্তি</span><span>💰 নিয়মিত পেমেন্ট</span><span>📞 ২৪ ঘণ্টা রেসপন্স</span><span>🔄 সহজ শর্তে প্রস্থান</span></div></div><div class="grid"><div class="stat"><b id="stat-1">0</b><span>নতুন অ্যাসাইনমেন্ট</span></div><div class="stat"><b id="stat-2">0</b><span>আজকের ডেলিভারি</span></div><div class="stat"><b id="stat-3">0</b><span>সম্পন্ন</span></div><div class="stat"><b id="stat-4">৳0</b><span>ডেলিভারি আয়</span></div></div><section class="panel"><h2>➕ নতুন এন্ট্রি যোগ করুন</h2>
 <div id="entry-ok" class="entry-ok">✅ সফলভাবে যোগ হয়েছে!</div>
 <form id="entryForm" style="display:grid;gap:10px;">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -62,11 +65,11 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 </form>
 </section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards"><div class="action"><b>📍 অ্যাসাইনমেন্ট</b><small>আপনার জন্য নির্ধারিত ডেলিভারি দেখুন</small><button class="btn gold" type="button" onclick="quickAction('view')">অ্যাসাইনমেন্ট দেখুন</button></div><div class="action"><b>🚚 ডেলিভারি আপডেট</b><small>Picked / On the way / Delivered স্ট্যাটাস দিন</small><button class="btn " type="button" onclick="quickAction('entry')">স্ট্যাটাস আপডেট</button></div><div class="action"><b>💵 আয় হিসাব</b><small>ডেলিভারি চার্জ/কমিশনের হিসাব দেখুন</small><button class="btn " type="button" onclick="quickAction('report')">হিসাব দেখুন</button></div></div></section>
 <section class="panel"><h2>📋 সাম্প্রতিক তথ্য</h2><table class="table"><thead><tr><th>আইডি</th><th>নাম/এলাকা</th><th>স্ট্যাটাস</th><th>পরিমাণ</th></tr></thead><tbody id="live-tbody"><tr><td colspan="4" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table></section>
-<section class="panel"><h2>🛵 ডেলিভারির পাশাপাশি বাড়তি আয় করুন — প্রতি সেলে ৫-১০% কমিশন</h2>
-<p style="font-size:.78rem;color:#5c5344;line-height:1.8;margin-bottom:12px;">আপনি তো এমনিতেই প্রতিদিন এলাকায় ঘোরেন, মানুষের সাথে আপনার পরিচয় ও বিশ্বাস আছে — এবার সেটাকেই বাড়তি আয়ে রূপ দিন। বাম পাশে ডেলিভারি পার্টনার প্রোগ্রামের বিস্তারিত দেখুন, আর ডান পাশের ফর্মে স্বাক্ষর করে সরাসরি আপনার পার্টনার অ্যাকাউন্ট খুলে ফেলুন।</p>
+<section class="panel promo-panel"><h2 style="color:#fff8e6;">🛵 ডেলিভারির পাশাপাশি বাড়তি আয় করুন — প্রতি সেলে ২-৫% কমিশন</h2>
+<p style="font-size:.78rem;color:#f3ead4;line-height:1.8;margin-bottom:12px;">আপনি তো এমনিতেই প্রতিদিন এলাকায় ঘোরেন, মানুষের সাথে আপনার পরিচয় ও বিশ্বাস আছে — এবার সেটাকেই বাড়তি আয়ে রূপ দিন। বাম পাশে ডেলিভারি ম্যান প্রোগ্রামের বিস্তারিত দেখুন, আর ডান পাশের ফর্মে স্বাক্ষর করে সরাসরি আপনার পার্টনার অ্যাকাউন্ট খুলে ফেলুন।</p>
 <div class="split">
-<iframe src="delivery-partner.html" title="ডেলিভারি পার্টনার প্রোগ্রাম"></iframe>
-<iframe src="delivery-partner-agreement.html" title="ডেলিভারি পার্টনার এগ্রিমেন্ট — অ্যাকাউন্ট খোলার ফর্ম"></iframe>
+<iframe src="delivery-partner.html" title="ডেলিভারি ম্যান প্রোগ্রাম"></iframe>
+<iframe src="delivery-partner-agreement.html" title="ডেলিভারি ম্যান এগ্রিমেন্ট — অ্যাকাউন্ট খোলার ফর্ম"></iframe>
 </div>
 </section>
 <section class="panel"><div class="note">✅ লাইভ অর্ডার, কমিশন ও ইউজার লগইন Firebase-এর মাধ্যমে সচল আছে। লগইন করে উপরের ফর্ম থেকে এন্ট্রি যোগ করলে তা সাথে সাথে এখানে দেখা যাবে।</div></section></main>
