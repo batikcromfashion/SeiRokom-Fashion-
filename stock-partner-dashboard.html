@@ -63,9 +63,9 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 <button type="submit" class="btn gold" style="padding:13px;font-size:.85rem;">➕ যোগ করুন</button>
 </form>
 </section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards">
-<div class="action"><b>📦 আমার স্টক</b><small>জমা দেওয়া পণ্যের তালিকা ও অবস্থা দেখুন</small><button class="btn gold" type="button" onclick="demoAction('আমার স্টক')">স্টক দেখুন</button></div>
-<div class="action"><b>💰 লাভের হিসাব</b><small>বিক্রি অনুযায়ী ৫০-৫০ ভাগের হিসাব দেখুন</small><button class="btn" type="button" onclick="demoAction('লাভের হিসাব')">হিসাব দেখুন</button></div>
-<div class="action"><b>🔁 রিটার্ন/অবিক্রিত</b><small>৩০ দিনে অবিক্রিত পণ্যের রিটার্ন স্ট্যাটাস</small><button class="btn" type="button" onclick="demoAction('রিটার্ন/অবিক্রিত')">স্ট্যাটাস দেখুন</button></div>
+<div class="action"><b>📦 আমার স্টক</b><small>জমা দেওয়া পণ্যের তালিকা ও অবস্থা দেখুন</small><button class="btn gold" type="button" onclick="quickAction('view')">স্টক দেখুন</button></div>
+<div class="action"><b>💰 লাভের হিসাব</b><small>বিক্রি অনুযায়ী ৫০-৫০ ভাগের হিসাব দেখুন</small><button class="btn" type="button" onclick="quickAction('report')">হিসাব দেখুন</button></div>
+<div class="action"><b>🔁 রিটার্ন/অবিক্রিত</b><small>৩০ দিনে অবিক্রিত পণ্যের রিটার্ন স্ট্যাটাস</small><button class="btn" type="button" onclick="quickAction('view')">স্ট্যাটাস দেখুন</button></div>
 </div></section>
 
 <section class="panel"><h2>🤝 স্টক পার্টনার হলে কেন লাভবান হবেন</h2>
@@ -88,6 +88,6 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 
 <section class="panel"><h2>📋 সাম্প্রতিক তথ্য</h2><table class="table"><thead><tr><th>আইডি</th><th>নাম/পণ্য</th><th>স্ট্যাটাস</th><th>পরিমাণ</th></tr></thead><tbody id="live-tbody"><tr><td colspan="4" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table></section>
 
-<section class="panel"><div class="note">ℹ️ ড্যাশবোর্ডের কাঠামো আলাদা করা হয়েছে। লাইভ স্টক, বিক্রি, লাভের হিসাব ও ইউজার লগইন চালু করতে Firebase/ব্যাকএন্ড সংযোগ প্রয়োজন হবে।</div></section>
+<section class="panel"><div class="note">✅ লাইভ বিক্রি, লাভের হিসাব ও ইউজার লগইন Firebase-এর মাধ্যমে সচল আছে। লগইন করে উপরের ফর্ম থেকে এন্ট্রি যোগ করলে তা সাথে সাথে এখানে দেখা যাবে।</div></section>
 </main>
-<script>function demoAction(name){alert(name+' — মডিউল প্রস্তুত। লাইভ ডেটা সংযোগ হলে এখান থেকেই কাজ করা যাবে।');}</script><script type="module" src="firebase-partner.js"></script></body></html>
+<script type="module" src="firebase-partner.js"></script></body></html>

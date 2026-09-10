@@ -60,7 +60,7 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 </select>
 <button type="submit" class="btn gold" style="padding:13px;font-size:.85rem;">➕ যোগ করুন</button>
 </form>
-</section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards"><div class="action"><b>📍 অ্যাসাইনমেন্ট</b><small>আপনার জন্য নির্ধারিত ডেলিভারি দেখুন</small><button class="btn gold" type="button" onclick="demoAction('অ্যাসাইনমেন্ট')">অ্যাসাইনমেন্ট দেখুন</button></div><div class="action"><b>🚚 ডেলিভারি আপডেট</b><small>Picked / On the way / Delivered স্ট্যাটাস দিন</small><button class="btn " type="button" onclick="demoAction('ডেলিভারি আপডেট')">স্ট্যাটাস আপডেট</button></div><div class="action"><b>💵 আয় হিসাব</b><small>ডেলিভারি চার্জ/কমিশনের হিসাব দেখুন</small><button class="btn " type="button" onclick="demoAction('আয় হিসাব')">হিসাব দেখুন</button></div></div></section>
+</section><section class="panel"><h2>⚡ দ্রুত কাজ</h2><div class="cards"><div class="action"><b>📍 অ্যাসাইনমেন্ট</b><small>আপনার জন্য নির্ধারিত ডেলিভারি দেখুন</small><button class="btn gold" type="button" onclick="quickAction('view')">অ্যাসাইনমেন্ট দেখুন</button></div><div class="action"><b>🚚 ডেলিভারি আপডেট</b><small>Picked / On the way / Delivered স্ট্যাটাস দিন</small><button class="btn " type="button" onclick="quickAction('entry')">স্ট্যাটাস আপডেট</button></div><div class="action"><b>💵 আয় হিসাব</b><small>ডেলিভারি চার্জ/কমিশনের হিসাব দেখুন</small><button class="btn " type="button" onclick="quickAction('report')">হিসাব দেখুন</button></div></div></section>
 <section class="panel"><h2>📋 সাম্প্রতিক তথ্য</h2><table class="table"><thead><tr><th>আইডি</th><th>নাম/এলাকা</th><th>স্ট্যাটাস</th><th>পরিমাণ</th></tr></thead><tbody id="live-tbody"><tr><td colspan="4" style="text-align:center;color:#9a917f;">লগইন করুন</td></tr></tbody></table></section>
 <section class="panel"><h2>🛵 ডেলিভারির পাশাপাশি বাড়তি আয় করুন — প্রতি সেলে ৫-১০% কমিশন</h2>
 <p style="font-size:.78rem;color:#5c5344;line-height:1.8;margin-bottom:12px;">আপনি তো এমনিতেই প্রতিদিন এলাকায় ঘোরেন, মানুষের সাথে আপনার পরিচয় ও বিশ্বাস আছে — এবার সেটাকেই বাড়তি আয়ে রূপ দিন। বাম পাশে ডেলিভারি পার্টনার প্রোগ্রামের বিস্তারিত দেখুন, আর ডান পাশের ফর্মে স্বাক্ষর করে সরাসরি আপনার পার্টনার অ্যাকাউন্ট খুলে ফেলুন।</p>
@@ -69,5 +69,5 @@ main{padding:18px 12px 40px}.grid{display:grid;grid-template-columns:repeat(4,1f
 <iframe src="delivery-partner-agreement.html" title="ডেলিভারি পার্টনার এগ্রিমেন্ট — অ্যাকাউন্ট খোলার ফর্ম"></iframe>
 </div>
 </section>
-<section class="panel"><div class="note">ℹ️ ড্যাশবোর্ডের কাঠামো আলাদা করা হয়েছে। লাইভ অর্ডার, কমিশন, ডেলিভারি স্ট্যাটাস ও ইউজার লগইন চালু করতে Firebase/ব্যাকএন্ড সংযোগ প্রয়োজন হবে।</div></section></main>
-<script>function demoAction(name){alert(name+' — মডিউল প্রস্তুত। লাইভ ডেটা সংযোগ হলে এখান থেকেই কাজ করা যাবে।');}</script><script type="module" src="firebase-partner.js"></script></body></html>
+<section class="panel"><div class="note">✅ লাইভ অর্ডার, কমিশন ও ইউজার লগইন Firebase-এর মাধ্যমে সচল আছে। লগইন করে উপরের ফর্ম থেকে এন্ট্রি যোগ করলে তা সাথে সাথে এখানে দেখা যাবে।</div></section></main>
+<script type="module" src="firebase-partner.js"></script></body></html>

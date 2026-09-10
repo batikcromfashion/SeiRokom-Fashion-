@@ -146,6 +146,8 @@ function wireEntryForm() {
 }
 
 // ---------- Live stats + table ----------
+let lastStats = {};
+
 async function loadStats(uid) {
   if (TYPE === "delivery") {
     const q = query(collection(db, "deliveries"), where("deliveryManId", "==", uid));
@@ -163,6 +165,7 @@ async function loadStats(uid) {
     setText("stat-2", activeToday);
     setText("stat-3", delivered);
     setText("stat-4", "৳" + earning);
+    lastStats = { assigned, activeToday, delivered, earning };
     renderTable(rows);
   } else {
     const q = query(collection(db, "orders"), where("partnerId", "==", uid));
@@ -178,6 +181,7 @@ async function loadStats(uid) {
       commissionSum += (o.commission || 0);
       rows.push({ id: d.id, name: o.customerName || "-", status: o.status || "-", amount: o.amount || 0, ts: o.createdAt || 0 });
     });
+    lastStats = { total: snap.size, pending, processing, completed, amountSum, commissionSum };
     if (TYPE === "dealer") {
       setText("stat-1", snap.size);
       setText("stat-2", pending);
@@ -196,6 +200,52 @@ async function loadStats(uid) {
     renderTable(rows);
   }
 }
+
+// ---------- Quick-action buttons (real Firestore data, no more demo alerts) ----------
+function buildReportText() {
+  const s = lastStats;
+  if (TYPE === "delivery") {
+    return "📊 আয়ের হিসাব\n\nঅ্যাসাইনড: " + (s.assigned || 0) +
+      "\nচলমান (Picked/On the way): " + (s.activeToday || 0) +
+      "\nডেলিভার্ড: " + (s.delivered || 0) +
+      "\nমোট আয়: ৳" + (s.earning || 0);
+  }
+  if (TYPE === "dealer") {
+    return "📊 বিক্রয় রিপোর্ট\n\nমোট অর্ডার: " + (s.total || 0) +
+      "\nপেন্ডিং: " + (s.pending || 0) +
+      "\nপ্রসেসিং: " + (s.processing || 0) +
+      "\nমোট বিক্রয় মূল্য: ৳" + (s.amountSum || 0);
+  }
+  if (TYPE === "dropship") {
+    return "📊 কমিশনের হিসাব\n\nপেন্ডিং: " + (s.pending || 0) +
+      "\nপ্রসেসিং: " + (s.processing || 0) +
+      "\nসম্পন্ন: " + (s.completed || 0) +
+      "\nমোট কমিশন: ৳" + (s.commissionSum || 0);
+  }
+  if (TYPE === "stock") {
+    return "📊 লাভের হিসাব\n\nসম্পন্ন বিক্রি: " + (s.completed || 0) +
+      "\nচলমান (পেন্ডিং+প্রসেসিং): " + ((s.pending || 0) + (s.processing || 0)) +
+      "\nমোট লাভের ভাগ: ৳" + (s.commissionSum || 0);
+  }
+  return "এখনো কোনো তথ্য নেই।";
+}
+
+window.quickAction = function (kind) {
+  if (!auth.currentUser) {
+    alert("এই তথ্য দেখতে আগে লগইন করুন।");
+    return;
+  }
+  if (kind === "view") {
+    const table = $("live-tbody");
+    const panel = table ? table.closest("section") : null;
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else if (kind === "entry") {
+    const form = $("entryForm");
+    if (form) form.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else if (kind === "report") {
+    alert(buildReportText());
+  }
+};
 
 function renderTable(rows) {
   const tbody = $("live-tbody");
