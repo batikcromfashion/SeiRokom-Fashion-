@@ -173,6 +173,7 @@ alt="" loading="lazy"></noscript>
   @media(max-width:860px){
     .nav-links{display:none;} .call-block{display:none;} .nav-search{display:none;}
     .btn-wa.hide-mobile{display:none;}
+    .srf-wish-link, .icon-btn{display:none !important;}
     .nav{ padding:10px 14px; gap:8px; }
     .brand-block{ gap:8px; }
     .brand-block .en{ display:block; }
@@ -2245,6 +2246,8 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
 <style id="sr-complaint-style">
 .hero-contact-stack{display:flex;flex-direction:column;align-items:stretch;gap:8px;flex:0 0 auto;min-width:180px}
 .hero-contact-stack .hero-youtube{min-width:180px}
+.hero-greeting-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:4px}
+.hero-greeting-row .hero-greeting{margin-bottom:0}
 .sr-complaint-btn{position:relative;min-height:42px;padding:8px 14px;border:1px solid rgba(255,255,255,.35);border-radius:22px;background:linear-gradient(135deg,#fff7d6,#ffd166,#ff9f68);color:#5a2600;font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(255,159,0,.22);transition:transform .2s ease,box-shadow .2s ease;overflow:hidden}
 .sr-complaint-btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px rgba(255,159,0,.32)}
 .sr-complaint-btn:after{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:srComplaintShine 3.8s infinite}
@@ -2583,6 +2586,8 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
     <a href="#products">প্রোডাক্ট</a>
     <a href="#reviews">রিভিউ</a>
     <a href="#contact">যোগাযোগ</a>
+    <a href="wishlist.html">🤍 উইশলিস্ট</a>
+    <a href="order-tracking.html">📦 অর্ডার ট্র্যাক করুন</a>
     <div class="m-search">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <input type="text" id="siteSearchMobile" placeholder="প্রোডাক্ট খুঁজুন..." autocomplete="off">
@@ -2614,12 +2619,14 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg>
             <span class="social-btn-text"><b>WhatsApp-এ যোগাযোগ করুন</b></span>
           </a>
-          <button type="button" class="sr-complaint-btn" onclick="openComplaintBox()" aria-label="অভিযোগ বা মতামত জানান">
-            <span aria-hidden="true">🛡️</span><span>অভিযোগ / মতামত জানান</span>
-          </button>
         </div>
       </div>
-      <div class="hero-greeting"><span class="rainbow-text">স্বাগতম ✦ Welcome</span></div>
+      <div class="hero-greeting-row">
+        <div class="hero-greeting"><span class="rainbow-text">স্বাগতম ✦ Welcome</span></div>
+        <button type="button" class="sr-complaint-btn" onclick="openComplaintBox()" aria-label="অভিযোগ বা মতামত জানান">
+          <span aria-hidden="true">🛡️</span><span>অভিযোগ / মতামত জানান</span>
+        </button>
+      </div>
       <h1>SeiRokom Fashion</h1>
       <p class="lede">সেই রকম ফ্যাশন একটি বাংলাদেশী ফ্যাশন ব্র্যান্ড যা পুরুষ, মহিলা ও শিশুদের জন্য স্টাইলিশ, আরামদায়ক এবং প্রিমিয়াম মানের পোশাক নিয়ে আসে।</p>
       <p class="lede">আমাদের সংগ্রহে শার্ট, টি-শার্ট, পোলো শার্ট, পাঞ্জাবি, বাচ্চাদের পোশাক, মহিলাদের পোশাক এবং আরও অনেক কিছু রয়েছে।</p>
@@ -4150,7 +4157,7 @@ function openTrustFallbackModal(detail){
       box.style.cssText='position:fixed;left:50%;bottom:100px;transform:translateX(-50%);z-index:2147483647;max-width:calc(100vw - 32px);width:340px;padding:16px 18px;border-radius:16px;background:#171717;color:#fff;border:1px solid rgba(255,215,100,.45);box-shadow:0 12px 35px rgba(0,0,0,.45);font:600 13.5px/1.65 "Hind Siliguri",Arial,sans-serif;text-align:left;';
       document.body.appendChild(box);
     }
-    box.innerHTML=html+'<div style="text-align:right;margin-top:10px"><button type="button" onclick="document.getElementById(\'srAppMsgBox\').remove()" style="border:0;border-radius:10px;padding:6px 12px;background:#333;color:#fff;font-weight:700;cursor:pointer">বন্ধ করুন ✕</button></div>';
+    box.innerHTML=html+'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px"><button type="button" onclick="document.getElementById(\'srAppMsgBox\').remove();srShare()" style="border:0;border-radius:10px;padding:6px 12px;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:800;cursor:pointer">📤 App Share করুন</button><button type="button" onclick="document.getElementById(\'srAppMsgBox\').remove()" style="border:0;border-radius:10px;padding:6px 12px;background:#333;color:#fff;font-weight:700;cursor:pointer">বন্ধ করুন ✕</button></div>';
     clearTimeout(window.__srAppMsgTimer);
     window.__srAppMsgTimer=setTimeout(function(){ if(box) box.remove(); },9000);
   }
