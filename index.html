@@ -2246,8 +2246,9 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
 <style id="sr-complaint-style">
 .hero-contact-stack{display:flex;flex-direction:column;align-items:stretch;gap:8px;flex:0 0 auto;min-width:180px}
 .hero-contact-stack .hero-youtube{min-width:180px}
-.hero-greeting-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:4px}
-.hero-greeting-row .hero-greeting{margin-bottom:0}
+.hero-greeting-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:8px;margin-bottom:4px}
+.hero-greeting-row .hero-greeting{margin-bottom:0;flex-shrink:0}
+.hero-greeting-row .sr-complaint-btn{flex:1;min-width:0;white-space:normal;display:flex;align-items:center;justify-content:center;gap:4px;text-align:center;line-height:1.25}
 .sr-complaint-btn{position:relative;min-height:42px;padding:8px 14px;border:1px solid rgba(255,255,255,.35);border-radius:22px;background:linear-gradient(135deg,#fff7d6,#ffd166,#ff9f68);color:#5a2600;font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(255,159,0,.22);transition:transform .2s ease,box-shadow .2s ease;overflow:hidden}
 .sr-complaint-btn:hover{transform:translateY(-2px);box-shadow:0 9px 24px rgba(255,159,0,.32)}
 .sr-complaint-btn:after{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:srComplaintShine 3.8s infinite}
