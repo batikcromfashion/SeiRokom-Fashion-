@@ -181,7 +181,18 @@ alt="" loading="lazy"></noscript>
     .nav-right{ gap:8px; }
   }
   @media(max-width:400px){
-    .btn-fb{ padding:7px 10px; font-size:0.7rem; gap:5px; min-height:46px; }
+    /* Mobile: keep the order button and cart fully visible side-by-side */
+    .nav{ padding-left:10px; padding-right:10px; gap:6px; }
+    .brand-block{ min-width:0; flex:1 1 auto; gap:6px; }
+    .brand-logo{ width:36px; height:36px; }
+    .brand-text{ min-width:0; overflow:hidden; }
+    .brand-text .bn{ font-size:.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .brand-text .en{ font-size:.46rem; letter-spacing:.6px; overflow:hidden; text-overflow:ellipsis; }
+    .nav-right{ flex:0 0 auto; gap:6px; min-width:0; }
+    .btn-fb{ flex:0 1 135px; min-width:0; max-width:135px; padding:7px 8px; font-size:0.68rem; gap:4px; min-height:44px; justify-content:center; }
+    .btn-fb .social-btn-text b{ font-size:.7rem; white-space:nowrap; }
+    .srf-cart-link{ width:34px !important; height:34px !important; flex:0 0 34px; }
+    .srf-cart-link svg{ width:17px !important; height:17px !important; }
   }
   @media(max-width:340px){
     .btn-fb span{ display:none; }
@@ -4621,6 +4632,7 @@ window.srCopyLink=function(forApp){
       <button type="button" class="sr-complaint-close" onclick="closeComplaintBox()" aria-label="বন্ধ করুন">×</button>
     </div>
     <div class="sr-complaint-note">যেকোনো ক্রয়, পণ্য, ডেলিভারি, পেমেন্ট, পার্টনার প্রোগ্রাম, আচরণ বা সেবাসংক্রান্ত অভিযোগ জানাতে পারেন। অভিযোগ করার জন্য কোনো নির্দিষ্ট কারণ বেছে নেওয়া বাধ্যতামূলক নয়।</div>
+    <div class="sr-complaint-note" style="margin-top:10px;border:1px solid rgba(201,162,74,.45);background:linear-gradient(135deg,rgba(201,162,74,.14),rgba(255,255,255,.04));color:#f7e6b0;font-weight:600;line-height:1.65;">🔒 <b>গোপনীয়তার নিশ্চয়তা:</b> অভিযোগকারীর তথ্য গোপন রাখা হবে। নির্ভয়ে, নির্দ্বিধায় অভিযোগ বা মতামত জানাতে পারেন। আমরা বিষয়টি যাচাই-বাছাই করে প্রয়োজনীয় পদক্ষেপ নেব ইনশাআল্লাহ।</div>
     <form class="sr-complaint-form" id="srComplaintForm" onsubmit="submitComplaint(event)">
       <label for="srComplaintType">অভিযোগ / বিষয়</label>
       <select id="srComplaintType"><option>সাধারণ অভিযোগ</option><option>পণ্য বা মান</option><option>অর্ডার বা ডেলিভারি</option><option>পেমেন্ট / কমিশন</option><option>পার্টনার প্রোগ্রাম</option><option>আচরণ / সেবা</option><option>অন্যান্য</option></select>
