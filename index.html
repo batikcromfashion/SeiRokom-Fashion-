@@ -2631,6 +2631,32 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
       <h1>SeiRokom Fashion</h1>
       <p class="lede">সেই রকম ফ্যাশন একটি বাংলাদেশী ফ্যাশন ব্র্যান্ড যা পুরুষ, মহিলা ও শিশুদের জন্য স্টাইলিশ, আরামদায়ক এবং প্রিমিয়াম মানের পোশাক নিয়ে আসে।</p>
       <p class="lede">আমাদের সংগ্রহে শার্ট, টি-শার্ট, পোলো শার্ট, পাঞ্জাবি, বাচ্চাদের পোশাক, মহিলাদের পোশাক এবং আরও অনেক কিছু রয়েছে।</p>
+      <div id="srHeroBanner" class="sr-hero-banner">
+        <div class="sr-hero-banner-track">
+          <div class="sr-hero-banner-slide active">🎉 নতুন কালেকশন — এখনই দেখুন সেরা অফার!</div>
+          <div class="sr-hero-banner-slide">🚚 ক্যাশ অন ডেলিভারি — সারা বাংলাদেশে</div>
+          <div class="sr-hero-banner-slide">🔄 ৭ দিনের সহজ রিটার্ন সুবিধা</div>
+          <div class="sr-hero-banner-slide">🤝 ড্রপশিপিং ও ডিলারশিপ পার্টনার নিচ্ছি — বিস্তারিত নিচে</div>
+        </div>
+      </div>
+      <style>
+        .sr-hero-banner{position:relative;margin:14px 0;min-height:38px;border-radius:10px;background:linear-gradient(135deg,#1c150b,#3a2811);border:1px solid rgba(255,215,100,.35);overflow:hidden;}
+        .sr-hero-banner-track{position:relative;height:38px;}
+        .sr-hero-banner-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 14px;font-size:.82rem;font-weight:700;color:#ffe7a0;text-align:center;opacity:0;transition:opacity .6s ease;}
+        .sr-hero-banner-slide.active{opacity:1;}
+      </style>
+      <script>
+        (function(){
+          var slides = document.querySelectorAll('#srHeroBanner .sr-hero-banner-slide');
+          if(!slides.length) return;
+          var i = 0;
+          setInterval(function(){
+            slides[i].classList.remove('active');
+            i = (i + 1) % slides.length;
+            slides[i].classList.add('active');
+          }, 3500);
+        })();
+      </script>
       
       <div class="connect-panel">
       <div class="social-follow-title">
