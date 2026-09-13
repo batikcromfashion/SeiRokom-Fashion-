@@ -200,9 +200,9 @@ body{
   @media(max-width:560px){ .prod-grid{grid-template-columns:1fr;} }
   .prod-card{ border:1px solid var(--border); border-radius:8px; overflow:hidden; transition:box-shadow .25s ease, transform .25s ease; }
   .prod-card:hover{ box-shadow:0 12px 28px rgba(0,0,0,0.08); transform:translateY(-3px); }
-  .prod-img{ aspect-ratio:1/1; background:repeating-linear-gradient(135deg, #f4f0e4, #f4f0e4 10px, #eee7d5 10px, #eee7d5 20px); display:flex; align-items:center; justify-content:center; position:relative; }
-  .prod-img svg{width:30%; height:30%; stroke:var(--gold-deep); fill:none; stroke-width:1.1; opacity:0.5;}
-  .prod-img .tag{ position:absolute; top:10px; left:10px; background:var(--white); border:1px dashed var(--gold-deep); color:var(--gold-deep); font-size:0.68rem; padding:4px 8px; border-radius:4px; }
+  .prod-img{ aspect-ratio:1/1; background:var(--black); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; position:relative; border:1px solid rgba(201,162,74,0.35); border-radius:10px; }
+  .prod-img svg{width:28%; height:28%; stroke:var(--gold); fill:none; stroke-width:1; opacity:0.55;}
+  .prod-img .tag{ position:static; background:transparent; border:none; color:#a8a196; font-size:0.75rem; padding:0; border-radius:0; }
   .prod-body{padding:16px 16px 18px;}
   .prod-body h4{font-size:1rem; margin-bottom:4px; font-family:'Hind Siliguri',sans-serif; font-weight:600;}
   .prod-body .price{ display:flex; align-items:baseline; gap:8px; margin-bottom:12px; }
