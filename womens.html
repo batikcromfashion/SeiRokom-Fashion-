@@ -208,11 +208,11 @@ body{
   .prod-body .price{ display:flex; align-items:baseline; gap:8px; margin-bottom:12px; }
   .price-new{ font-size:1.1rem; font-weight:700; color:var(--gold-deep); }
   .price-old{ font-size:0.8rem; color:#a39c8c; text-decoration:line-through; }
-  .prod-actions{ display:flex; gap:8px; }
-  .prod-order{ flex:1; display:block; text-align:center; background:var(--black); color:var(--white); padding:10px; border-radius:5px; font-size:0.85rem; font-weight:600; }
+  .prod-actions{ display:flex; flex-wrap:wrap; gap:6px; }
+  .prod-order{ order:1; flex:1 1 100%; display:block; text-align:center; background:var(--black); color:var(--white); padding:10px; border-radius:5px; font-size:0.85rem; font-weight:600; }
   .prod-order:hover{background:var(--gold-deep);}
-  .prod-detail{ flex:1; display:block; text-align:center; background:#fff; color:var(--ink); border:1px solid var(--border); padding:9px; border-radius:5px; font-size:0.85rem; font-weight:600; }
-  .prod-detail:hover{ border-color:var(--gold-deep); color:var(--gold-deep); }
+  .prod-detail{ order:2; flex:0 0 auto; display:inline-block; text-align:center; background:transparent; color:var(--gold-deep); border:none; padding:4px 2px; border-radius:0; font-size:0.8rem; font-weight:600; text-decoration:underline; margin-left:auto; }
+  .prod-detail:hover{ color:var(--gold); }
   .prod-badge.discount{ right:10px; left:auto; background:#c0522b; }
   .prod-rating{ display:flex; align-items:center; gap:6px; font-size:0.76rem; color:var(--gold-deep); margin-bottom:6px; }
   .prod-rating .stars{ letter-spacing:1px; }
