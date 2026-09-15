@@ -114,6 +114,13 @@ body{
   /* ---------- header ---------- */
   header{ position:sticky; top:0; z-index:50; background:var(--black); }
   .nav{ display:flex; align-items:center; justify-content:space-between; padding:12px 24px; max-width:var(--maxw); margin:0 auto; gap:20px; }
+  .nav-right{ flex-shrink:0; }
+  @media(max-width:420px){
+    .nav{ padding:10px 14px; gap:10px; }
+    .nav-right{ gap:8px; }
+    .srf-wish-link, .srf-cart-link, .nav-right button{ width:34px !important; height:34px !important; }
+    .brand-text .bn{ font-size:0.95rem; }
+  }
   .brand-block{display:flex; align-items:center; gap:10px; flex-shrink:0;}
   .brand-logo{width:40px; height:40px; border-radius:50%; overflow:hidden; border:1px solid var(--gold); flex-shrink:0;}
   .brand-logo img{width:100%; height:100%; object-fit:cover;}
@@ -198,48 +205,38 @@ body{
   .prod-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   @media(max-width:860px){ .prod-grid{grid-template-columns:repeat(2,1fr);} }
   @media(max-width:560px){ .prod-grid{grid-template-columns:1fr;} }
-  .prod-card{ border:1px solid var(--border); border-radius:8px; overflow:hidden; transition:box-shadow .25s ease, transform .25s ease; }
+  .prod-card{ border:1px solid rgba(201,162,74,0.25); border-radius:8px; overflow:hidden; transition:box-shadow .25s ease, transform .25s ease; }
   .prod-card:hover{ box-shadow:0 12px 28px rgba(0,0,0,0.08); transform:translateY(-3px); }
   .prod-img{ aspect-ratio:1/1; background:var(--black); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; position:relative; border:1px solid rgba(201,162,74,0.35); border-radius:10px; }
   .prod-img svg{width:28%; height:28%; stroke:var(--gold); fill:none; stroke-width:1; opacity:0.55;}
   .prod-img .tag{ position:static; background:transparent; border:none; color:#a8a196; font-size:0.75rem; padding:0; border-radius:0; }
-  .prod-body{padding:16px 16px 18px;}
-  .prod-body h4{font-size:1rem; margin-bottom:4px; font-family:'Hind Siliguri',sans-serif; font-weight:600;}
-  .prod-body .price{ display:flex; align-items:baseline; gap:8px; margin-bottom:12px; }
-  .price-new{ font-size:1.1rem; font-weight:700; color:var(--gold-deep); }
-  .price-old{ font-size:0.8rem; color:#a39c8c; text-decoration:line-through; }
-  .prod-actions{ display:flex; flex-wrap:wrap; gap:6px; }
-  .prod-order{ order:1; flex:1 1 100%; display:block; text-align:center; padding:10px; border-radius:5px; font-size:0.85rem; font-weight:600; position:relative; z-index:0; overflow:hidden; border:none; }
-  .prod-detail{ order:2; flex:0 0 auto; display:inline-block; text-align:center; padding:6px 14px; border-radius:16px; font-size:0.78rem; font-weight:700; text-decoration:none; margin-left:auto; position:relative; z-index:0; overflow:hidden; border:none; }
-
-  @keyframes prodBgFlow{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-  @keyframes prodTextColor{ 0%{color:#151008;} 33%{color:#3a2e12;} 66%{color:#5a4419;} 100%{color:#151008;} }
-
-  .prod-cart, .prod-wish, .prod-sizeguide, .prod-order{ position:relative; z-index:0; overflow:hidden; border:none; }
-  .prod-cart::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#3b6cf0,#8ab4ff,#1e42b3,#8ab4ff,#3b6cf0); background-size:300% 300%; animation:prodBgFlow 6s ease infinite; }
-  .prod-sizeguide::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#2f8fed,#a6d4ff,#1a5fb3,#a6d4ff,#2f8fed); background-size:300% 300%; animation:prodBgFlow 6s ease infinite; }
-  .prod-order::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#e6b800,#fff2a8,#c99a00,#fff2a8,#e6b800); background-size:300% 300%; animation:prodBgFlow 6s ease infinite; }
-  .prod-detail::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#e63946,#ff8a80,#b3261e,#ff8a80,#e63946); background-size:300% 300%; animation:prodBgFlow 6s ease infinite; }
-  .prod-wish::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#ec4899,#ffb6d9,#c2185b,#ffb6d9,#ec4899); background-size:300% 300%; animation:prodBgFlow 6s ease infinite; }
-
-  .prod-cart, .prod-wish, .prod-sizeguide, .prod-order, .prod-detail{
-    color:#151008;
-    -webkit-text-fill-color:#151008;
-    font-weight:700;
-    animation:prodTextColor 4s ease infinite;
-  }
-  @media (prefers-reduced-motion: reduce){
-    .prod-cart::before, .prod-wish::before, .prod-sizeguide::before, .prod-order::before, .prod-detail::before,
-    .prod-cart, .prod-wish, .prod-sizeguide, .prod-order, .prod-detail{ animation:none; }
-  }
-
-  @keyframes prodBodyFlow{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-  .prod-body{
-    background:linear-gradient(120deg,#f6e7c9,#eadcf6,#d9f2e3,#fbe0e6,#cde7fb,#fef3c7,#e0f2e9,#f5d0d0,#d7e3fc);
-    background-size:400% 400%;
-    animation:prodBodyFlow 14s ease infinite;
-  }
-  @media (prefers-reduced-motion: reduce){ .prod-body{ animation:none; } }
+  .prod-body{ padding:16px 16px 18px; background:#0d0d0d; }
+  .prod-body h4{ font-size:1.15rem; margin-bottom:6px; font-family:'Hind Siliguri',sans-serif; font-weight:600; color:var(--gold-light); }
+  .prod-body .price{ display:flex; align-items:baseline; gap:10px; margin-bottom:10px; }
+  .price-new{ font-size:1.3rem; font-weight:700; color:var(--gold-light); }
+  .price-old{ font-size:0.85rem; color:#8a857a; text-decoration:line-through; }
+  .prod-rating{ color:#cfc9bd; }
+  .prod-rating .stars{ color:var(--gold); }
+  .prod-sold{ color:#e9834a; }
+  .prod-desc{ font-size:0.9rem; color:#cfc9bd; margin:8px 0 14px; line-height:1.6; }
+  .prod-label{ display:block; font-size:0.82rem; color:#cfc9bd; margin:12px 0 6px; }
+  .prod-color-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
+  .prod-color-btn{ width:28px; height:28px; border-radius:50%; border:2px solid rgba(255,255,255,0.25); cursor:pointer; padding:0; }
+  .prod-color-btn.active{ border-color:var(--gold-light); box-shadow:0 0 0 2px rgba(201,162,74,0.4); }
+  .prod-size-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .prod-size-btn{ padding:8px 14px; border-radius:8px; border:1px solid rgba(201,162,74,0.35); background:transparent; color:var(--cream); font-size:0.85rem; cursor:pointer; font-family:inherit; }
+  .prod-size-btn.active{ background:var(--gold); color:#0d0d0d; border-color:var(--gold); font-weight:600; }
+  .prod-sizeguide-link{ font-size:0.78rem; color:#a8a196; text-decoration:underline; background:none; border:none; cursor:pointer; padding:0; margin:8px 0 4px; display:inline-block; }
+  .prod-qty-row{ display:flex; align-items:center; gap:14px; margin:14px 0 16px; }
+  .prod-qty-box{ display:flex; align-items:center; gap:10px; }
+  .prod-qty-box span{ color:var(--cream); font-size:1rem; }
+  .prod-qty-box button{ width:32px; height:32px; border-radius:50%; border:1px solid var(--gold); background:transparent; color:var(--gold-light); font-size:1.1rem; cursor:pointer; line-height:1; }
+  .prod-cta-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; margin-bottom:10px; }
+  .prod-btn-gold{ flex:1; min-width:120px; text-align:center; padding:13px; border-radius:30px; font-weight:700; border:none; cursor:pointer; font-size:0.92rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:#0d0d0d; }
+  .prod-btn-outline{ flex:1; min-width:120px; text-align:center; padding:12px; border-radius:30px; font-weight:700; border:1px solid rgba(201,162,74,0.5); background:transparent; color:var(--gold-light); cursor:pointer; font-size:0.88rem; }
+  .prod-row2{ display:flex; gap:10px; align-items:center; }
+  .prod-btn-wa{ flex:1; text-align:center; padding:13px; border-radius:30px; font-weight:700; background:#25D366; color:#fff; font-size:0.92rem; display:block; }
+  .prod-heart-btn{ width:44px; height:44px; flex:none; border-radius:50%; border:1px solid rgba(201,162,74,0.4); background:transparent; color:var(--gold-light); font-size:1.1rem; cursor:pointer; }
   .prod-badge.discount{ right:10px; left:auto; background:#c0522b; }
   .prod-rating{ display:flex; align-items:center; gap:6px; font-size:0.76rem; color:var(--gold-deep); margin-bottom:6px; }
   .prod-rating .stars{ letter-spacing:1px; }
@@ -456,14 +453,14 @@ body{
         <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .7 3a2 2 0 01-.4 2.1L8 10.3a16 16 0 006 6l1.5-1.5a2 2 0 012.1-.4c1 .4 2 .6 3 .7a2 2 0 011.4 2.1z"/></svg>
         <div><b>01645-008919</b></div>
       </div>
-      <a href="wishlist.html" class="srf-wish-link" aria-label="উইশলিস্ট" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);margin-right:4px;">
+      <a href="wishlist.html" class="srf-wish-link" aria-label="উইশলিস্ট" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);">
         <svg viewBox="0 0 24 24" width="19" height="19" stroke="#e9cd8b" fill="none" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
         <span class="srf-wish-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#c9a24a;color:#111;font-size:0.65rem;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;padding:0 3px;">0</span>
       </a>
-      <button type="button" onclick="openSizeGuide('men')" aria-label="সাইজ গাইড" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;margin-right:4px;cursor:pointer;">
+      <button type="button" onclick="openSizeGuide('men')" aria-label="সাইজ গাইড" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;cursor:pointer;">
         <svg viewBox="0 0 24 24" width="19" height="19" stroke="#e9cd8b" fill="none" stroke-width="1.8"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M7 7v3M11 7v3M15 7v3M19 7v3"/></svg>
       </button>
-      <a href="cart.html" class="srf-cart-link" aria-label="কার্ট" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);margin-right:4px;">
+      <a href="cart.html" class="srf-cart-link" aria-label="কার্ট" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="#e9cd8b" fill="none" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
         <span class="srf-cart-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#c9a24a;color:#111;font-size:0.65rem;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;padding:0 3px;">0</span>
       </a>
@@ -494,19 +491,19 @@ body{
     <div class="prod-grid">
       <div class="prod-card">
         <div class="prod-img"><span class="prod-badge discount">26% ছাড়</span><span class="tag">ছবি বসবে</span><svg viewBox="0 0 24 24"><path d="M8 3l4 3 4-3 3 4-2 2v11H5V9L3 7l5-4z"/></svg></div>
-        <div class="prod-body"><h4>পোলো টি-শার্ট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৮ (128 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ৮৫০</span><span class="price-old">৳ ১,১৫০</span></div><div class="prod-sold">🔥 ৫০০+ জন কিনেছেন</div><div class="prod-actions"><a class="prod-detail" href="product-polo-tshirt.html">বিস্তারিত দেখুন</a><a class="prod-order" href="https://wa.me/8801645008919?text=%E0%A6%AA%E0%A7%8B%E0%A6%B2%E0%A7%8B%20%E0%A6%9F%E0%A6%BF-%E0%A6%B6%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">অর্ডার করুন</a><button type="button" class="prod-cart" onclick="addToCart('new-collection-1', 'পোলো টি-শার্ট (নতুন)', 850)" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:24px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;">🛒 কার্টে যোগ করুন</button><div style="display:flex;gap:8px;align-items:center;"><button type="button" class="prod-wish" data-wishlist-id="new-collection-1" onclick="toggleWishlist('new-collection-1', 'পোলো টি-শার্ট (নতুন)', 850)" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;margin-top:6px;">❤️</button><button type="button" class="prod-sizeguide" onclick="openSizeGuide('men')" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;border-radius:18px;font-size:0.72rem;cursor:pointer;margin-top:6px;">📏 সাইজ গাইড</button></div></div></div>
+        <div class="prod-body"><h4>পোলো টি-শার্ট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৮ (128 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ৮৫০</span><span class="price-old">৳ ১,১৫০</span></div><div class="prod-sold">🔥 ৫০০+ জন কিনেছেন</div><div class="prod-desc">প্রিমিয়াম কটন দিয়ে তৈরি আরামদায়ক পোলো টি-শার্ট — নিয়মিত ব্যবহার ও ক্যাজুয়াল আউটিং, দুই জায়গাতেই মানানসই।</div><label class="prod-label">সাইজ বাছাই করুন</label><div class="prod-size-row"><button type="button" class="prod-size-btn active">S</button><button type="button" class="prod-size-btn">M</button><button type="button" class="prod-size-btn">L</button><button type="button" class="prod-size-btn">XL</button><button type="button" class="prod-size-btn">XXL</button></div><button type="button" class="prod-sizeguide-link" onclick="openSizeGuide('men')">📏 সাইজ গাইড দেখুন</button><label class="prod-label">রঙ বাছাই করুন</label><div class="prod-color-row"><button type="button" class="prod-color-btn active" style="background:#111111;" aria-label="কালো"></button><button type="button" class="prod-color-btn" style="background:#ffffff;" aria-label="সাদা"></button><button type="button" class="prod-color-btn" style="background:#c9a24a;" aria-label="গোল্ড"></button></div><div class="prod-qty-row"><span class="prod-label" style="margin:0;">পরিমাণ</span><div class="prod-qty-box"><button type="button" onclick="changeCardQty('new-collection-1',-1)">−</button><span id="qty-new-collection-1">1</span><button type="button" onclick="changeCardQty('new-collection-1',1)">+</button></div></div><div class="prod-cta-row"><button type="button" class="prod-btn-gold" onclick="addToCart('new-collection-1', 'পোলো টি-শার্ট (নতুন)', 850)">এখনই কিনুন</button><button type="button" class="prod-btn-outline" onclick="addToCart('new-collection-1', 'পোলো টি-শার্ট (নতুন)', 850)">🛒 কার্টে যোগ করুন</button></div><div class="prod-row2"><a class="prod-btn-wa" href="https://wa.me/8801645008919?text=%E0%A6%AA%E0%A7%8B%E0%A6%B2%E0%A7%8B%20%E0%A6%9F%E0%A6%BF-%E0%A6%B6%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a><button type="button" class="prod-heart-btn" data-wishlist-id="new-collection-1" onclick="toggleWishlist('new-collection-1', 'পোলো টি-শার্ট (নতুন)', 850)">♡</button></div></div>
       </div>
       <div class="prod-card">
         <div class="prod-img"><span class="prod-badge discount">25% ছাড়</span><span class="tag">ছবি বসবে</span><svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2-1.5 3 0 5-3 1-5 4-5 8v5h10v-5c0-4-2-7-5-8 1.5-2 1.5-3 0-5z"/></svg></div>
-        <div class="prod-body"><h4>লেডিস ৩ পিস (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৬ (94 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ১,৩৮০</span><span class="price-old">৳ ১,৮৫০</span></div><div class="prod-sold">🔥 ৩৫০+ জন কিনেছেন</div><div class="prod-actions"><a class="prod-detail" href="product-ladies-3-piece.html">বিস্তারিত দেখুন</a><a class="prod-order" href="https://wa.me/8801645008919?text=%E0%A6%B2%E0%A7%87%E0%A6%A1%E0%A6%BF%E0%A6%B8%20%E0%A7%A9%20%E0%A6%AA%E0%A6%BF%E0%A6%B8%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">অর্ডার করুন</a><button type="button" class="prod-cart" onclick="addToCart('new-collection-2', 'লেডিস ৩ পিস (নতুন)', 1380)" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:24px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;">🛒 কার্টে যোগ করুন</button><div style="display:flex;gap:8px;align-items:center;"><button type="button" class="prod-wish" data-wishlist-id="new-collection-2" onclick="toggleWishlist('new-collection-2', 'লেডিস ৩ পিস (নতুন)', 1380)" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;margin-top:6px;">❤️</button><button type="button" class="prod-sizeguide" onclick="openSizeGuide('men')" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;border-radius:18px;font-size:0.72rem;cursor:pointer;margin-top:6px;">📏 সাইজ গাইড</button></div></div></div>
+        <div class="prod-body"><h4>লেডিস ৩ পিস (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৬ (94 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ১,৩৮০</span><span class="price-old">৳ ১,৮৫০</span></div><div class="prod-sold">🔥 ৩৫০+ জন কিনেছেন</div><div class="prod-desc"></div><label class="prod-label">সাইজ বাছাই করুন</label><div class="prod-size-row"><button type="button" class="prod-size-btn active">S</button><button type="button" class="prod-size-btn">M</button><button type="button" class="prod-size-btn">L</button><button type="button" class="prod-size-btn">XL</button><button type="button" class="prod-size-btn">XXL</button></div><button type="button" class="prod-sizeguide-link" onclick="openSizeGuide('men')">📏 সাইজ গাইড দেখুন</button><label class="prod-label">রঙ বাছাই করুন</label><div class="prod-color-row"><button type="button" class="prod-color-btn active" style="background:#111111;" aria-label="কালো"></button><button type="button" class="prod-color-btn" style="background:#ffffff;" aria-label="সাদা"></button><button type="button" class="prod-color-btn" style="background:#c9a24a;" aria-label="গোল্ড"></button></div><div class="prod-qty-row"><span class="prod-label" style="margin:0;">পরিমাণ</span><div class="prod-qty-box"><button type="button" onclick="changeCardQty('new-collection-2',-1)">−</button><span id="qty-new-collection-2">1</span><button type="button" onclick="changeCardQty('new-collection-2',1)">+</button></div></div><div class="prod-cta-row"><button type="button" class="prod-btn-gold" onclick="addToCart('new-collection-2', 'লেডিস ৩ পিস (নতুন)', 1380)">এখনই কিনুন</button><button type="button" class="prod-btn-outline" onclick="addToCart('new-collection-2', 'লেডিস ৩ পিস (নতুন)', 1380)">🛒 কার্টে যোগ করুন</button></div><div class="prod-row2"><a class="prod-btn-wa" href="https://wa.me/8801645008919?text=%E0%A6%B2%E0%A7%87%E0%A6%A1%E0%A6%BF%E0%A6%B8%20%E0%A7%A9%20%E0%A6%AA%E0%A6%BF%E0%A6%B8%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a><button type="button" class="prod-heart-btn" data-wishlist-id="new-collection-2" onclick="toggleWishlist('new-collection-2', 'লেডিস ৩ পিস (নতুন)', 1380)">♡</button></div></div>
       </div>
       <div class="prod-card">
         <div class="prod-img"><span class="prod-badge discount">24% ছাড়</span><span class="tag">ছবি বসবে</span><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M7 21v-6a5 5 0 0110 0v6"/></svg></div>
-        <div class="prod-body"><h4>কিডস সেট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৯ (215 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ৬৫০</span><span class="price-old">৳ ৮৫০</span></div><div class="prod-sold">🔥 ৮০০+ জন কিনেছেন</div><div class="prod-actions"><a class="prod-detail" href="product-kids-set.html">বিস্তারিত দেখুন</a><a class="prod-order" href="https://wa.me/8801645008919?text=%E0%A6%95%E0%A6%BF%E0%A6%A1%E0%A6%B8%20%E0%A6%B8%E0%A7%87%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">অর্ডার করুন</a><button type="button" class="prod-cart" onclick="addToCart('new-collection-3', 'কিডস সেট (নতুন)', 650)" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:24px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;">🛒 কার্টে যোগ করুন</button><div style="display:flex;gap:8px;align-items:center;"><button type="button" class="prod-wish" data-wishlist-id="new-collection-3" onclick="toggleWishlist('new-collection-3', 'কিডস সেট (নতুন)', 650)" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;margin-top:6px;">❤️</button><button type="button" class="prod-sizeguide" onclick="openSizeGuide('men')" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;border-radius:18px;font-size:0.72rem;cursor:pointer;margin-top:6px;">📏 সাইজ গাইড</button></div></div></div>
+        <div class="prod-body"><h4>কিডস সেট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৯ (215 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ৬৫০</span><span class="price-old">৳ ৮৫০</span></div><div class="prod-sold">🔥 ৮০০+ জন কিনেছেন</div><div class="prod-desc">শিশুদের জন্য আরামদায়ক ও রঙিন সেট — সারাদিন খেলাধুলায় আরাম নিশ্চিত করবে।</div><label class="prod-label">সাইজ বাছাই করুন</label><div class="prod-size-row"><button type="button" class="prod-size-btn active">S</button><button type="button" class="prod-size-btn">M</button><button type="button" class="prod-size-btn">L</button><button type="button" class="prod-size-btn">XL</button><button type="button" class="prod-size-btn">XXL</button></div><button type="button" class="prod-sizeguide-link" onclick="openSizeGuide('men')">📏 সাইজ গাইড দেখুন</button><label class="prod-label">রঙ বাছাই করুন</label><div class="prod-color-row"><button type="button" class="prod-color-btn active" style="background:#111111;" aria-label="কালো"></button><button type="button" class="prod-color-btn" style="background:#ffffff;" aria-label="সাদা"></button><button type="button" class="prod-color-btn" style="background:#c9a24a;" aria-label="গোল্ড"></button></div><div class="prod-qty-row"><span class="prod-label" style="margin:0;">পরিমাণ</span><div class="prod-qty-box"><button type="button" onclick="changeCardQty('new-collection-3',-1)">−</button><span id="qty-new-collection-3">1</span><button type="button" onclick="changeCardQty('new-collection-3',1)">+</button></div></div><div class="prod-cta-row"><button type="button" class="prod-btn-gold" onclick="addToCart('new-collection-3', 'কিডস সেট (নতুন)', 650)">এখনই কিনুন</button><button type="button" class="prod-btn-outline" onclick="addToCart('new-collection-3', 'কিডস সেট (নতুন)', 650)">🛒 কার্টে যোগ করুন</button></div><div class="prod-row2"><a class="prod-btn-wa" href="https://wa.me/8801645008919?text=%E0%A6%95%E0%A6%BF%E0%A6%A1%E0%A6%B8%20%E0%A6%B8%E0%A7%87%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a><button type="button" class="prod-heart-btn" data-wishlist-id="new-collection-3" onclick="toggleWishlist('new-collection-3', 'কিডস সেট (নতুন)', 650)">♡</button></div></div>
       </div>
       <div class="prod-card">
         <div class="prod-img"><span class="prod-badge discount">24% ছাড়</span><span class="tag">ছবি বসবে</span><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></div>
-        <div class="prod-body"><h4>ডেনিম প্যান্ট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৫ (67 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ১,১০০</span><span class="price-old">৳ ১,৪৫০</span></div><div class="prod-sold">🔥 ২২০+ জন কিনেছেন</div><div class="prod-actions"><a class="prod-detail" href="product-denim-pant.html">বিস্তারিত দেখুন</a><a class="prod-order" href="https://wa.me/8801645008919?text=%E0%A6%A1%E0%A7%87%E0%A6%A8%E0%A6%BF%E0%A6%AE%20%E0%A6%AA%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">অর্ডার করুন</a><button type="button" class="prod-cart" onclick="addToCart('new-collection-4', 'ডেনিম প্যান্ট (নতুন)', 1100)" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:24px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;">🛒 কার্টে যোগ করুন</button><div style="display:flex;gap:8px;align-items:center;"><button type="button" class="prod-wish" data-wishlist-id="new-collection-4" onclick="toggleWishlist('new-collection-4', 'ডেনিম প্যান্ট (নতুন)', 1100)" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;margin-top:6px;">❤️</button><button type="button" class="prod-sizeguide" onclick="openSizeGuide('men')" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;border-radius:18px;font-size:0.72rem;cursor:pointer;margin-top:6px;">📏 সাইজ গাইড</button></div></div></div>
+        <div class="prod-body"><h4>ডেনিম প্যান্ট (নতুন)</h4><div class="prod-rating"><span class="stars">★★★★★</span><span>৪.৫ (67 রিভিউ)</span></div><div class="price"><span class="price-new">৳ ১,১০০</span><span class="price-old">৳ ১,৪৫০</span></div><div class="prod-sold">🔥 ২২০+ জন কিনেছেন</div><div class="prod-desc">টেকসই ডেনিম ফেব্রিকে তৈরি প্যান্ট, প্রতিদিনের ব্যবহারের জন্য পারফেক্ট ফিট।</div><label class="prod-label">সাইজ বাছাই করুন</label><div class="prod-size-row"><button type="button" class="prod-size-btn active">S</button><button type="button" class="prod-size-btn">M</button><button type="button" class="prod-size-btn">L</button><button type="button" class="prod-size-btn">XL</button><button type="button" class="prod-size-btn">XXL</button></div><button type="button" class="prod-sizeguide-link" onclick="openSizeGuide('men')">📏 সাইজ গাইড দেখুন</button><label class="prod-label">রঙ বাছাই করুন</label><div class="prod-color-row"><button type="button" class="prod-color-btn active" style="background:#111111;" aria-label="কালো"></button><button type="button" class="prod-color-btn" style="background:#ffffff;" aria-label="সাদা"></button><button type="button" class="prod-color-btn" style="background:#c9a24a;" aria-label="গোল্ড"></button></div><div class="prod-qty-row"><span class="prod-label" style="margin:0;">পরিমাণ</span><div class="prod-qty-box"><button type="button" onclick="changeCardQty('new-collection-4',-1)">−</button><span id="qty-new-collection-4">1</span><button type="button" onclick="changeCardQty('new-collection-4',1)">+</button></div></div><div class="prod-cta-row"><button type="button" class="prod-btn-gold" onclick="addToCart('new-collection-4', 'ডেনিম প্যান্ট (নতুন)', 1100)">এখনই কিনুন</button><button type="button" class="prod-btn-outline" onclick="addToCart('new-collection-4', 'ডেনিম প্যান্ট (নতুন)', 1100)">🛒 কার্টে যোগ করুন</button></div><div class="prod-row2"><a class="prod-btn-wa" href="https://wa.me/8801645008919?text=%E0%A6%A1%E0%A7%87%E0%A6%A8%E0%A6%BF%E0%A6%AE%20%E0%A6%AA%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%9F%20%E0%A6%A8%E0%A6%A4%E0%A7%81%E0%A6%A8%20%E0%A6%95%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%95%E0%A6%B6%E0%A6%A8" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a><button type="button" class="prod-heart-btn" data-wishlist-id="new-collection-4" onclick="toggleWishlist('new-collection-4', 'ডেনিম প্যান্ট (নতুন)', 1100)">♡</button></div></div>
       </div>
     </div>
   </div>
@@ -619,5 +616,13 @@ src="https://www.facebook.com/tr?id=2637858026633154&ev=PageView&noscript=1"
 </script>
 <script src="cart.js"></script>
 <script src="extras.js"></script>
+<script>
+function changeCardQty(id, delta){
+  var el = document.getElementById('qty-' + id);
+  if(!el) return;
+  var v = Math.max(1, parseInt(el.textContent||'1',10) + delta);
+  el.textContent = v;
+}
+</script>
 </body>
 </html>
