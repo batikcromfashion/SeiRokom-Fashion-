@@ -57,6 +57,16 @@
   .review-text{font-size:0.85rem;color:#cfc9bd;}
   .review-note{font-size:0.72rem;color:#6b675e;margin-top:14px;}
 </style>
+
+<style>
+.related-products{margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,162,74,0.2);}
+.related-products h2{font-size:1.05rem;color:var(--gold-light);margin-bottom:16px;}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.related-card{display:block;background:rgba(255,255,255,0.03);border:1px solid rgba(201,162,74,0.25);border-radius:12px;padding:14px;text-decoration:none;color:var(--cream);transition:border-color .2s ease,transform .2s ease;}
+.related-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.related-name{font-size:0.88rem;font-weight:600;margin-bottom:6px;}
+.related-price{font-size:0.9rem;color:var(--gold-light);font-weight:700;}
+</style>
 </head>
 <body>
 <header>
@@ -129,7 +139,11 @@
     <div class="review-card"><div class="review-head"><span class="name">রিভিউ ৩</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">দামের তুলনায় মানটা অনেক ভালো, আবার অর্ডার করব।</div></div>
     <div class="review-note">* উদাহরণস্বরূপ রিভিউ — প্রকৃত অর্ডার শুরু হলে আসল কাস্টমার রিভিউ দিয়ে প্রতিস্থাপন করা হবে।</div>
   </section>
-</div>
+  <section class="related-products">
+    <h2>🛍️ এটাও পছন্দ হতে পারে</h2>
+    <div class="related-grid"><a class="related-card" href="product-polo-tshirt.html"><div class="related-name">পোলো টি-শার্ট</div><div class="related-price">৳ 850</div></a><a class="related-card" href="product-casual-shirt.html"><div class="related-name">ক্যাজুয়াল শার্ট</div><div class="related-price">৳ 950</div></a><a class="related-card" href="product-premium-panjabi.html"><div class="related-name">প্রিমিয়াম পাঞ্জাবি</div><div class="related-price">৳ 1450</div></a></div>
+  </section>
+  </div>
 
 <script src="cart.js"></script>
 <script src="extras.js"></script>
