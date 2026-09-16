@@ -2514,6 +2514,25 @@ body.sr-modal-active #srMainHeader{
 @media(max-width:600px){.srf-mvp{padding:42px 0}.srf-mvp-grid{grid-template-columns:repeat(2,1fr)}.srf-form-grid{grid-template-columns:1fr}.srf-field.full{grid-column:auto}.srf-status{grid-template-columns:1fr 1fr}.srf-status-step:last-child{grid-column:1/-1}.srf-action{flex:1 1 145px}.srf-dialog-body{padding:15px}.srf-flash{align-items:flex-start;flex-direction:column}}
 @media(max-width:370px){.srf-mvp-grid{grid-template-columns:1fr}.srf-mvp .wrap{padding:0 12px}}
 </style>
+
+<style id="srf-search-gap-polish">
+/* ===== Mobile search-to-hero spacing polish =====
+   Small targeted adjustment only: keeps the existing layout/features intact. */
+@media (max-width:860px){
+  #srMainHeader .mobile-search-row{
+    margin-bottom:3px !important;
+  }
+  .hero{
+    padding-top:8px !important;
+  }
+}
+@media (max-width:480px){
+  .hero{
+    padding-top:8px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
