@@ -210,7 +210,7 @@ alt="" loading="lazy"></noscript>
     .btn-fb{ padding:8px 13px; font-size:0.78rem; gap:6px; min-height:48px; }
     .nav-right{ gap:8px; }
   }
-  @media(max-width:400px){
+  @media(max-width:860px){
     /* Mobile: keep the order button and cart fully visible side-by-side */
     .nav{ padding-left:10px; padding-right:10px; gap:6px; }
     .brand-block{ min-width:0; flex:1 1 auto; gap:6px; }
@@ -262,36 +262,29 @@ alt="" loading="lazy"></noscript>
   .hero-youtube{
     position:relative;
     flex:0 0 auto;
-    min-width:180px;
-    height:48px;
-    padding:0 18px;
-    border-radius:28px;
+    min-width:0;
+    width:auto;
+    height:44px;
+    padding:0 16px;
+    border-radius:24px;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    gap:9px;
+    gap:6px;
     background:linear-gradient(135deg,#ff3131,#e50914);
     color:#fff;
     border:1px solid rgba(255,255,255,.22);
-    box-shadow:0 7px 22px rgba(255,0,0,.30);
+    box-shadow:0 4px 12px rgba(0,0,0,.18);
     transition:transform .2s ease, box-shadow .2s ease;
     white-space:nowrap;
     font-family:'Hind Siliguri',sans-serif;
-    font-size:.82rem;
+    font-size:.84rem;
     font-weight:700;
     text-decoration:none;
     overflow:visible;
   }
-  .hero-youtube svg{width:23px;height:23px;fill:#fff;flex-shrink:0;}
-  .hero-youtube::before{
-    content:"";
-    position:absolute;
-    inset:-5px;
-    border-radius:32px;
-    border:1.5px solid rgba(255,55,55,.65);
-    animation:heroYoutubePulse 2.4s ease-out infinite;
-    pointer-events:none;
-  }
+  .hero-youtube svg{width:18px;height:18px;fill:#fff;flex-shrink:0;}
+  .hero-youtube::before{ content:none; }
   .hero-youtube:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,0,0,.42);}
   @keyframes heroYoutubePulse{
     0%{transform:scale(.94);opacity:.75;}
@@ -301,14 +294,14 @@ alt="" loading="lazy"></noscript>
   @media(max-width:560px){
     .hero-eyebrow-row{gap:8px;}
     .hero-eyebrow-row .eyebrow{font-size:1.08rem;line-height:1.3;}
-    .hero-youtube{min-width:158px;height:52px;padding:0 12px;gap:7px;font-size:.72rem;}
-    .hero-youtube svg{width:20px;height:20px;}
+    .hero-youtube{height:42px;padding:0 14px;gap:5px;font-size:.78rem;}
+    .hero-youtube svg{width:16px;height:16px;}
   }
   @media(max-width:360px){
     .hero-eyebrow-row{gap:6px;}
     .hero-eyebrow-row .eyebrow{font-size:1rem; line-height:1.25;}
-    .hero-youtube{min-width:150px;height:50px;padding:0 10px;font-size:.68rem;}
-    .hero-youtube svg{width:19px;height:19px;}
+    .hero-youtube{height:40px;padding:0 12px;font-size:.74rem;}
+    .hero-youtube svg{width:15px;height:15px;}
   }
   @keyframes heroTitleShine{
     0%{ background-position:0% center; }
@@ -2285,9 +2278,11 @@ src="https://www.facebook.com/tr?id=901496787684861&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <style id="sr-complaint-style">
-.hero-contact-stack{display:flex;flex-direction:column;align-items:stretch;gap:8px;flex:0 0 auto;min-width:180px}
-.hero-contact-stack .hero-youtube{min-width:180px}
+.hero-contact-stack{display:flex;flex-direction:column;align-items:flex-start;gap:8px;flex:0 0 auto;min-width:0}
+.hero-contact-stack .hero-youtube{min-width:0}
 .hero-greeting-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:8px;margin-bottom:4px}
+.hero-barakah-link{display:inline-block;font-size:0.82rem;color:#e9cd8b;background:rgba(201,162,74,0.12);border:1px solid rgba(201,162,74,0.4);border-radius:14px;padding:7px 14px;margin-bottom:10px;text-decoration:none;font-weight:600;}
+.hero-barakah-link:hover{background:rgba(201,162,74,0.22);}
 .hero-greeting-row .hero-greeting{margin-bottom:0;flex-shrink:0}
 .hero-greeting-row .sr-complaint-btn{flex:1;min-width:0;white-space:normal;display:flex;align-items:center;justify-content:center;gap:4px;text-align:center;line-height:1.25}
 .sr-complaint-btn{position:relative;min-height:42px;padding:8px 14px;border:1px solid rgba(255,255,255,.35);border-radius:22px;background:linear-gradient(135deg,#fff7d6,#ffd166,#ff9f68);color:#5a2600;font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(255,159,0,.22);transition:transform .2s ease,box-shadow .2s ease;overflow:hidden}
@@ -2314,7 +2309,7 @@ body.sr-complaint-open #srShareBar,body.sr-complaint-open #srAiFab,body.sr-compl
 body.sr-modal-active #srShareBar,body.sr-modal-active #srAiFab,body.sr-modal-active #srQuick4Btn,body.sr-modal-active #srShareModal,body.sr-modal-active #srAiSheet,body.sr-modal-active #srQuick4Panel{display:none!important}
 @media(max-width:640px){.sr-complaint-privacy{font-size:.84rem!important;line-height:1.68!important;padding:12px 13px!important}}
 .sr-complaint-form label{display:block;margin:10px 0 5px;color:#263244;font-size:.78rem;font-weight:700}.sr-complaint-form input,.sr-complaint-form select,.sr-complaint-form textarea{width:100%;box-sizing:border-box;border:1px solid #d8e0ea;border-radius:12px;padding:11px 12px;font-family:inherit;font-size:.84rem;background:#fff;outline:none}.sr-complaint-form textarea{min-height:120px;resize:vertical}.sr-complaint-form input:focus,.sr-complaint-form select:focus,.sr-complaint-form textarea:focus{border-color:#25a56a;box-shadow:0 0 0 3px rgba(37,165,106,.1)}.sr-complaint-submit{width:100%;margin-top:14px;border:0;border-radius:14px;padding:12px;background:linear-gradient(135deg,#148f58,#25b76e);color:#fff;font-family:inherit;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(20,143,88,.22)}.sr-complaint-foot{margin-top:10px;text-align:center;color:#7a8492;font-size:.68rem;line-height:1.45}
-@media(max-width:640px){.hero-contact-stack{min-width:145px}.hero-contact-stack .hero-youtube{min-width:145px;padding:0 10px}.sr-complaint-btn{font-size:.7rem;padding:7px 8px}.sr-complaint-modal{padding:17px;border-radius:20px}}
+@media(max-width:640px){.hero-contact-stack{min-width:0}.hero-contact-stack .hero-youtube{min-width:0;padding:0 12px}.sr-complaint-btn{font-size:.7rem;padding:7px 8px}.sr-complaint-modal{padding:17px;border-radius:20px}}
 </style>
 
 <style id="sr-sticky-search-final-fix">
@@ -2343,7 +2338,7 @@ body.sr-modal-active #srMainHeader{
   top:0 !important;left:0 !important;right:0 !important;
   width:100% !important;
 }
-#srStickySpacer{display:none;height:0;}
+#srStickySpacer{display:none;height:0;background:rgba(10,10,10,.98);}
 #srMainHeader.sr-fixed-fallback + #srStickySpacer{
   display:block;height:var(--sr-sticky-height,0px);
 }
@@ -2362,7 +2357,7 @@ body.sr-modal-active #srMainHeader{
   #srMainHeader .mobile-search-bar{min-width:0;flex:1 1 auto;}
   #srMainHeader .hamburger-btn{flex:0 0 42px;width:42px;height:42px;}
 }
-@media(max-width:400px){
+@media(max-width:860px){
   #srMainHeader .nav{padding-left:8px;padding-right:8px;gap:5px;}
   #srMainHeader .brand-block{flex:1 1 auto;min-width:0;}
   #srMainHeader .brand-logo{width:38px;height:38px;}
@@ -2376,7 +2371,8 @@ body.sr-modal-active #srMainHeader{
   #srMainHeader .btn-fb .social-btn-text b{font-size:.68rem !important;}
   #srMainHeader .srf-cart-link{width:40px !important;height:40px !important;}
   #srMainHeader .srf-cart-link svg{width:19px !important;height:19px !important;}
-  #srMainHeader .mobile-search-row{margin-left:8px;margin-right:8px;margin-top:6px;margin-bottom:8px;}
+  #srMainHeader .mobile-search-row{margin-left:8px;margin-right:8px;margin-top:6px;margin-bottom:0;}
+  #srMainHeader{padding-bottom:8px;}
   #srMainHeader .mobile-search-bar{min-height:44px;padding:8px 12px;}
 }
 @media(max-width:340px){
@@ -2395,7 +2391,7 @@ body.sr-modal-active #srMainHeader{
 #srMainHeader .mobile-search-bar{
   background:linear-gradient(135deg,#fff7d6 0%,#ffd166 48%,#e9b949 100%) !important;
   border:1.5px solid rgba(255,255,255,.75) !important;
-  box-shadow:0 7px 22px rgba(201,162,74,.28), inset 0 1px 0 rgba(255,255,255,.65) !important;
+  box-shadow:0 4px 12px rgba(201,162,74,.20), inset 0 1px 0 rgba(255,255,255,.55) !important;
   animation:srSearchGoldGlow 3s ease-in-out infinite !important;
 }
 #srMainHeader .nav-search input,
@@ -2405,8 +2401,8 @@ body.sr-modal-active #srMainHeader{
 #srMainHeader .nav-search svg,
 #srMainHeader .mobile-search-bar svg{stroke:#5b4615 !important;}
 @keyframes srSearchGoldGlow{
-  0%,100%{box-shadow:0 7px 22px rgba(201,162,74,.24),inset 0 1px 0 rgba(255,255,255,.65);}
-  50%{box-shadow:0 9px 30px rgba(233,205,139,.48),0 0 0 2px rgba(255,255,255,.10),inset 0 1px 0 rgba(255,255,255,.85);}
+  0%,100%{box-shadow:0 4px 12px rgba(201,162,74,.20),inset 0 1px 0 rgba(255,255,255,.55);}
+  50%{box-shadow:0 5px 16px rgba(233,205,139,.30),inset 0 1px 0 rgba(255,255,255,.65);}
 }
 
 /* Three-dot menu: white animated gradient, clearly separated from search */
@@ -2444,21 +2440,22 @@ body.sr-modal-active #srMainHeader{
   margin-bottom:10px !important;
 }
 .hero .hero-eyebrow-row .eyebrow{min-width:0 !important;overflow-wrap:anywhere;}
-.hero .hero-contact-stack{min-width:145px !important;max-width:100% !important;}
-.hero .hero-contact-stack .hero-youtube{min-width:145px !important;max-width:100% !important;}
+.hero .hero-contact-stack{min-width:0 !important;max-width:100% !important;}
+.hero .hero-contact-stack .hero-youtube{min-width:0 !important;max-width:100% !important;width:auto !important;}
 
 @media(max-width:560px){
   #srMainHeader .mobile-search-row{gap:7px !important;margin-left:10px !important;margin-right:10px !important;}
   #srMainHeader .hamburger-btn{flex:0 0 44px !important;width:44px !important;height:44px !important;}
   .hero .hero-eyebrow-row{grid-template-columns:minmax(0,1fr) minmax(140px,42%) !important;gap:8px !important;}
   .hero .hero-eyebrow-row .eyebrow{font-size:1rem !important;line-height:1.28 !important;}
-  .hero .hero-contact-stack,.hero .hero-contact-stack .hero-youtube{min-width:140px !important;}
+  .hero .hero-contact-stack,.hero .hero-contact-stack .hero-youtube{min-width:0 !important;}
 }
 @media(max-width:400px){
   #srMainHeader .mobile-search-row{margin-left:8px !important;margin-right:8px !important;gap:6px !important;}
   #srMainHeader .hamburger-btn{flex-basis:42px !important;width:42px !important;height:42px !important;}
   .hero .hero-eyebrow-row{grid-template-columns:1fr !important;gap:8px !important;align-items:stretch !important;}
-  .hero .hero-contact-stack,.hero .hero-contact-stack .hero-youtube{width:100% !important;min-width:0 !important;}
+  .hero .hero-contact-stack{width:auto !important;min-width:0 !important;}
+  .hero .hero-contact-stack .hero-youtube{width:auto !important;min-width:0 !important;}
 }
 </style>
 
@@ -2514,25 +2511,6 @@ body.sr-modal-active #srMainHeader{
 @media(max-width:600px){.srf-mvp{padding:42px 0}.srf-mvp-grid{grid-template-columns:repeat(2,1fr)}.srf-form-grid{grid-template-columns:1fr}.srf-field.full{grid-column:auto}.srf-status{grid-template-columns:1fr 1fr}.srf-status-step:last-child{grid-column:1/-1}.srf-action{flex:1 1 145px}.srf-dialog-body{padding:15px}.srf-flash{align-items:flex-start;flex-direction:column}}
 @media(max-width:370px){.srf-mvp-grid{grid-template-columns:1fr}.srf-mvp .wrap{padding:0 12px}}
 </style>
-
-<style id="srf-search-gap-polish">
-/* ===== Mobile search-to-hero spacing polish =====
-   Small targeted adjustment only: keeps the existing layout/features intact. */
-@media (max-width:860px){
-  #srMainHeader .mobile-search-row{
-    margin-bottom:3px !important;
-  }
-  .hero{
-    padding-top:8px !important;
-  }
-}
-@media (max-width:480px){
-  .hero{
-    padding-top:8px !important;
-  }
-}
-</style>
-
 </head>
 <body>
 
@@ -2897,6 +2875,9 @@ body.sr-modal-active #srMainHeader{
           </a>
         </div>
       </div>
+      <a href="#barakah" class="hero-barakah-link" aria-label="ব্যবসায় বরকতের জন্য আয়াতুল কুরসি ও কুরআনের শিক্ষা দেখুন">
+        🕌 বিসমিল্লাহ — ব্যবসায় বরকতের আয়াত পড়ুন ↓
+      </a>
       <div class="hero-greeting-row">
         <div class="hero-greeting"><span class="rainbow-text">স্বাগতম ✦ Welcome</span></div>
         <button type="button" class="sr-complaint-btn" onclick="openComplaintBox()" aria-label="অভিযোগ বা মতামত জানান">
@@ -3017,6 +2998,8 @@ body.sr-modal-active #srMainHeader{
     </div>
   </div>
 </section>
+
+
 <!-- ===== TOP TRUST + ORDER POLISH ===== -->
 <section class="top-polish" aria-label="SeiRokom Fashion trust and order information">
   <div class="wrap">
@@ -3071,6 +3054,13 @@ body.sr-modal-active #srMainHeader{
       </div>
       <a href="#collections" style="background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;padding:11px 20px;border-radius:30px;text-decoration:none;font-size:0.88rem;white-space:nowrap;">এখনই দেখুন</a>
     </div>
+  </div>
+</section>
+
+<section id="bundle-offer" style="background:linear-gradient(135deg,#0d1f16,#0d0d0d);border-bottom:1px solid rgba(201,162,74,0.25);padding:22px 18px;">
+  <div class="wrap" style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;text-align:center;">
+    <span style="font-size:1.4rem;">🎁</span>
+    <div style="color:#a8e6b0;font-weight:700;font-size:0.95rem;">২টি পণ্য একসাথে অর্ডার করলে অতিরিক্ত ৫% ছাড়, ৩টি বা তার বেশি হলে ১০% ছাড় — WhatsApp-এ অর্ডারের সময় জানিয়ে দিন!</div>
   </div>
 </section>
 <script>
@@ -3344,6 +3334,115 @@ body.sr-modal-active #srMainHeader{
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+
+
+<!-- ===== BARAKAH / QUR'AN SECTION (styles) ===== -->
+<style>
+.barakah-section{
+  background:linear-gradient(180deg,#0b0b0b,#151008 60%,#0b0b0b);
+  padding:64px 0;
+  border-top:1px solid rgba(201,162,74,0.3);
+  border-bottom:1px solid rgba(201,162,74,0.3);
+  color:#e7e2d6;
+}
+.barakah-inner{max-width:820px; margin:0 auto; padding:0 24px; text-align:center;}
+.barakah-kicker{
+  display:inline-block; font-size:0.85rem; letter-spacing:1px; color:var(--gold-light);
+  border:1px solid rgba(201,162,74,0.4); border-radius:20px; padding:5px 16px; margin-bottom:14px;
+}
+.barakah-inner h2{
+  font-family:'Tiro Bangla', serif; font-size:clamp(1.6rem,4vw,2.2rem);
+  color:var(--gold-light); margin-bottom:14px;
+}
+.barakah-intro{color:#c9c3b4; font-size:0.98rem; line-height:1.8; margin-bottom:36px;}
+.barakah-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(201,162,74,0.3);
+  border-radius:18px;
+  padding:32px 24px;
+  margin-bottom:28px;
+}
+.barakah-card h3{
+  font-family:'Hind Siliguri',sans-serif; font-size:1.02rem; font-weight:600;
+  color:var(--gold-light); margin-bottom:20px;
+}
+.barakah-arabic{
+  font-family:'Amiri', serif; font-size:clamp(1.15rem,3vw,1.5rem);
+  line-height:2.3; color:#fdf6e3; margin-bottom:22px; direction:rtl;
+}
+.barakah-translation{
+  font-size:0.92rem; line-height:1.9; color:#d8d3c6; text-align:justify;
+}
+.barakah-verses{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:18px; margin-bottom:30px; text-align:left;
+}
+.barakah-verse-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(201,162,74,0.22);
+  border-radius:14px; padding:20px;
+}
+.barakah-verse-card h4{
+  font-size:0.88rem; color:var(--gold-light); margin-bottom:10px; font-weight:600;
+}
+.barakah-verse-arabic{
+  font-family:'Amiri', serif; font-size:1.05rem; line-height:1.9; color:#fdf6e3;
+  direction:rtl; margin-bottom:10px;
+}
+.barakah-verse-text{font-size:0.84rem; line-height:1.75; color:#c9c3b4;}
+.barakah-verse-text b{color:#e7e2d6; font-weight:600;}
+.barakah-dua{
+  font-size:1rem; color:var(--gold-light); font-weight:600; margin-top:6px;
+}
+.barakah-verify-note{
+  font-size:0.76rem; color:#8a857a; margin-top:22px; line-height:1.7;
+}
+@media(max-width:600px){
+  .barakah-section{padding:44px 0;}
+  .barakah-card{padding:24px 16px;}
+}
+</style>
+
+<!-- ===== BARAKAH / QUR'AN SECTION ===== -->
+<section class="barakah-section" id="barakah">
+  <div class="barakah-inner">
+    <span class="barakah-kicker" id="barakah-top">বিসমিল্লাহির রাহমানির রাহীম</span>
+    <h2>ব্যবসায় বরকতের জন্য</h2>
+    <p class="barakah-intro">আমরা বিশ্বাস করি, সততা ও আল্লাহর প্রতি আস্থা নিয়ে ব্যবসা করলে তাতে বরকত আসে। আমাদের প্রতিটি অর্ডার, প্রতিটি গ্রাহকের আস্থা — আমরা এই শিক্ষাগুলো স্মরণ রেখেই এগিয়ে যাই।</p>
+
+    <div class="barakah-card">
+      <h3>আয়াতুল কুরসি — সূরা আল-বাক্বারা, আয়াত ২৫৫</h3>
+      <p class="barakah-arabic">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</p>
+      <p class="barakah-translation">"আল্লাহ, তিনি ব্যতীত সত্যিকার কোনো ইলাহ নেই, তিনি চিরঞ্জীব, সবকিছুর ধারক। তন্দ্রা কিংবা নিদ্রা তাঁকে স্পর্শ করে না। আসমানসমূহ ও যমীনে যা কিছু আছে, সবই তাঁর। তাঁর অনুমতি ব্যতীত কে আছে এমন, যে তাঁর কাছে সুপারিশ করবে? তাদের সামনে ও পেছনে যা কিছু আছে তিনি তা জানেন। তাঁর জ্ঞানের কোনো কিছুই তারা আয়ত্ত করতে পারে না, তবে যতটুকু তিনি ইচ্ছা করেন। তাঁর কুরসি আসমানসমূহ ও যমীনকে পরিবেষ্টন করে আছে, আর এ দুটির রক্ষণাবেক্ষণ তাঁর জন্য কষ্টকর নয়। তিনিই সুউচ্চ, সুমহান।"</p>
+    </div>
+
+    <div class="barakah-verses">
+      <div class="barakah-verse-card">
+        <h4>💰 ব্যবসা হালাল, সুদ হারাম</h4>
+        <p class="barakah-verse-arabic">وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا</p>
+        <p class="barakah-verse-text">"আল্লাহ ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম করেছেন।" — <b>সূরা আল-বাক্বারা, ২:২৭৫</b></p>
+      </div>
+      <div class="barakah-verse-card">
+        <h4>🤝 পারস্পরিক সম্মতিতে লেনদেন</h4>
+        <p class="barakah-verse-arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ</p>
+        <p class="barakah-verse-text">"হে মুমিনগণ, তোমরা একে অপরের সম্পদ অন্যায়ভাবে ভক্ষণ করো না, তবে পারস্পরিক সম্মতিতে ব্যবসা হলে ভিন্ন কথা।" — <b>সূরা আন-নিসা, ৪:২৯</b></p>
+      </div>
+      <div class="barakah-verse-card">
+        <h4>⚖️ ওজনে-পরিমাপে সততা</h4>
+        <p class="barakah-verse-arabic">وَيْلٌ لِّلْمُطَفِّفِينَ</p>
+        <p class="barakah-verse-text">"ধ্বংস তাদের জন্য, যারা ওজনে-পরিমাপে কম দেয়।" — <b>সূরা আল-মুতাফফিফীন, ৮৩:১</b></p>
+      </div>
+      <div class="barakah-verse-card">
+        <h4>🌟 সৎ ব্যবসায়ীর মর্যাদা</h4>
+        <p class="barakah-verse-text">রাসূলুল্লাহ (সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম) বলেছেন: "সত্যবাদী ও বিশ্বস্ত ব্যবসায়ী কিয়ামতের দিন নবীগণ, সিদ্দীকগণ ও শহীদগণের সাথে থাকবেন।" — <b>হাদিস, তিরমিযি</b></p>
+      </div>
+    </div>
+
+    <p class="barakah-dua">🤲 আল্লাহ আমাদের এই ব্যবসায় বরকত দান করুন এবং প্রতিটি গ্রাহককে উত্তম প্রতিদান দিন — আমীন।</p>
+    <p class="barakah-verify-note">উদ্ধৃত আয়াত ও অনুবাদ সাধারণভাবে প্রচলিত উৎস থেকে নেওয়া। প্রকাশের আগে একজন আলেম বা নির্ভরযোগ্য কুরআন অনুবাদের সাথে একবার মিলিয়ে নেওয়ার অনুরোধ থাকলো, যাতে প্রতিটি হরফ নির্ভুল থাকে।</p>
   </div>
 </section>
 
@@ -5237,5 +5336,56 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
   sync();
 })();
 </script>
+
+<!-- ===== FIRST ORDER COUPON POPUP ===== -->
+<style>
+.sr-coupon-overlay{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(12,18,30,.72);backdrop-filter:blur(5px);}
+.sr-coupon-overlay.open{display:flex;}
+.sr-coupon-box{position:relative;max-width:380px;width:100%;background:linear-gradient(160deg,#151008,#0d0d0d);border:1px solid rgba(201,162,74,0.4);border-radius:20px;padding:32px 26px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.sr-coupon-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#a8a196;font-size:1.4rem;cursor:pointer;line-height:1;}
+.sr-coupon-box h3{color:var(--gold-light);font-family:'Tiro Bangla',serif;font-size:1.4rem;margin-bottom:10px;}
+.sr-coupon-box p{color:#cfc9bd;font-size:0.9rem;line-height:1.7;margin-bottom:18px;}
+.sr-coupon-code{display:inline-block;background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:800;font-size:1.15rem;letter-spacing:2px;padding:10px 22px;border-radius:10px;margin-bottom:18px;cursor:pointer;}
+.sr-coupon-note{font-size:0.72rem;color:#8a857a;margin-bottom:18px;}
+.sr-coupon-cta{display:block;background:#25D366;color:#fff;font-weight:700;padding:12px;border-radius:26px;text-decoration:none;font-size:0.9rem;}
+</style>
+<div class="sr-coupon-overlay" id="srCouponOverlay" onclick="if(event.target===this) closeCouponPopup()">
+  <div class="sr-coupon-box">
+    <button type="button" class="sr-coupon-close" onclick="closeCouponPopup()" aria-label="বন্ধ করুন">&times;</button>
+    <h3>🎉 আপনার জন্য বিশেষ উপহার!</h3>
+    <p>প্রথমবার অর্ডার করছেন? নিচের কোডটি WhatsApp-এ অর্ডারের সময় উল্লেখ করুন এবং পেয়ে যান বিশেষ ছাড়।</p>
+    <div class="sr-coupon-code" id="srCouponCode" onclick="copyCouponCode()">WELCOME10</div>
+    <p class="sr-coupon-note">কোডে ট্যাপ করলে কপি হয়ে যাবে। শর্ত প্রযোজ্য।</p>
+    <a href="https://wa.me/8801645008919?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20WELCOME10%20%E0%A6%95%E0%A7%8B%E0%A6%A1%20%E0%A6%A6%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A7%87%20%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A1%E0%A6%BE%E0%A6%B0%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%87" target="_blank" rel="noopener" class="sr-coupon-cta">WhatsApp-এ অর্ডার করুন</a>
+  </div>
+</div>
+<script>
+function closeCouponPopup(){
+  var o = document.getElementById('srCouponOverlay');
+  if(o) o.classList.remove('open');
+  try{ localStorage.setItem('srf_coupon_seen', '1'); }catch(e){}
+}
+function copyCouponCode(){
+  var codeEl = document.getElementById('srCouponCode');
+  var text = codeEl ? codeEl.textContent.trim() : 'WELCOME10';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      codeEl.textContent = 'কপি হয়েছে! ✓';
+      setTimeout(function(){ codeEl.textContent = text; }, 1500);
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var seen = false;
+  try{ seen = localStorage.getItem('srf_coupon_seen') === '1'; }catch(e){}
+  if(!seen){
+    setTimeout(function(){
+      var o = document.getElementById('srCouponOverlay');
+      if(o) o.classList.add('open');
+    }, 4000);
+  }
+});
+</script>
+
 </body>
 </html>
