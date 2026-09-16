@@ -1,5 +1,13 @@
-const CACHE_NAME = 'seirokom-fashion-v2';
-const APP_SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './offline.html'];
+const CACHE_NAME = 'seirokom-fashion-v3';
+
+const APP_SHELL = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './offline.html'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -12,35 +20,67 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+        )
+      )
       .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', event => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
+  const request = event.request;
 
-  event.respondWith((async () => {
-    const cached = await caches.match(req);
-    if (cached) return cached;
+  if (request.method !== 'GET') return;
 
-    try {
-      const response = await fetch(req);
-      if (response && response.ok && new URL(req.url).origin === self.location.origin) {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, copy)).catch(() => {});
+  event.respondWith(
+    (async () => {
+      const cachedResponse = await caches.match(request);
+
+      if (cachedResponse) {
+        return cachedResponse;
       }
-      return response;
-    } catch (err) {
-      if (req.mode === 'navigate') {
-        return caches.match('./offline.html') || caches.match('./index.html');
+
+      try {
+        const response = await fetch(request);
+
+        if (
+          response &&
+          response.ok &&
+          new URL(request.url).origin === self.location.origin
+        ) {
+          const responseCopy = response.clone();
+
+          caches.open(CACHE_NAME)
+            .then(cache => cache.put(request, responseCopy))
+            .catch(() => {});
+        }
+
+        return response;
+
+      } catch (error) {
+
+        if (request.mode === 'navigate') {
+          return (
+            await caches.match('./offline.html') ||
+            await caches.match('./index.html')
+          );
+        }
+
+        return new Response('', {
+          status: 503,
+          statusText: 'Offline'
+        });
       }
-      return new Response('', {status: 503, statusText: 'Offline'});
-    }
-  })());
+    })()
+  );
 });
 
 self.addEventListener('message', event => {
-  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
