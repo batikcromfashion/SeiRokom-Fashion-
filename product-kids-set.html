@@ -40,7 +40,6 @@
   .size-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
   .size-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
 
-  /* Color Circles */
   .color-row{display:flex;align-items:center;gap:12px;}
   .color-circle{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;position:relative;transition:0.2s ease;}
   .color-circle.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,74,0.4);}
@@ -113,7 +112,7 @@
       </div>
 
       <div class="sold">🔥 ৫০০+ জন কিনেছেন</div>
-      <div class="viewers">👀 ৪ জন এখন এটি দেখছেন</div>
+      <div class="viewers">👀 <span id="view-count">৪</span> জন এখন এটি দেখছেন</div>
       <div class="stock-warn">⚡ মাত্র ৪টি স্টকে বাকি</div>
 
       <div class="desc" id="product-desc">শিশুদের জন্য আরামদায়ক ও রঙিন সেট — সারাদিন খেলাধুলায় আরাম নিশ্চিত করবে।</div>
@@ -174,6 +173,17 @@
   var selectedSize = 'S';
   var selectedColor = 'কালো';
   var qty = 1;
+
+  // Live Dynamic Viewer Count System
+  function updateViewerCount(){
+    var bnNums = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    var randomNum = Math.floor(Math.random() * 7) + 3; // Generates number between 3 and 9
+    var el = document.getElementById('view-count');
+    if(el){
+      el.textContent = bnNums[randomNum];
+    }
+  }
+  setInterval(updateViewerCount, 4000); // Changes every 4 seconds
 
   // Size Select
   document.querySelectorAll('.size-btn').forEach(function(btn){
