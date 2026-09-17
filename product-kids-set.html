@@ -26,16 +26,28 @@
   h1{color:var(--gold-light);font-size:1.5rem;margin:0 0 8px;}
   .rating-row{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:#cfc9bd;margin-bottom:10px;}
   .stars{color:var(--gold);letter-spacing:1px;}
-  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:14px;}
-  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:6px;}
+  .viewers{font-size:0.82rem;color:#cfc9bd;margin-bottom:6px;}
+  .stock-warn{font-size:0.82rem;color:#ff5252;margin-bottom:14px;font-weight:600;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
   .price-new{font-size:1.6rem;font-weight:700;color:var(--gold-light);}
   .price-old{font-size:1rem;color:#8a857a;text-decoration:line-through;}
   .discount{font-size:0.78rem;background:rgba(201,162,74,0.18);color:var(--gold);padding:3px 8px;border-radius:12px;}
   .desc{font-size:0.92rem;color:#cfc9bd;margin:14px 0 18px;line-height:1.6;}
   label{display:block;font-size:0.82rem;color:#cfc9bd;margin:14px 0 6px;}
+  
   .size-row{display:flex;flex-wrap:wrap;gap:8px;}
   .size-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
   .size-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
+
+  /* Color Circles */
+  .color-row{display:flex;align-items:center;gap:12px;}
+  .color-circle{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;position:relative;transition:0.2s ease;}
+  .color-circle.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,74,0.4);}
+  .color-black{background:#000000;border:1px solid #444;}
+  .color-white{background:#ffffff;}
+  .color-gold{background:#c9a24a;}
+
   .qty-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .qty-box{display:flex;align-items:center;gap:10px;}
   .qty-box button{width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-size:1.1rem;cursor:pointer;}
@@ -94,12 +106,16 @@
     <div>
       <h1>কিডস সেট</h1>
       <div class="rating-row"><span class="stars">★★★★★</span><span>৪.৮ (128 রিভিউ)</span></div>
-      <div class="sold">🔥 ৫০০+ জন কিনেছেন</div>
       <div class="price-row">
         <span class="price-new">৳ 650</span>
         <span class="price-old">৳ 850</span>
         <span class="discount">24% ছাড়</span>
       </div>
+
+      <div class="sold">🔥 ৫০০+ জন কিনেছেন</div>
+      <div class="viewers">👀 ৪ জন এখন এটি দেখছেন</div>
+      <div class="stock-warn">⚡ মাত্র ৪টি স্টকে বাকি</div>
+
       <div class="desc" id="product-desc">শিশুদের জন্য আরামদায়ক ও রঙিন সেট — সারাদিন খেলাধুলায় আরাম নিশ্চিত করবে।</div>
 
       <label>সাইজ বাছাই করুন</label>
@@ -111,6 +127,13 @@
         <button type="button" class="size-btn" data-size="XXL">XXL</button>
       </div>
       <button type="button" class="sg-link" onclick="openSizeGuide('kids')">📏 সাইজ গাইড দেখুন</button>
+
+      <label>রং বাছাই করুন</label>
+      <div class="color-row">
+        <div class="color-circle color-black active" data-color="কালো" title="কালো"></div>
+        <div class="color-circle color-white" data-color="সাদা" title="সাদা"></div>
+        <div class="color-circle color-gold" data-color="গোল্ডেন" title="গোল্ডেন"></div>
+      </div>
 
       <div class="qty-row">
         <label style="margin:0;">পরিমাণ</label>
@@ -149,13 +172,24 @@
 <script src="extras.js"></script>
 <script>
   var selectedSize = 'S';
+  var selectedColor = 'কালো';
   var qty = 1;
 
+  // Size Select
   document.querySelectorAll('.size-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       selectedSize = btn.dataset.size;
+    });
+  });
+
+  // Color Select
+  document.querySelectorAll('.color-circle').forEach(function(circle){
+    circle.addEventListener('click', function(){
+      document.querySelectorAll('.color-circle').forEach(function(c){ c.classList.remove('active'); });
+      circle.classList.add('active');
+      selectedColor = circle.dataset.color;
     });
   });
 
@@ -165,7 +199,7 @@
   }
 
   function fullName(){
-    return selectedSize ? "কিডস সেট" + " (সাইজ: " + selectedSize + ")" : "কিডস সেট";
+    return "কিডস সেট (সাইজ: " + selectedSize + ", রং: " + selectedColor + ")";
   }
 
   function doAddToCart(){
@@ -185,6 +219,7 @@
     var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
                "📌 *প্রোডাক্ট:* কিডস সেট\n" +
                "📏 *সাইজ:* " + selectedSize + "\n" +
+               "🎨 *রং:* " + selectedColor + "\n" +
                "🔢 *পরিমাণ:* " + qty + "\n" +
                "💰 *মোট দাম:* ৳" + (650 * qty) + "\n\n" +
                "---------------------------\n" +
