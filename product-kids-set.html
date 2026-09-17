@@ -33,9 +33,9 @@
   .discount{font-size:0.78rem;background:rgba(201,162,74,0.18);color:var(--gold);padding:3px 8px;border-radius:12px;}
   .desc{font-size:0.92rem;color:#cfc9bd;margin:14px 0 18px;line-height:1.6;}
   label{display:block;font-size:0.82rem;color:#cfc9bd;margin:14px 0 6px;}
-  .size-row{display:flex;flex-wrap:wrap;gap:8px;}
-  .size-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
-  .size-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
+  .size-row, .color-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .size-btn, .color-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
+  .size-btn.active, .color-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
   .qty-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .qty-box{display:flex;align-items:center;gap:10px;}
   .qty-box button{width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-size:1.1rem;cursor:pointer;}
@@ -100,7 +100,7 @@
         <span class="price-old">৳ 850</span>
         <span class="discount">24% ছাড়</span>
       </div>
-      <div class="desc">শিশুদের জন্য আরামদায়ক ও রঙিন সেট — সারাদিন খেলাধুলায় আরাম নিশ্চিত করবে।</div>
+      <div class="desc" id="product-desc">শিশুদের জন্য আরামদায়ক ও রঙিন সেট — সারাদিন খেলাধুলায় আরাম নিশ্চিত করবে।</div>
 
       <label>সাইজ বাছাই করুন</label>
       <div class="size-row" id="size-row">
@@ -110,6 +110,13 @@
         <button type="button" class="size-btn" data-size="8-9Y">8-9Y</button>
       </div>
       <button type="button" class="sg-link" onclick="openSizeGuide('kids')">📏 সাইজ গাইড দেখুন</button>
+
+      <label>কালার বাছাই করুন</label>
+      <div class="color-row" id="color-row">
+        <button type="button" class="color-btn active" data-color="লাল">লাল</button>
+        <button type="button" class="color-btn" data-color="নীল">নীল</button>
+        <button type="button" class="color-btn" data-color="হলুদ">হলুদ</button>
+      </div>
 
       <div class="qty-row">
         <label style="margin:0;">পরিমাণ</label>
@@ -125,7 +132,7 @@
         <button type="button" class="btn btn-outline" onclick="doAddToCart()">🛒 কার্টে যোগ করুন</button>
       </div>
       <div class="row2">
-        <a class="btn btn-wa" href="https://wa.me/8801645008919?text=আমি%20কিডস%20সেট%20অর্ডার%20করতে%20চাই" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a>
+        <button type="button" class="btn btn-wa" onclick="orderOnWhatsApp()">WhatsApp-এ অর্ডার করুন</button>
         <button type="button" class="heart-btn" id="wish-heart" onclick="toggleWishlist('product-kids-set', 'কিডস সেট', 650)">♡</button>
       </div>
     </div>
@@ -147,8 +154,10 @@
 <script src="cart.js"></script>
 <script src="extras.js"></script>
 <script>
-  var selectedSize = document.querySelector('.size-btn') ? document.querySelector('.size-btn').dataset.size : null;
+  var selectedSize = document.querySelector('.size-btn') ? document.querySelector('.size-btn').dataset.size : '2-3Y';
+  var selectedColor = 'লাল';
   var qty = 1;
+
   document.querySelectorAll('.size-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -158,13 +167,21 @@
   });
   if (document.querySelector('.size-btn')) document.querySelector('.size-btn').classList.add('active');
 
+  document.querySelectorAll('.color-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.color-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      selectedColor = btn.dataset.color;
+    });
+  });
+
   function changeQty(delta){
     qty = Math.max(1, qty + delta);
     document.getElementById('qty-val').textContent = qty;
   }
 
   function fullName(){
-    return selectedSize ? "কিডস সেট" + " (সাইজ: " + selectedSize + ")" : "কিডস সেট";
+    return "কিডস সেট (সাইজ: " + selectedSize + ", কালার: " + selectedColor + ")";
   }
 
   function doAddToCart(){
@@ -172,6 +189,27 @@
   }
   function doBuyNow(){
     SRFCart.buyNow('product-kids-set', fullName(), 650, qty);
+  }
+
+  function orderOnWhatsApp(){
+    var phone = "8801645008919";
+    var desc = document.getElementById('product-desc').innerText;
+    
+    var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
+               "📌 *প্রোডাক্ট:* কিডস সেট\n" +
+               "📏 *সাইজ:* " + selectedSize + "\n" +
+               "🎨 *কালার:* " + selectedColor + "\n" +
+               "🔢 *পরিমাণ:* " + qty + "\n" +
+               "💰 *মোট দাম:* ৳" + (650 * qty) + "\n" +
+               "📝 *বিবরণ:* " + desc + "\n\n" +
+               "---------------------------\n" +
+               "👤 *আপনার নাম:* \n" +
+               "📞 *মোবাইল নম্বর:* \n" +
+               "📍 *ডেলিভারি ঠিকানা (লোকেশন):* \n" +
+               "---------------------------\n" +
+               "*(দয়া করে নাম, নম্বর ও ঠিকানা লিখে মেসেজটি সেন্ড করুন)*";
+
+    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank");
   }
 
   document.addEventListener('DOMContentLoaded', function(){
