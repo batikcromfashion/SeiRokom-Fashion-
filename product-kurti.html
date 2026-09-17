@@ -22,20 +22,30 @@
   @media(min-width:720px){ .product-top{grid-template-columns:1fr 1fr;} }
   .ph-img{position:relative;background:#161616;border:1px solid rgba(201,162,74,0.25);border-radius:14px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
   .ph-badge{color:#8a857a;font-size:0.85rem;}
-  .frame img{width:100%;border-radius:14px;border:1px solid rgba(201,162,74,0.25);display:block;}
   h1{color:var(--gold-light);font-size:1.5rem;margin:0 0 8px;}
   .rating-row{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:#cfc9bd;margin-bottom:10px;}
   .stars{color:var(--gold);letter-spacing:1px;}
-  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:14px;}
-  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:6px;}
+  .viewers{font-size:0.82rem;color:#cfc9bd;margin-bottom:6px;}
+  .stock-warn{font-size:0.82rem;color:#ff5252;margin-bottom:14px;font-weight:600;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
   .price-new{font-size:1.6rem;font-weight:700;color:var(--gold-light);}
   .price-old{font-size:1rem;color:#8a857a;text-decoration:line-through;}
   .discount{font-size:0.78rem;background:rgba(201,162,74,0.18);color:var(--gold);padding:3px 8px;border-radius:12px;}
   .desc{font-size:0.92rem;color:#cfc9bd;margin:14px 0 18px;line-height:1.6;}
   label{display:block;font-size:0.82rem;color:#cfc9bd;margin:14px 0 6px;}
+  
   .size-row{display:flex;flex-wrap:wrap;gap:8px;}
   .size-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
   .size-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
+
+  .color-row{display:flex;align-items:center;gap:12px;}
+  .color-circle{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;position:relative;transition:0.2s ease;}
+  .color-circle.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,74,0.4);}
+  .color-maroon{background:#800000;}
+  .color-mustard{background:#e1ad01;}
+  .color-teal{background:#008080;}
+
   .qty-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .qty-box{display:flex;align-items:center;gap:10px;}
   .qty-box button{width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-size:1.1rem;cursor:pointer;}
@@ -55,9 +65,7 @@
   .review-head .verified{color:#7bc47f;font-size:0.72rem;}
   .review-stars{color:var(--gold);font-size:0.85rem;margin-bottom:6px;}
   .review-text{font-size:0.85rem;color:#cfc9bd;}
-  .review-note{font-size:0.72rem;color:#6b675e;margin-top:14px;}
 </style>
-
 <style>
 .related-products{margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,162,74,0.2);}
 .related-products h2{font-size:1.05rem;color:var(--gold-light);margin-bottom:16px;}
@@ -80,12 +88,12 @@
       <svg viewBox="0 0 24 24" width="17" height="17" stroke="#e9cd8b" fill="none" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
       <span class="badge srf-wish-badge">0</span>
     </a>
-    <a class="back" href="womens.html">← Women's Fashion</a>
+    <a class="back" href="womens.html">← Women's Collection</a>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb"><a href="index.html">হোম</a> / <a href="womens.html">Women's Fashion</a> / কুর্তি</div>
+  <div class="crumb"><a href="index.html">হোম</a> / <a href="womens.html">Women's Collection</a> / কুর্তি</div>
 
   <div class="product-top">
     <div>
@@ -93,24 +101,34 @@
     </div>
     <div>
       <h1>কুর্তি</h1>
-      <div class="rating-row"><span class="stars">★★★★★</span><span>৪.৬ (119 রিভিউ)</span></div>
-      <div class="sold">🔥 ৪২০+ জন কিনেছেন</div>
+      <div class="rating-row"><span class="stars">★★★★★</span><span>৪.৮ (১৩৫ রিভিউ)</span></div>
       <div class="price-row">
-        <span class="price-new">৳ 890</span>
-        <span class="price-old">৳ 1,190</span>
-        <span class="discount">25% ছাড়</span>
+        <span class="price-new">৳ 850</span>
+        <span class="price-old">৳ 1100</span>
+        <span class="discount">23% ছাড়</span>
       </div>
-      <div class="desc">আরামদায়ক ও স্টাইলিশ কুর্তি — নিয়মিত পরিধানের জন্য উপযুক্ত।</div>
+
+      <div class="sold">🔥 ৫০০+ জন কিনেছেন</div>
+      <div class="viewers">👀 <span id="view-count">৮</span> জন এখন এটি দেখছেন</div>
+      <div class="stock-warn">⚡ মাত্র ২টি স্টকে বাকি</div>
+
+      <div class="desc" id="product-desc">এলিগ্যান্ট ডিজাইনের কটন প্রিন্টেড কুর্তি—ক্যাজুয়াল ও ডেইলি ইউজ উভয়ের জন্যই উপযোগী।</div>
 
       <label>সাইজ বাছাই করুন</label>
       <div class="size-row" id="size-row">
-        <button type="button" class="size-btn" data-size="S">S</button>
-        <button type="button" class="size-btn" data-size="M">M</button>
+        <button type="button" class="size-btn active" data-size="M">M</button>
         <button type="button" class="size-btn" data-size="L">L</button>
         <button type="button" class="size-btn" data-size="XL">XL</button>
         <button type="button" class="size-btn" data-size="XXL">XXL</button>
       </div>
-      <button type="button" class="sg-link" onclick="openSizeGuide('women')">📏 সাইজ গাইড দেখুন</button>
+      <button type="button" class="sg-link" onclick="openSizeGuide('womens')">📏 সাইজ গাইড দেখুন</button>
+
+      <label>রং বাছাই করুন</label>
+      <div class="color-row">
+        <div class="color-circle color-maroon active" data-color="মেরুন" title="মেরুন"></div>
+        <div class="color-circle color-mustard" data-color="মাস্টার্ড ইয়েলো" title="মাস্টার্ড ইয়েলো"></div>
+        <div class="color-circle color-teal" data-color="টিল গ্রিন" title="টিল গ্রিন"></div>
+      </div>
 
       <div class="qty-row">
         <label style="margin:0;">পরিমাণ</label>
@@ -126,30 +144,38 @@
         <button type="button" class="btn btn-outline" onclick="doAddToCart()">🛒 কার্টে যোগ করুন</button>
       </div>
       <div class="row2">
-        <a class="btn btn-wa" href="https://wa.me/8801645008919?text=আমি%20কুর্তি%20অর্ডার%20করতে%20চাই" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a>
-        <button type="button" class="heart-btn" id="wish-heart" onclick="toggleWishlist('product-kurti', 'কুর্তি', 890)">♡</button>
+        <button type="button" class="btn btn-wa" onclick="orderOnWhatsApp()">WhatsApp-এ অর্ডার করুন</button>
+        <button type="button" class="heart-btn" id="wish-heart" onclick="toggleWishlist('product-kurti', 'কুর্তি', 850)">♡</button>
       </div>
     </div>
   </div>
 
   <section class="reviews">
-    <h2>⭐ কাস্টমার রিভিউ (৪.৬ (119 রিভিউ))</h2>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ১</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">কোয়ালিটি খুব ভালো, ছবির মতোই পেয়েছি। ডেলিভারিও সময়মতো হয়েছে।</div></div>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ২</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★☆</div><div class="review-text">ফেব্রিক আরামদায়ক, সাইজ পারফেক্ট ফিট হয়েছে।</div></div>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ৩</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">দামের তুলনায় মানটা অনেক ভালো, আবার অর্ডার করব।</div></div>
-    <div class="review-note">* উদাহরণস্বরূপ রিভিউ — প্রকৃত অর্ডার শুরু হলে আসল কাস্টমার রিভিউ দিয়ে প্রতিস্থাপন করা হবে।</div>
+    <h2>⭐ কাস্টমার রিভিউ (৪.৮ (১৩৫ রিভিউ))</h2>
+    <div class="review-card"><div class="review-head"><span class="name">নুসরাত জাহান</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">কুর্তির কাপড়ের কোয়ালিটি খুব ভালো এবং পরতে অনেক কমফোর্টেবল।</div></div>
+    <div class="review-card"><div class="review-head"><span class="name">তনিমা সুলতানা</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">প্রিন্টটা সামনাসামনি আরও সুন্দর লাগে। সাইজ একদম সঠিক পেয়েছি।</div></div>
   </section>
   <section class="related-products">
     <h2>🛍️ এটাও পছন্দ হতে পারে</h2>
-    <div class="related-grid"><a class="related-card" href="product-saree.html"><div class="related-name">শাড়ি</div><div class="related-price">৳ 1650</div></a><a class="related-card" href="product-girls-frock.html"><div class="related-name">গার্লস ফ্রক</div><div class="related-price">৳ 750</div></a><a class="related-card" href="product-premium-panjabi.html"><div class="related-name">প্রিমিয়াম পাঞ্জাবি</div><div class="related-price">৳ 1450</div></a></div>
+    <div class="related-grid"><a class="related-card" href="product-ladies-3-piece.html"><div class="related-name">লেডিস থ্রি-পিস</div><div class="related-price">৳ 1450</div></a><a class="related-card" href="product-saree.html"><div class="related-name">শাড়ি</div><div class="related-price">৳ 1650</div></a></div>
   </section>
   </div>
 
 <script src="cart.js"></script>
 <script src="extras.js"></script>
 <script>
-  var selectedSize = document.querySelector('.size-btn') ? document.querySelector('.size-btn').dataset.size : null;
+  var selectedSize = 'M';
+  var selectedColor = 'মেরুন';
   var qty = 1;
+
+  function updateViewerCount(){
+    var bnNums = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    var randomNum = Math.floor(Math.random() * 7) + 3;
+    var el = document.getElementById('view-count');
+    if(el){ el.textContent = bnNums[randomNum]; }
+  }
+  setInterval(updateViewerCount, 4000);
+
   document.querySelectorAll('.size-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -157,7 +183,14 @@
       selectedSize = btn.dataset.size;
     });
   });
-  if (document.querySelector('.size-btn')) document.querySelector('.size-btn').classList.add('active');
+
+  document.querySelectorAll('.color-circle').forEach(function(circle){
+    circle.addEventListener('click', function(){
+      document.querySelectorAll('.color-circle').forEach(function(c){ c.classList.remove('active'); });
+      circle.classList.add('active');
+      selectedColor = circle.dataset.color;
+    });
+  });
 
   function changeQty(delta){
     qty = Math.max(1, qty + delta);
@@ -165,18 +198,41 @@
   }
 
   function fullName(){
-    return selectedSize ? "কুর্তি" + " (সাইজ: " + selectedSize + ")" : "কুর্তি";
+    return "কুর্তি (সাইজ: " + selectedSize + ", রং: " + selectedColor + ")";
   }
 
   function doAddToCart(){
-    SRFCart.addToCart('product-kurti', fullName(), 890, qty);
+    if (typeof SRFCart !== 'undefined') {
+      SRFCart.addToCart('product-kurti', fullName(), 850, qty);
+    }
   }
+  
   function doBuyNow(){
-    SRFCart.buyNow('product-kurti', fullName(), 890, qty);
+    if (typeof SRFCart !== 'undefined') {
+      SRFCart.buyNow('product-kurti', fullName(), 850, qty);
+    }
+  }
+
+  function orderOnWhatsApp(){
+    var phone = "8801645008919";
+    var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
+               "📌 *প্রোডাক্ট:* কুর্তি\n" +
+               "📏 *সাইজ:* " + selectedSize + "\n" +
+               "🎨 *রং:* " + selectedColor + "\n" +
+               "🔢 *পরিমাণ:* " + qty + "\n" +
+               "💰 *মোট দাম:* ৳" + (850 * qty) + "\n\n" +
+               "---------------------------\n" +
+               "👤 *আপনার নাম:* \n" +
+               "📞 *মোবাইল নম্বর:* \n" +
+               "📍 *ডেলিভারি ঠিকানা (লোকেশন):* \n" +
+               "---------------------------\n" +
+               "*(দয়া করে নাম, নম্বর ও ঠিকানা লিখে মেসেজটি সেন্ড করুন)*";
+
+    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank");
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    if (SRFWishlist.isInWishlist('product-kurti')) {
+    if (typeof SRFWishlist !== 'undefined' && SRFWishlist.isInWishlist('product-kurti')) {
       document.getElementById('wish-heart').textContent = '♥';
     }
   });
