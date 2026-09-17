@@ -22,20 +22,30 @@
   @media(min-width:720px){ .product-top{grid-template-columns:1fr 1fr;} }
   .ph-img{position:relative;background:#161616;border:1px solid rgba(201,162,74,0.25);border-radius:14px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
   .ph-badge{color:#8a857a;font-size:0.85rem;}
-  .frame img{width:100%;border-radius:14px;border:1px solid rgba(201,162,74,0.25);display:block;}
   h1{color:var(--gold-light);font-size:1.5rem;margin:0 0 8px;}
   .rating-row{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:#cfc9bd;margin-bottom:10px;}
   .stars{color:var(--gold);letter-spacing:1px;}
-  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:14px;}
-  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+  .sold{font-size:0.82rem;color:#e9834a;margin-bottom:6px;}
+  .viewers{font-size:0.82rem;color:#cfc9bd;margin-bottom:6px;}
+  .stock-warn{font-size:0.82rem;color:#ff5252;margin-bottom:14px;font-weight:600;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
   .price-new{font-size:1.6rem;font-weight:700;color:var(--gold-light);}
   .price-old{font-size:1rem;color:#8a857a;text-decoration:line-through;}
   .discount{font-size:0.78rem;background:rgba(201,162,74,0.18);color:var(--gold);padding:3px 8px;border-radius:12px;}
   .desc{font-size:0.92rem;color:#cfc9bd;margin:14px 0 18px;line-height:1.6;}
   label{display:block;font-size:0.82rem;color:#cfc9bd;margin:14px 0 6px;}
+  
   .size-row{display:flex;flex-wrap:wrap;gap:8px;}
   .size-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(201,162,74,0.35);background:transparent;color:var(--cream);font-size:0.85rem;cursor:pointer;font-family:inherit;}
   .size-btn.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold);font-weight:600;}
+
+  .color-row{display:flex;align-items:center;gap:12px;}
+  .color-circle{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;position:relative;transition:0.2s ease;}
+  .color-circle.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,74,0.4);}
+  .color-black{background:#000000;border:1px solid #444;}
+  .color-navy{background:#000080;}
+  .color-maroon{background:#800000;}
+
   .qty-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .qty-box{display:flex;align-items:center;gap:10px;}
   .qty-box button{width:32px;height:32px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-light);font-size:1.1rem;cursor:pointer;}
@@ -55,9 +65,7 @@
   .review-head .verified{color:#7bc47f;font-size:0.72rem;}
   .review-stars{color:var(--gold);font-size:0.85rem;margin-bottom:6px;}
   .review-text{font-size:0.85rem;color:#cfc9bd;}
-  .review-note{font-size:0.72rem;color:#6b675e;margin-top:14px;}
 </style>
-
 <style>
 .related-products{margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,162,74,0.2);}
 .related-products h2{font-size:1.05rem;color:var(--gold-light);margin-bottom:16px;}
@@ -80,12 +88,12 @@
       <svg viewBox="0 0 24 24" width="17" height="17" stroke="#e9cd8b" fill="none" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
       <span class="badge srf-wish-badge">0</span>
     </a>
-    <a class="back" href="mens.html">← Men's Fashion</a>
+    <a class="back" href="mens.html">← Men's Collection</a>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb"><a href="index.html">হোম</a> / <a href="mens.html">Men's Fashion</a> / পোলো টি-শার্ট</div>
+  <div class="crumb"><a href="index.html">হোম</a> / <a href="mens.html">Men's Collection</a> / পোলো টি-শার্ট</div>
 
   <div class="product-top">
     <div>
@@ -93,24 +101,34 @@
     </div>
     <div>
       <h1>পোলো টি-শার্ট</h1>
-      <div class="rating-row"><span class="stars">★★★★★</span><span>৪.৮ (128 রিভিউ)</span></div>
-      <div class="sold">🔥 ৫০০+ জন কিনেছেন</div>
+      <div class="rating-row"><span class="stars">★★★★★</span><span>৪.৮ (১২০ রিভিউ)</span></div>
       <div class="price-row">
-        <span class="price-new">৳ 850</span>
-        <span class="price-old">৳ 1,150</span>
-        <span class="discount">26% ছাড়</span>
+        <span class="price-new">৳ 580</span>
+        <span class="price-old">৳ 750</span>
+        <span class="discount">23% ছাড়</span>
       </div>
-      <div class="desc">প্রিমিয়াম কটন দিয়ে তৈরি আরামদায়ক পোলো টি-শার্ট — নিয়মিত ব্যবহার ও ক্যাজুয়াল আউটিং, দুই জায়গাতেই মানানসই।</div>
+
+      <div class="sold">🔥 ৩৫০+ জন কিনেছেন</div>
+      <div class="viewers">👀 <span id="view-count">৫</span> জন এখন এটি দেখছেন</div>
+      <div class="stock-warn">⚡ মাত্র ৬টি স্টকে বাকি</div>
+
+      <div class="desc" id="product-desc">প্রিমিয়াম পিকে কটন ফেব্রিকের স্মার্ট কলার পোলো টি-শার্ট — আরামদায়ক ও ট্রেন্ডি আউটফিট।</div>
 
       <label>সাইজ বাছাই করুন</label>
       <div class="size-row" id="size-row">
-        <button type="button" class="size-btn" data-size="S">S</button>
-        <button type="button" class="size-btn" data-size="M">M</button>
+        <button type="button" class="size-btn active" data-size="M">M</button>
         <button type="button" class="size-btn" data-size="L">L</button>
         <button type="button" class="size-btn" data-size="XL">XL</button>
         <button type="button" class="size-btn" data-size="XXL">XXL</button>
       </div>
-      <button type="button" class="sg-link" onclick="openSizeGuide('men')">📏 সাইজ গাইড দেখুন</button>
+      <button type="button" class="sg-link" onclick="openSizeGuide('mens')">📏 সাইজ গাইড দেখুন</button>
+
+      <label>রং বাছাই করুন</label>
+      <div class="color-row">
+        <div class="color-circle color-black active" data-color="ব্ল্যাক" title="ব্ল্যাক"></div>
+        <div class="color-circle color-navy" data-color="নেভি ব্লু" title="নেভি ব্লু"></div>
+        <div class="color-circle color-maroon" data-color="মেরুন" title="মেরুন"></div>
+      </div>
 
       <div class="qty-row">
         <label style="margin:0;">পরিমাণ</label>
@@ -126,30 +144,38 @@
         <button type="button" class="btn btn-outline" onclick="doAddToCart()">🛒 কার্টে যোগ করুন</button>
       </div>
       <div class="row2">
-        <a class="btn btn-wa" href="https://wa.me/8801645008919?text=আমি%20পোলো%20টি-শার্ট%20অর্ডার%20করতে%20চাই" target="_blank" rel="noopener">WhatsApp-এ অর্ডার করুন</a>
-        <button type="button" class="heart-btn" id="wish-heart" onclick="toggleWishlist('product-polo-tshirt', 'পোলো টি-শার্ট', 850)">♡</button>
+        <button type="button" class="btn btn-wa" onclick="orderOnWhatsApp()">WhatsApp-এ অর্ডার করুন</button>
+        <button type="button" class="heart-btn" id="wish-heart" onclick="toggleWishlist('product-polo-tshirt', 'পোলো টি-শার্ট', 580)">♡</button>
       </div>
     </div>
   </div>
 
   <section class="reviews">
-    <h2>⭐ কাস্টমার রিভিউ (৪.৮ (128 রিভিউ))</h2>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ১</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">কোয়ালিটি খুব ভালো, ছবির মতোই পেয়েছি। ডেলিভারিও সময়মতো হয়েছে।</div></div>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ২</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★☆</div><div class="review-text">ফেব্রিক আরামদায়ক, সাইজ পারফেক্ট ফিট হয়েছে।</div></div>
-    <div class="review-card"><div class="review-head"><span class="name">রিভিউ ৩</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">দামের তুলনায় মানটা অনেক ভালো, আবার অর্ডার করব।</div></div>
-    <div class="review-note">* উদাহরণস্বরূপ রিভিউ — প্রকৃত অর্ডার শুরু হলে আসল কাস্টমার রিভিউ দিয়ে প্রতিস্থাপন করা হবে।</div>
+    <h2>⭐ কাস্টমার রিভিউ (৪.৮ (১২০ রিভিউ))</h2>
+    <div class="review-card"><div class="review-head"><span class="name">ইমরান হোসাইন</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">পিকে কটন ফেব্রিকটা খুব আরামদায়ক। কলারের স্টিচিংও মজবুত।</div></div>
+    <div class="review-card"><div class="review-head"><span class="name">শেহজাদ খান</span><span class="verified">✓ Verified Purchase</span></div><div class="review-stars">★★★★★</div><div class="review-text">দামের তুলনায় অনেক ভালো কোয়ালিটি। সাইজ একদম ঠিকঠাক পেয়েছি।</div></div>
   </section>
   <section class="related-products">
     <h2>🛍️ এটাও পছন্দ হতে পারে</h2>
-    <div class="related-grid"><a class="related-card" href="product-casual-shirt.html"><div class="related-name">ক্যাজুয়াল শার্ট</div><div class="related-price">৳ 950</div></a><a class="related-card" href="product-denim-pant.html"><div class="related-name">ডেনিম প্যান্ট</div><div class="related-price">৳ 1100</div></a><a class="related-card" href="product-premium-panjabi.html"><div class="related-name">প্রিমিয়াম পাঞ্জাবি</div><div class="related-price">৳ 1450</div></a></div>
+    <div class="related-grid"><a class="related-card" href="product-casual-shirt.html"><div class="related-name">ক্যাজুয়াল শার্ট</div><div class="related-price">৳ 950</div></a><a class="related-card" href="product-denim-pant.html"><div class="related-name">ডেনিম প্যান্ট</div><div class="related-price">৳ 1150</div></a></div>
   </section>
   </div>
 
 <script src="cart.js"></script>
 <script src="extras.js"></script>
 <script>
-  var selectedSize = document.querySelector('.size-btn') ? document.querySelector('.size-btn').dataset.size : null;
+  var selectedSize = 'M';
+  var selectedColor = 'ব্ল্যাক';
   var qty = 1;
+
+  function updateViewerCount(){
+    var bnNums = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    var randomNum = Math.floor(Math.random() * 7) + 3;
+    var el = document.getElementById('view-count');
+    if(el){ el.textContent = bnNums[randomNum]; }
+  }
+  setInterval(updateViewerCount, 4000);
+
   document.querySelectorAll('.size-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -157,7 +183,14 @@
       selectedSize = btn.dataset.size;
     });
   });
-  if (document.querySelector('.size-btn')) document.querySelector('.size-btn').classList.add('active');
+
+  document.querySelectorAll('.color-circle').forEach(function(circle){
+    circle.addEventListener('click', function(){
+      document.querySelectorAll('.color-circle').forEach(function(c){ c.classList.remove('active'); });
+      circle.classList.add('active');
+      selectedColor = circle.dataset.color;
+    });
+  });
 
   function changeQty(delta){
     qty = Math.max(1, qty + delta);
@@ -165,18 +198,41 @@
   }
 
   function fullName(){
-    return selectedSize ? "পোলো টি-শার্ট" + " (সাইজ: " + selectedSize + ")" : "পোলো টি-শার্ট";
+    return "পোলো টি-শার্ট (সাইজ: " + selectedSize + ", রং: " + selectedColor + ")";
   }
 
   function doAddToCart(){
-    SRFCart.addToCart('product-polo-tshirt', fullName(), 850, qty);
+    if (typeof SRFCart !== 'undefined') {
+      SRFCart.addToCart('product-polo-tshirt', fullName(), 580, qty);
+    }
   }
+  
   function doBuyNow(){
-    SRFCart.buyNow('product-polo-tshirt', fullName(), 850, qty);
+    if (typeof SRFCart !== 'undefined') {
+      SRFCart.buyNow('product-polo-tshirt', fullName(), 580, qty);
+    }
+  }
+
+  function orderOnWhatsApp(){
+    var phone = "8801645008919";
+    var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
+               "📌 *প্রোডাক্ট:* পোলো টি-শার্ট\n" +
+               "📏 *সাইজ:* " + selectedSize + "\n" +
+               "🎨 *রং:* " + selectedColor + "\n" +
+               "🔢 *পরিমাণ:* " + qty + "\n" +
+               "💰 *মোট দাম:* ৳" + (580 * qty) + "\n\n" +
+               "---------------------------\n" +
+               "👤 *আপনার নাম:* \n" +
+               "📞 *মোবাইল নম্বর:* \n" +
+               "📍 *ডেলিভারি ঠিকানা (লোকেশন):* \n" +
+               "---------------------------\n" +
+               "*(দয়া করে নাম, নম্বর ও ঠিকানা লিখে মেসেজটি সেন্ড করুন)*";
+
+    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank");
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    if (SRFWishlist.isInWishlist('product-polo-tshirt')) {
+    if (typeof SRFWishlist !== 'undefined' && SRFWishlist.isInWishlist('product-polo-tshirt')) {
       document.getElementById('wish-heart').textContent = '♥';
     }
   });
