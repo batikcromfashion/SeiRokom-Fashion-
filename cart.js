@@ -31,12 +31,16 @@
   function addToCart(id, name, price, qty) {
     qty = qty || 1;
     price = Number(price) || 0;
+    
+    // Create unique ID based on item name (handles sizes & colors properly)
+    const uniqueId = id + "_" + name.replace(/\s+/g, "_");
     const cart = getCart();
-    const existing = cart.find((item) => item.id === id);
+    const existing = cart.find((item) => item.id === uniqueId || item.name === name);
+
     if (existing) {
       existing.qty += qty;
     } else {
-      cart.push({ id: id, name: name, price: price, qty: qty });
+      cart.push({ id: uniqueId, name: name, price: price, qty: qty });
     }
     saveCart(cart);
     showAddedToast(name);
@@ -45,7 +49,17 @@
   function buyNow(id, name, price, qty) {
     qty = qty || 1;
     price = Number(price) || 0;
-    saveCart([{ id: id, name: name, price: price, qty: qty }]);
+    const uniqueId = id + "_" + name.replace(/\s+/g, "_");
+    
+    // Add item to existing cart and redirect to checkout
+    const cart = getCart();
+    const existing = cart.find((item) => item.id === uniqueId || item.name === name);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      cart.push({ id: uniqueId, name: name, price: price, qty: qty });
+    }
+    saveCart(cart);
     window.location.href = "checkout.html";
   }
 
