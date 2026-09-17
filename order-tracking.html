@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>অর্ডার ট্র্যাকিং | SeiRokom Fashion</title>
+<style>
+:root{--gold:#c9a24a;--light:#f0d58f;--bg:#0b0b0b;--card:#151515;--muted:#aaa39a;--green:#35d27a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#080808,#17130c 55%,#0b0b0b);color:#faf8f4;font-family:Arial,"Noto Sans Bengali",sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(201,162,74,.25)}
+.head,.wrap{width:min(680px,calc(100% - 28px));margin:auto}.head{padding:12px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-weight:700;color:var(--light);font-size:1rem}.back{color:#fff;text-decoration:none;border:1px solid rgba(201,162,74,.4);padding:6px 12px;border-radius:20px;font-size:.82rem}
+.wrap{padding:18px 0 60px}h1{font-size:1.65rem;margin:22px 0 4px;color:var(--light)}.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+.card{background:linear-gradient(145deg,#171717,#101010);border:1px solid rgba(201,162,74,.3);border-radius:18px;padding:18px;box-shadow:0 12px 35px rgba(0,0,0,.25)}
+label{display:block;color:#ddd4c6;font-size:.86rem;margin-bottom:6px}input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(201,162,74,.35);background:#0d0d0d;color:#fff;font:inherit;outline:none}button{width:100%;margin-top:12px;padding:13px;border:0;border-radius:28px;background:linear-gradient(135deg,var(--gold),var(--light));color:#111;font-weight:700;font-size:1rem;cursor:pointer}
+#result{margin-top:16px}.empty{text-align:center;color:var(--muted);padding:12px 4px;line-height:1.7}.order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px}.id{font-weight:700;color:var(--light)}.date{color:var(--muted);font-size:.8rem}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:20px 0 8px}.step{text-align:center;font-size:.68rem;color:#777}.dot{width:25px;height:25px;border-radius:50%;border:2px solid #555;margin:0 auto 6px;display:grid;place-items:center;font-size:.72rem}.step.done{color:#bfeecf}.step.done .dot{border-color:var(--green);background:rgba(53,210,122,.12);color:var(--green)}
+.note{font-size:.78rem;color:var(--muted);margin-top:14px;line-height:1.7}.history{margin-top:16px}.history h2{font-size:1rem;color:var(--light);margin:0 0 10px}.history button{background:#191919;color:#eee;border:1px solid rgba(201,162,74,.25);text-align:left;margin-top:6px;font-size:.84rem}footer{text-align:center;color:#777;font-size:.75rem;margin-top:24px}
+@media(max-width:480px){.wrap,.head{width:calc(100% - 20px)}.steps{gap:2px}.step{font-size:.58rem}.dot{width:22px;height:22px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="logo">SR · SEIROKOM FASHION</div><a class="back" href="index.html">← শপিংয়ে ফিরুন</a></div></header>
+<main class="wrap">
+<h1>📦 অর্ডার ট্র্যাকিং</h1>
+<div class="sub">আপনার Order ID দিয়ে অর্ডারের বর্তমান স্ট্যাটাস দেখুন।</div>
+<section class="card">
+<label for="orderId">Order ID</label>
+<input id="orderId" type="text" placeholder="যেমন: SRF-260917-1234" autocomplete="off">
+<button id="trackBtn" type="button">🔎 অর্ডার ট্র্যাক করুন</button>
+<div id="result"></div>
+</section>
+<section class="card history" id="historyBox" style="display:none">
+<h2>🕘 আপনার সাম্প্রতিক Order ID</h2><div id="historyList"></div>
+</section>
+<footer>SeiRokom Fashion — Style For Everyone ❤️</footer>
+</main>
+<script src="cart.js"></script>
+<script>
+(function(){
+var states=['Order Confirmed','Processing','Packed','Shipped','Delivered'];
+var labels=['অর্ডার নিশ্চিত','প্রসেসিং','প্যাক করা','শিপড','ডেলিভার্ড'];
+var input=document.getElementById('orderId'),result=document.getElementById('result');
+function esc(s){return String(s).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
+function show(id){
+id=(id||'').trim().toUpperCase();
+if(!id){result.innerHTML='<div class="empty">দয়া করে Order ID লিখুন।</div>';return}
+var orders=window.SRFCart&&SRFCart.getMyOrders?SRFCart.getMyOrders():[];
+var found=orders.find(function(o){return String(o.orderId||'').toUpperCase()===id});
+if(!found){result.innerHTML='<div class="empty">এই ডিভাইসে Order ID-টি পাওয়া যায়নি। সঠিক Order ID দিয়ে আবার চেষ্টা করুন।<br>Server-side tracking পরে Firebase/backend যুক্ত করা যাবে।</div>';return}
+var html='<div class="order-head"><span class="id">'+esc(found.orderId)+'</span><span class="date">'+new Date(found.date).toLocaleString('bn-BD')+'</span></div>';
+html+='<div class="steps">'+states.map(function(s,i){return '<div class="step '+(i===0?'done':'')+'"><div class="dot">'+(i===0?'✓':i+1)+'</div>'+labels[i]+'</div>'}).join('')+'</div>';
+html+='<div class="note">বর্তমানে সংরক্ষিত অর্ডার রেকর্ড অনুযায়ী স্ট্যাটাস: <b style="color:#bfeecf">অর্ডার নিশ্চিত</b>। Firebase/backend যুক্ত হলে Processing, Packed, Shipped ও Delivered status প্রশাসনিকভাবে আপডেট করা যাবে।</div>';
+result.innerHTML=html}
+function history(){
+var box=document.getElementById('historyBox'),list=document.getElementById('historyList');
+var orders=window.SRFCart&&SRFCart.getMyOrders?SRFCart.getMyOrders():[];
+if(!orders.length)return;
+box.style.display='block';
+list.innerHTML=orders.slice(0,5).map(function(o){return '<button type="button" data-id="'+esc(o.orderId)+'">📦 '+esc(o.orderId)+'</button>'}).join('');
+list.querySelectorAll('button').forEach(function(b){b.onclick=function(){input.value=this.dataset.id;show(this.dataset.id)}})}
+document.getElementById('trackBtn').onclick=function(){show(input.value)};
+input.onkeydown=function(e){if(e.key==='Enter')show(input.value)};
+var q=new URLSearchParams(location.search).get('id');history();if(q){input.value=q;show(q)}
+})();
+</script>
+</body>
+</html>
