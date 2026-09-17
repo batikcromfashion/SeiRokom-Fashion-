@@ -54,9 +54,11 @@
       if (isInWishlist(id)) {
         el.classList.add("active");
         el.textContent = "♥";
+        el.style.color = "#c9a24a";
       } else {
         el.classList.remove("active");
         el.textContent = "♡";
+        el.style.color = "";
       }
     });
   }
@@ -121,21 +123,21 @@
     const overlay = document.createElement("div");
     overlay.id = "srf-sizeguide-modal";
     overlay.style.cssText =
-      "display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;" +
-      "align-items:center;justify-content:center;padding:20px;font-family:'Hind Siliguri',sans-serif;";
+      "display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000;" +
+      "align-items:center;justify-content:center;padding:20px;font-family:'Hind Siliguri',sans-serif;backdrop-filter:blur(3px);";
     overlay.innerHTML =
       '<div style="background:#161616;border:1px solid rgba(201,162,74,0.35);border-radius:14px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;padding:22px;color:#faf8f4;position:relative;">' +
-        '<button id="srf-sg-close" style="position:absolute;top:14px;right:14px;background:none;border:none;color:#a8a196;font-size:1.3rem;cursor:pointer;">×</button>' +
+        '<button id="srf-sg-close" style="position:absolute;top:14px;right:14px;background:none;border:none;color:#a8a196;font-size:1.5rem;cursor:pointer;line-height:1;">×</button>' +
         '<h2 style="color:#e9cd8b;font-size:1.2rem;margin:0 0 14px;">📏 সাইজ গাইড</h2>' +
         '<div id="srf-sg-tabs" style="display:flex;gap:8px;margin-bottom:16px;"></div>' +
         '<div id="srf-sg-chart"></div>' +
         '<div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">' +
           '<h3 style="color:#e9cd8b;font-size:0.95rem;margin:0 0 10px;">আপনার সাইজ বের করুন</h3>' +
           '<label style="font-size:0.82rem;color:#cfc9bd;">উচ্চতা (সেমি)</label>' +
-          '<input id="srf-sg-height" type="number" placeholder="যেমন: 170" style="width:100%;padding:9px 12px;margin:6px 0 10px;border-radius:8px;border:1px solid rgba(201,162,74,0.3);background:#0d0d0d;color:#faf8f4;">' +
+          '<input id="srf-sg-height" type="number" placeholder="যেমন: 170" style="width:100%;padding:9px 12px;margin:6px 0 10px;border-radius:8px;border:1px solid rgba(201,162,74,0.3);background:#0d0d0d;color:#faf8f4;font-family:inherit;">' +
           '<label style="font-size:0.82rem;color:#cfc9bd;">ওজন (কেজি)</label>' +
-          '<input id="srf-sg-weight" type="number" placeholder="যেমন: 65" style="width:100%;padding:9px 12px;margin:6px 0 12px;border-radius:8px;border:1px solid rgba(201,162,74,0.3);background:#0d0d0d;color:#faf8f4;">' +
-          '<button id="srf-sg-calc" style="width:100%;padding:11px;border-radius:24px;border:none;background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;cursor:pointer;">সাইজ দেখুন</button>' +
+          '<input id="srf-sg-weight" type="number" placeholder="যেমন: 65" style="width:100%;padding:9px 12px;margin:6px 0 12px;border-radius:8px;border:1px solid rgba(201,162,74,0.3);background:#0d0d0d;color:#faf8f4;font-family:inherit;">' +
+          '<button id="srf-sg-calc" style="width:100%;padding:11px;border-radius:24px;border:none;background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;cursor:pointer;font-family:inherit;">সাইজ দেখুন</button>' +
           '<div id="srf-sg-result" style="margin-top:12px;text-align:center;font-size:1rem;color:#e9cd8b;font-weight:600;"></div>' +
         '</div>' +
       '</div>';
@@ -181,14 +183,14 @@
     let rowsHtml = chart.rows
       .map(
         (r) =>
-          "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td><td>" + r[3] + "</td></tr>"
+          "<tr><td style=\"padding:6px 4px;\">" + r[0] + "</td><td style=\"padding:6px 4px;\">" + r[1] + "</td><td style=\"padding:6px 4px;\">" + r[2] + "</td><td style=\"padding:6px 4px;\">" + r[3] + "</td></tr>"
       )
       .join("");
     chartEl.innerHTML =
       '<div style="font-size:0.85rem;color:#cfc9bd;margin-bottom:8px;">' + chart.label + "</div>" +
       '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">' +
       '<thead><tr style="color:#e9cd8b;border-bottom:1px solid rgba(201,162,74,0.3);">' +
-      "<th style=\"text-align:left;padding:6px 4px;\">সাইজ</th><th style=\"text-align:left;padding:6px 4px;\">ইঞ্চি</th><th style=\"text-align:left;padding:6px 4px;\">বুক(সেমি)</th><th style=\"text-align:left;padding:6px 4px;\">কোমর(সেমি)</th></tr></thead>" +
+      '<th style="text-align:left;padding:6px 4px;">সাইজ</th><th style="text-align:left;padding:6px 4px;">ইঞ্চি</th><th style="text-align:left;padding:6px 4px;">বুক(সেমি)</th><th style="text-align:left;padding:6px 4px;">কোমর(সেমি)</th></tr></thead>' +
       "<tbody>" + rowsHtml + "</tbody></table>";
   }
 
