@@ -1,8 +1,23 @@
-const CACHE_NAME = 'seirokom-fashion-v3';
+const CACHE_NAME = 'seirokom-fashion-v4';
 
 const APP_SHELL = [
   './',
   './index.html',
+  './cart.html',
+  './checkout.html',
+  './wishlist.html',
+  './cart.js',
+  './extras.js',
+  './product-kids-set.html',
+  './product-boys-tshirt.html',
+  './product-casual-shirt.html',
+  './product-denim-pant.html',
+  './product-girls-frock.html',
+  './product-kurti.html',
+  './product-ladies-3-piece.html',
+  './product-polo-tshirt.html',
+  './product-saree.html',
+  './product-premium-panjabi.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
