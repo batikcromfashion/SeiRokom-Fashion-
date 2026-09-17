@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | SeiRokom Fashion</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { margin: 0; background-color: #f4f6f9; color: #333; }
+    header { background: #1a1a1a; color: #c9a24a; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { margin: 0; font-size: 20px; }
+    .container { padding: 20px; max-width: 1200px; margin: auto; }
+    .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
+    th { background: #f8f9fa; }
+    .status-select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    .btn-refresh { background: #c9a24a; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .btn-refresh:hover { background: #b08b38; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SeiRokom Fashion — Admin Panel</h1>
+    <button class="btn-refresh" onclick="loadOrders()">🔄 Refresh Orders</button>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>All Customer Orders</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Phone & Address</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-orders-body">
+            <tr><td colspan="7">অর্ডার লোড হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db, collection, getDocs, doc, updateDoc, query, orderBy } from "./firebase-config.js";
+
+    const statusOptions = ["Pending", "Confirmed", "Processing", "Packed", "Shipped", "Delivered", "Cancelled"];
+
+    async function loadOrders() {
+      const tbody = document.getElementById("admin-orders-body");
+      tbody.innerHTML = "<tr><td colspan='7'>অর্ডার লোড হচ্ছে...</td></tr>";
+
+      try {
+        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          tbody.innerHTML = "<tr><td colspan='7'>কোনো অর্ডার পাওয়া যায়নি।</td></tr>";
+          return;
+        }
+
+        tbody.innerHTML = "";
+
+        querySnapshot.forEach((documentSnap) => {
+          const order = documentSnap.data();
+          const docId = documentSnap.id;
+
+          const tr = document.createElement("tr");
+
+          let selectOptions = statusOptions.map(st => 
+            `<option value="${st}" ${order.status === st ? 'selected' : ''}>${st}</option>`
+          ).join("");
+
+          tr.innerHTML = `
+            <td><strong>${order.orderId || 'N/A'}</strong></td>
+            <td>${order.customer?.name || 'N/A'}</td>
+            <td>${order.customer?.phone || ''}<br><small>${order.customer?.address || ''}</small></td>
+            <td>৳${order.totalAmount || 0}</td>
+            <td>${order.paymentMethod || 'COD'}</td>
+            <td>
+              <select class="status-select" id="status-${docId}">
+                ${selectOptions}
+              </select>
+            </td>
+            <td>
+              <button class="btn-refresh" style="padding:4px 8px; font-size:12px;" onclick="updateOrderStatus('${docId}')">Save</button>
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+        });
+
+      } catch (error) {
+        console.error("Error fetching orders: ", error);
+        tbody.innerHTML = "<tr><td colspan='7' style='color:red;'>অর্ডার আনতে সমস্যা হয়েছে। Rules চেক করুন।</td></tr>";
+      }
+    }
+
+    async function updateOrderStatus(docId) {
+      const newStatus = document.getElementById(`status-${docId}`).value;
+      try {
+        const orderRef = doc(db, "orders", docId);
+        await updateDoc(orderRef, { status: newStatus });
+        alert("অর্ডার স্ট্যাটাস সফলভাবে আপডেট হয়েছে!");
+      } catch (e) {
+        console.error("Update failed:", e);
+        alert("স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে।");
+      }
+    }
+
+    window.loadOrders = loadOrders;
+    window.updateOrderStatus = updateOrderStatus;
+
+    loadOrders();
+  </script>
+</body>
+</html>
