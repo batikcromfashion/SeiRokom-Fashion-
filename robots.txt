@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://seirokomfashion.com/sitemap.xml
+Sitemap: https://batikcromfashion.github.io/SeiRokom-Fashion-/sitemap.xml
