@@ -46,65 +46,6 @@
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://batikcromfashion.github.io/SeiRokom-Fashion-/#website",
-      "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/",
-      "name": "SeiRokom Fashion",
-      "alternateName": "সেইরকম ফ্যাশন",
-      "inLanguage": "bn-BD"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://batikcromfashion.github.io/SeiRokom-Fashion-/#webpage",
-      "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/",
-      "name": "SeiRokom Fashion — Style For Everyone",
-      "isPartOf": {
-        "@id": "https://batikcromfashion.github.io/SeiRokom-Fashion-/#website"
-      },
-      "about": {
-        "@id": "https://batikcromfashion.github.io/SeiRokom-Fashion-/#store"
-      },
-      "inLanguage": "bn-BD"
-    },
-    {
-      "@type": "ItemList",
-      "@id": "https://batikcromfashion.github.io/SeiRokom-Fashion-/#collections",
-      "name": "SeiRokom Fashion Collections",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Men's Fashion",
-          "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/mens.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Women's Fashion",
-          "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/womens.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Kids Fashion",
-          "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/kids.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "New Collection",
-          "url": "https://batikcromfashion.github.io/SeiRokom-Fashion-/new-collection.html"
-        }
-      ]
-    }
-  ]
-}
-</script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -1949,52 +1890,6 @@ alt="" loading="lazy"></noscript>
     to{opacity:.92;transform:translateY(0)}
   }
 
-
-
-  /* ---------- SEO-friendly size + delivery info panel ---------- */
-  .srf-info-panel{
-    background:#fff;
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    padding:52px 0;
-  }
-  .srf-info-grid{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:14px;
-  }
-  .srf-info-card{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:16px 15px;
-    background:var(--cream);
-    border:1px solid var(--border);
-    border-radius:14px;
-    color:var(--ink);
-    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
-  }
-  .srf-info-card:hover{
-    transform:translateY(-3px);
-    border-color:var(--gold);
-    box-shadow:0 10px 24px rgba(0,0,0,.07);
-  }
-  .srf-info-icon{
-    width:42px;height:42px;flex:0 0 42px;
-    display:grid;place-items:center;
-    border-radius:50%;
-    background:#fff;
-    border:1px solid var(--border);
-    font-size:20px;
-  }
-  .srf-info-card span:nth-child(2){min-width:0;flex:1;}
-  .srf-info-card b{display:block;font-size:.88rem;margin-bottom:3px;}
-  .srf-info-card small{display:block;color:var(--muted);font-size:.68rem;line-height:1.55;}
-  .srf-info-card>strong{color:var(--gold-deep);font-size:1.05rem;flex:0 0 auto;}
-  @media(max-width:760px){
-    .srf-info-panel{padding:42px 0;}
-    .srf-info-grid{grid-template-columns:1fr;}
-  }
 </style>
 <style id="final-site-audit-animation">
 a,button{-webkit-tap-highlight-color:transparent}
@@ -2483,7 +2378,7 @@ body.sr-modal-active #srMainHeader{
   #srMainHeader .btn-fb .social-btn-text b{font-size:.68rem !important;}
   #srMainHeader .srf-cart-link{width:40px !important;height:40px !important;}
   #srMainHeader .srf-cart-link svg{width:19px !important;height:19px !important;}
-  #srMainHeader .mobile-search-row{margin-left:8px;margin-right:8px;margin-top:6px;margin-bottom:8px;}
+  #srMainHeader .mobile-search-row{margin-left:8px;margin-right:8px;margin-top:6px;margin-bottom:0;padding-bottom:8px;}
   #srMainHeader .mobile-search-bar{min-height:44px;padding:8px 12px;}
 }
 @media(max-width:340px){
@@ -2565,7 +2460,10 @@ body.sr-modal-active #srMainHeader{
   #srMainHeader .mobile-search-row{margin-left:8px !important;margin-right:8px !important;gap:6px !important;}
   #srMainHeader .hamburger-btn{flex-basis:42px !important;width:42px !important;height:42px !important;}
   .hero .hero-eyebrow-row{grid-template-columns:1fr !important;gap:8px !important;align-items:stretch !important;}
-  .hero .hero-contact-stack,.hero .hero-contact-stack .hero-youtube{width:100% !important;min-width:0 !important;}
+  .hero .hero-contact-stack,.hero .hero-contact-stack .hero-youtube{width:50% !important;min-width:0 !important;}
+  .hero .hero-contact-stack .hero-youtube{height:auto !important;min-height:44px;padding:10px 8px !important;white-space:nowrap !important;line-height:1.2;font-size:.82rem !important;gap:6px !important;text-align:center;}
+  .hero .hero-contact-stack .hero-youtube .wa-btn-extra{display:none;}
+  .hero .hero-contact-stack .hero-youtube svg{width:15px !important;height:15px !important;}
 }
 </style>
 
@@ -2621,44 +2519,13 @@ body.sr-modal-active #srMainHeader{
 @media(max-width:600px){.srf-mvp{padding:42px 0}.srf-mvp-grid{grid-template-columns:repeat(2,1fr)}.srf-form-grid{grid-template-columns:1fr}.srf-field.full{grid-column:auto}.srf-status{grid-template-columns:1fr 1fr}.srf-status-step:last-child{grid-column:1/-1}.srf-action{flex:1 1 145px}.srf-dialog-body{padding:15px}.srf-flash{align-items:flex-start;flex-direction:column}}
 @media(max-width:370px){.srf-mvp-grid{grid-template-columns:1fr}.srf-mvp .wrap{padding:0 12px}}
 </style>
-
-<style id="srf-performance-polish">
-/* ===== SeiRokom Fashion — lightweight performance polish =====
-   Targeted additions only; existing features/layout remain intact. */
-
-/* Avoid rendering below-the-fold sections until they are needed. */
-@supports (content-visibility:auto){
-  .sr-content-section,
-  .products-section,
-  .footer-section{
-    content-visibility:auto;
-    contain-intrinsic-size: 700px;
-  }
-}
-
-/* Keep media decoding/loading work off the critical path where possible. */
-img[loading="lazy"]{
-  content-visibility:auto;
-}
-
-/* Reduce animation work for visitors who request less motion. */
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{
-    animation-duration:.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;
-    scroll-behavior:auto !important;
-  }
-}
-</style>
-
 </head>
 <body>
 
 <!-- SeiRokom Fashion PWA Splash Screen -->
 <div id="seirokomSplash" role="status" aria-label="SeiRokom Fashion লোড হচ্ছে">
   <div class="sr-splash-inner">
-    <img class="sr-splash-logo" src="icon-192.png" alt="SeiRokom Fashion" loading="lazy" decoding="async">
+    <img class="sr-splash-logo" src="icon-192.png" alt="SeiRokom Fashion">
     <div class="sr-splash-title">SeiRokom Fashion</div>
     <div class="sr-splash-sub">Style For Everyone ❤️🇧🇩</div>
     <div class="sr-splash-loader" aria-hidden="true"><span></span></div>
@@ -3012,7 +2879,7 @@ img[loading="lazy"]{
         <div class="hero-contact-stack">
           <a href="https://wa.me/8801645008919" class="hero-youtube" target="_blank" rel="noopener noreferrer" style="background:#25D366;" aria-label="WhatsApp-এ যোগাযোগ করুন">
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h0a7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.4-5.64zM12.05 18.4a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1-3.5A6.6 6.6 0 1112.05 18.4z"/></svg>
-            <span class="social-btn-text"><b>WhatsApp-এ যোগাযোগ করুন</b></span>
+            <span class="social-btn-text"><b>WhatsApp<span class="wa-btn-extra">-এ যোগাযোগ করুন</span></b></span>
           </a>
         </div>
       </div>
@@ -3283,35 +3150,6 @@ img[loading="lazy"]{
 </section>
 
 
-
-<section class="srf-info-panel" aria-labelledby="srfInfoTitle">
-  <div class="wrap">
-    <div class="section-head" style="margin-bottom:24px;">
-      <div class="kicker">সহায়তা</div>
-      <h2 id="srfInfoTitle">📏 সাইজ ও 🚚 ডেলিভারি তথ্য</h2>
-      <p style="font-size:.92rem;color:var(--muted);margin-top:10px;">
-        অর্ডারের আগে সঠিক সাইজ, ডেলিভারি সুবিধা ও প্রযোজ্য তথ্য দেখে নিন।
-      </p>
-    </div>
-    <div class="srf-info-grid">
-      <a class="srf-info-card" href="size-guide.html">
-        <span class="srf-info-icon">📏</span>
-        <span><b>সাইজ গাইড</b><small>পোশাকভেদে মাপ আলাদা হতে পারে। অর্ডারের আগে সাইজ চার্ট দেখে নিন।</small></span>
-        <strong>→</strong>
-      </a>
-      <a class="srf-info-card" href="shipping-info.html">
-        <span class="srf-info-icon">🚚</span>
-        <span><b>ডেলিভারি তথ্য</b><small>আপনার এলাকা অনুযায়ী প্রযোজ্য ডেলিভারি চার্জ ও সময় অর্ডারের আগে নিশ্চিত করুন।</small></span>
-        <strong>→</strong>
-      </a>
-      <a class="srf-info-card" href="return-policy.html">
-        <span class="srf-info-icon">🔄</span>
-        <span><b>রিটার্ন নীতি</b><small>পণ্য ফেরত বা পরিবর্তনের শর্ত জানতে Return Policy দেখুন।</small></span>
-        <strong>→</strong>
-      </a>
-    </div>
-  </div>
-</section>
 
 <section id="products" style="background:var(--cream); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
@@ -4889,10 +4727,10 @@ function openTrustFallbackModal(detail){
   <button id="notifyBtn" style="padding:16px 32px;background:linear-gradient(135deg,#ffefb4,#c9a24a);color:#111;border:none;border-radius:30px;font-size:16px;font-weight:700;box-shadow:0 8px 24px rgba(201,162,74,.4);cursor:pointer;">🔔 Notification চালু করুন</button>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js" onerror="alert('Firebase app script load failed!')" defer></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js" onerror="alert('Firebase messaging script load failed!')" defer></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js" defer></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js" onerror="alert('Firebase firestore script load failed!')" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js" onerror="alert('Firebase app script load failed!')"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js" onerror="alert('Firebase messaging script load failed!')"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js" onerror="alert('Firebase firestore script load failed!')"></script>
 
 <script>
 (function(){
@@ -5158,8 +4996,8 @@ window.srCopyLink=function(forApp){
 })();
 </script>
 
-<script src="cart.js" defer></script>
-<script src="extras.js" defer></script>
+<script src="cart.js"></script>
+<script src="extras.js"></script>
   <!-- Partner benefit details modal -->
   <div class="partner-benefit-overlay" id="partnerBenefitOverlay" role="dialog" aria-modal="true" aria-labelledby="partnerBenefitTitle">
     <div class="partner-benefit-modal">
