@@ -22,6 +22,12 @@
   @media(min-width:720px){ .product-top{grid-template-columns:1fr 1fr;} }
   .ph-img{position:relative;background:#161616;border:1px solid rgba(201,162,74,0.25);border-radius:14px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
   .ph-badge{color:#8a857a;font-size:0.85rem;}
+  .gallery-main{position:relative;background:#161616;border:1px solid rgba(201,162,74,0.25);border-radius:14px;aspect-ratio:1/1;overflow:hidden;}
+  .gallery-main img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery-thumbs{display:flex;gap:10px;margin-top:10px;}
+  .gallery-thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;opacity:0.7;transition:0.2s ease;}
+  .gallery-thumbs img.active{border-color:var(--gold);opacity:1;}
+  .gallery-thumbs img:hover{opacity:1;}
   h1{color:var(--gold-light);font-size:1.5rem;margin:0 0 8px;}
   .rating-row{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:#cfc9bd;margin-bottom:10px;}
   .stars{color:var(--gold);letter-spacing:1px;}
@@ -97,7 +103,13 @@
 
   <div class="product-top">
     <div>
-      <div class="ph-img"><span class="ph-badge">ছবি বসবে</span><svg viewBox="0 0 24 24" width="70" height="70" stroke="#e9cd8b" fill="none" stroke-width="1.2"><path d="M8 3l4 3 4-3 3 4-2 2v11H5V9L3 7l5-4z"/></svg></div>
+      <div class="gallery-main"><img id="main-img" src="images/casual-shirt-1.jpg" alt="ক্যাজুয়াল শার্ট"></div>
+      <div class="gallery-thumbs">
+        <img src="images/casual-shirt-1.jpg" class="active" onclick="changeMainImg(this)">
+        <img src="images/casual-shirt-2.jpg" onclick="changeMainImg(this)">
+        <img src="images/casual-shirt-3.jpg" onclick="changeMainImg(this)">
+        <img src="images/casual-shirt-4.jpg" onclick="changeMainImg(this)">
+      </div>
     </div>
     <div>
       <h1>ক্যাজুয়াল শার্ট</h1>
@@ -164,6 +176,12 @@
 <script src="cart.js"></script>
 <script src="extras.js"></script>
 <script>
+  function changeMainImg(el){
+    document.getElementById('main-img').src = el.src;
+    document.querySelectorAll('.gallery-thumbs img').forEach(function(t){ t.classList.remove('active'); });
+    el.classList.add('active');
+  }
+
   var selectedSize = 'M';
   var selectedColor = 'নেভি ব্লু';
   var qty = 1;
