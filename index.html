@@ -4807,42 +4807,52 @@ function openTrustFallbackModal(detail){
     var messaging = firebase.messaging();
     var db = firebase.firestore();
 
-    var btn = document.getElementById("notifyBtn");
-    if (!btn) {
-      alert("সমস্যা: notifyBtn খুঁজে পাওয়া যায়নি!");
-    } else {
-      btn.addEventListener("click", function () {
-        Notification.requestPermission().then(function (permission) {
-          if (permission !== "granted") {
-            alert("নোটিফিকেশন পারমিশন দেওয়া হয়নি।");
-            return;
-          }
-          navigator.serviceWorker.register("/SeiRokom-Fashion-/firebase-messaging-sw.js")
-            .then(function (registration) {
-              return messaging.getToken({
-                vapidKey: "BPCcF96lHtq3c9whbyrqvJ70VSTd1nXFQAzF2-C9HyZQ_G4XpNhIrk_wXMzABQVVlGB8JORGXCgNTCdXysYQaZM",
-                serviceWorkerRegistration: registration
-              });
-            })
-            .then(function (token) {
-              if (!token) {
-                alert("টোকেন পাওয়া যায়নি।");
-                return;
-              }
-              return db.collection("subscribers").doc(token).set({
-                token: token,
-                subscribedAt: new Date().toISOString()
-              }).then(function () {
-                btn.textContent = "🔔 Subscribed!";
-                btn.disabled = true;
-              });
-            })
-            .catch(function (err) {
-              console.error(err);
-              alert("সমস্যা হয়েছে, একটু পরে আবার চেষ্টা করুন।");
+    /* আসল Firebase Cloud Messaging সাবস্ক্রাইব ফাংশন — এটাই একমাত্র সত্যিকারের
+       ব্যাকএন্ড-সংযুক্ত Notification লজিক। নিচের notifyBtn এবং পপআপ Notification
+       বাটন দুটোই একই ফাংশন ব্যবহার করে, যাতে দুই জায়গাতেই একই রকম আসল
+       সাবস্ক্রিপশন কাজ করে (আলাদা কোনো ডামি/ডেমো লজিক নয়)। */
+    window.srFcmSubscribe = function(cb){
+      cb = cb || {};
+      function fail(msg, err){ if(err) console.error(err); if(cb.onError) cb.onError(msg); }
+      if(!('Notification' in window) || !('serviceWorker' in navigator)){
+        fail('এই ব্রাউজারে Notification/Service Worker সুবিধা সমর্থিত নয়।');
+        return;
+      }
+      if(Notification.permission === 'denied'){
+        fail('Notification ব্লক করা আছে — ব্রাউজার সেটিংস থেকে অনুমতি দিন।');
+        return;
+      }
+      Notification.requestPermission().then(function (permission) {
+        if (permission !== "granted") {
+          fail('নোটিফিকেশন পারমিশন দেওয়া হয়নি।');
+          return;
+        }
+        navigator.serviceWorker.register("/SeiRokom-Fashion-/firebase-messaging-sw.js")
+          .then(function (registration) {
+            return messaging.getToken({
+              vapidKey: "BPCcF96lHtq3c9whbyrqvJ70VSTd1nXFQAzF2-C9HyZQ_G4XpNhIrk_wXMzABQVVlGB8JORGXCgNTCdXysYQaZM",
+              serviceWorkerRegistration: registration
             });
-        }).catch(function (err) {
-          console.error(err);
+          })
+          .then(function (token) {
+            if (!token) { fail('টোকেন পাওয়া যায়নি।'); return; }
+            return db.collection("subscribers").doc(token).set({
+              token: token,
+              subscribedAt: new Date().toISOString()
+            }).then(function () {
+              if(cb.onSubscribed) cb.onSubscribed();
+            });
+          })
+          .catch(function (err) { fail('সমস্যা হয়েছে, একটু পরে আবার চেষ্টা করুন।', err); });
+      }).catch(function (err) { fail('সমস্যা হয়েছে, একটু পরে আবার চেষ্টা করুন।', err); });
+    };
+
+    var btn = document.getElementById("notifyBtn");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        window.srFcmSubscribe({
+          onSubscribed: function(){ btn.textContent = "🔔 Subscribed!"; btn.disabled = true; },
+          onError: function(msg){ alert(msg); }
         });
       });
     }
@@ -5395,6 +5405,200 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
   var mo=new MutationObserver(sync);
   mo.observe(document.body,{attributes:true,attributeFilter:['class','style'],subtree:true});
   sync();
+})();
+</script>
+<style id="sr-quickmenu-hide-until-ai">
+  /* Homepage-এ গোল চিহ্নের জায়গায় থ্রি-ডট (quick-menu) বাটন লুকানো থাকবে।
+     "Your Shopping Assistant" চ্যাট খোলার পরই এটি চ্যাটের ভেতরে, "সাইজ"
+     চিপের পাশের ফাঁকা গোল জায়গায় (chips সারির উপরে-ডানে) বসে যাবে।
+     চ্যাট বন্ধ করলে আবার আগের মতো লুকিয়ে যাবে। */
+  #quickMenuTrigger{display:none !important;}
+  #srAiChips{position:relative;}
+  #quickMenuTrigger.qm-inline{
+    display:flex !important; position:absolute !important;
+    top:6px !important; right:6px !important; bottom:auto !important; left:auto !important;
+    width:34px !important; height:34px !important; z-index:5;
+  }
+  #quickMenuTrigger.qm-inline svg{width:15px;height:15px;}
+  #quickMenuTrigger.qm-inline::before{display:none;}
+
+  /* চ্যাট খোলা থাকা অবস্থায় বাকি ৪টি ভাসমান বাটন (Your Shopping Assistant,
+     Your Offers, Share, App) সম্পূর্ণ লুকানো থাকবে — চ্যাটের ভেতরটা পরিষ্কার
+     ও সুন্দর দেখাবে। চ্যাট বন্ধ করলেই এরা আবার আগের মতো ফিরে আসবে। */
+  body.sr-ai-open #srAiFab,
+  body.sr-ai-open #srQuick4Btn,
+  body.sr-ai-open #srShareBar{
+    display:none !important;
+  }
+</style>
+<script id="sr-quickmenu-hide-until-ai-js">
+(function(){
+  'use strict';
+  var sheet=document.getElementById('srAiSheet');
+  var trigger=document.getElementById('quickMenuTrigger');
+  var chips=document.getElementById('srAiChips');
+  if(!sheet || !trigger) return;
+  function sync(){
+    var isOpen=sheet.classList.contains('open');
+    document.body.classList.toggle('sr-ai-open', isOpen);
+    if(isOpen){
+      if(chips && trigger.parentNode!==chips) chips.appendChild(trigger);
+      trigger.classList.add('qm-inline');
+    } else {
+      trigger.classList.remove('qm-inline');
+      if(trigger.parentNode!==document.body) document.body.appendChild(trigger);
+    }
+  }
+  var mo=new MutationObserver(sync);
+  mo.observe(sheet,{attributes:true,attributeFilter:['class']});
+  sync();
+})();
+</script>
+<style id="sr-help-payment-notify-style">
+  /* ===== Ai Help Centre / Payment Method / Notification — popup + floating বাটন ===== */
+  .sr-simple-overlay{display:none;position:fixed;inset:0;z-index:2147483200;background:rgba(2,7,18,.78);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px;}
+  .sr-simple-overlay.open{display:flex;}
+  .sr-simple-modal{position:relative;width:min(430px,100%);max-height:86vh;overflow:auto;background:linear-gradient(160deg,#15100a,#221a10 60%,#15100a);color:#fff;border:1px solid rgba(255,215,100,.35);border-radius:22px;padding:22px 20px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .sr-simple-modal h3{margin:0 0 10px;color:#ffe7a0;font-size:1.15rem;}
+  .sr-simple-modal p{margin:0 0 12px;opacity:.9;line-height:1.6;font-size:.92rem;}
+  .sr-simple-close{position:absolute;top:10px;right:12px;background:transparent;border:0;color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;opacity:.75;}
+  .sr-simple-close:hover{opacity:1;}
+  .sr-simple-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .sr-simple-btn{flex:1 1 auto;text-align:center;padding:11px 14px;border-radius:12px;font-weight:800;font-size:.85rem;cursor:pointer;text-decoration:none;border:0;display:inline-block;}
+  .sr-simple-btn-solid{background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;}
+  .sr-simple-btn-outline{background:rgba(255,255,255,.08);color:#ffe7a0;border:1px solid rgba(255,215,100,.5);}
+  .sr-payment-note{background:rgba(255,215,100,.08);border:1px solid rgba(255,215,100,.3);border-radius:12px;padding:10px 12px;font-size:.85rem;}
+  #srPaymentModal .trust-badges-row,#srPaymentModal .payment-row{margin-top:10px;}
+
+  /* Notification + Ai Help Centre — ভাসমান বাটন (বাকি ৪টির সাথে)। Payment Method
+     আর ভাসমান নয় — এটি এখন হিরো সেকশনের গোল চিহ্নের জায়গায় সাধারণ (স্ক্রল হওয়া) বাটন। */
+  #srNotifyFab,#srAiHelpFab{
+    position:fixed;z-index:2147483000;border:0;border-radius:16px;padding:10px 14px;
+    font-weight:800;font-size:.82rem;color:#fff;cursor:pointer;display:flex;align-items:center;gap:7px;
+    box-shadow:0 8px 26px rgba(0,0,0,.4);
+  }
+  #srNotifyFab{left:10px;bottom:122px;background:linear-gradient(135deg,#0ea5a3,#5eead4);}
+  #srAiHelpFab{right:10px;bottom:110px;background:linear-gradient(135deg,#ec4899,#f59e0b);}
+  @media(max-width:560px){
+    #srNotifyFab{left:10px;bottom:118px;padding:9px 12px;font-size:.76rem;}
+    #srAiHelpFab{right:10px;bottom:106px;padding:9px 12px;font-size:.76rem;}
+  }
+  body.sr-ai-open #srNotifyFab,body.sr-ai-open #srAiHelpFab{display:none !important;}
+
+  /* Payment Method — হিরো সেকশনের উপরে-ডানে খালি গোল জায়গায়, পেজের সাথে স্ক্রল হবে */
+  #srPaymentInline{
+    position:absolute;top:8px;right:14px;z-index:5;border:0;border-radius:16px;padding:10px 14px;
+    font-weight:800;font-size:.82rem;color:#fff;cursor:pointer;display:flex;align-items:center;gap:7px;
+    background:linear-gradient(135deg,#2563eb,#38bdf8);box-shadow:0 8px 26px rgba(0,0,0,.4);
+  }
+  @media(max-width:560px){ #srPaymentInline{top:6px;right:10px;padding:9px 12px;font-size:.76rem;} }
+</style>
+
+<button type="button" id="srNotifyFab" onclick="srOpenPopup('srNotifyModal')" aria-label="Notification">🔔 Notification</button>
+<button type="button" id="srAiHelpFab" onclick="srOpenPopup('srAiHelpModal')" aria-label="Ai Help Centre">🤖 Ai Help Centre</button>
+<script id="sr-payment-inline-mount">
+(function(){
+  'use strict';
+  var host=document.querySelector('.hero .wrap.hero-grid');
+  if(!host) return;
+  if(getComputedStyle(host).position==='static') host.style.position='relative';
+  var btn=document.createElement('button');
+  btn.type='button'; btn.id='srPaymentInline';
+  btn.setAttribute('aria-label','Payment Method');
+  btn.setAttribute('onclick',"srOpenPopup('srPaymentModal')");
+  btn.innerHTML='💳 Payment Method';
+  host.insertBefore(btn, host.firstChild);
+})();
+</script>
+
+<div id="srAiHelpModal" class="sr-simple-overlay" aria-hidden="true">
+  <div class="sr-simple-modal">
+    <button type="button" class="sr-simple-close" aria-label="বন্ধ করুন" onclick="srClosePopups()">×</button>
+    <h3>🤖 SeiRokom AI Help Centre</h3>
+    <p>এই <b>SeiRokom AI</b> দ্বারা SeiRokom Fashion-এর জন্য সকলেই সাপোর্ট পাবে — প্রোডাক্ট, অর্ডার, সাইজ, ডেলিভারি বা যেকোনো প্রশ্নে সবসময় সাহায্য পাওয়া যাবে ইনশাআল্লাহ।</p>
+    <div class="sr-simple-actions">
+      <a class="sr-simple-btn sr-simple-btn-outline" href="https://github.com/batikcromfashion/seirokom-ai-app" target="_blank" rel="noopener noreferrer">🔗 GitHub-এ দেখুন</a>
+      <a class="sr-simple-btn sr-simple-btn-solid" href="app-release.apk" download>⬇️ APK ডাউনলোড</a>
+    </div>
+  </div>
+</div>
+
+<div id="srPaymentModal" class="sr-simple-overlay" aria-hidden="true">
+  <div class="sr-simple-modal">
+    <button type="button" class="sr-simple-close" aria-label="বন্ধ করুন" onclick="srClosePopups()">×</button>
+    <h3>💳 Payment Method</h3>
+    <p class="sr-payment-note">নিচের Payment Method এর কার্যক্রম প্রসেসিং-এ আছে। কার্যক্রম চালু হলে, আগামীতে চালু থাকবে ইনশাআল্লাহ।</p>
+    <div class="trust-badges-row" aria-label="ট্রাস্ট ব্যাজ">
+      <div class="trust-badge"><span>💵</span><span>ক্যাশ অন ডেলিভারি</span></div>
+      <div class="trust-badge"><span>🚚</span><span>দ্রুত ডেলিভারি</span></div>
+      <div class="trust-badge"><span>🔄</span><span>৭ দিনের রিটার্ন</span></div>
+      <div class="trust-badge"><span>🛡️</span><span>নিরাপদ কেনাকাটা</span></div>
+    </div>
+    <div class="payment-row" aria-label="গ্রহণযোগ্য পেমেন্ট পদ্ধতি">
+      <span class="payment-chip">bKash</span>
+      <span class="payment-chip">Nagad</span>
+      <span class="payment-chip">Rocket</span>
+      <span class="payment-chip">Visa</span>
+      <span class="payment-chip">Mastercard</span>
+      <span class="payment-chip">Cash on Delivery</span>
+    </div>
+  </div>
+</div>
+
+<div id="srNotifyModal" class="sr-simple-overlay" aria-hidden="true">
+  <div class="sr-simple-modal">
+    <button type="button" class="sr-simple-close" aria-label="বন্ধ করুন" onclick="srClosePopups()">×</button>
+    <h3>🔔 Notification চালু করুন</h3>
+    <p>Notification চালু রাখলে আপনি সবার আগে জানতে পারবেন —</p>
+    <ul style="margin:0 0 16px;padding-left:18px;line-height:1.8;font-size:.88rem;opacity:.9;">
+      <li>🆕 নতুন কালেকশনের খবর সবার আগে</li>
+      <li>🎁 বিশেষ অফার ও ডিসকাউন্ট মিস হবে না</li>
+      <li>🚚 অর্ডার ও ডেলিভারি আপডেট</li>
+    </ul>
+    <button type="button" class="sr-simple-btn sr-simple-btn-solid" id="srNotifyPopupBtn" style="width:100%;" onclick="srRequestNotify()">🔔 Notification On করুন</button>
+    <p id="srNotifyStatus" style="margin-top:10px;font-size:.8rem;text-align:center;"></p>
+  </div>
+</div>
+
+<script id="sr-help-payment-notify-js">
+(function(){
+  'use strict';
+  function allOverlays(){return document.querySelectorAll('.sr-simple-overlay');}
+  window.srOpenPopup=function(id){
+    allOverlays().forEach(function(o){o.classList.remove('open');o.setAttribute('aria-hidden','true');});
+    var el=document.getElementById(id);
+    if(el){el.classList.add('open');el.setAttribute('aria-hidden','false');}
+  };
+  window.srClosePopups=function(){
+    allOverlays().forEach(function(o){o.classList.remove('open');o.setAttribute('aria-hidden','true');});
+  };
+  allOverlays().forEach(function(o){
+    o.addEventListener('click',function(e){ if(e.target===o) srClosePopups(); });
+  });
+  window.srRequestNotify=function(){
+    var status=document.getElementById('srNotifyStatus');
+    var popupBtn=document.getElementById('srNotifyPopupBtn');
+    function say(t){ if(status) status.textContent=t; }
+    if(Notification && Notification.permission==='granted'){
+      say('✅ Notification ইতিমধ্যে চালু আছে। ধন্যবাদ!');
+      return;
+    }
+    say('⏳ চালু করা হচ্ছে…');
+    /* সাইটের আসল Firebase Cloud Messaging ব্যাকএন্ডের সাথেই সরাসরি সাবস্ক্রাইব করা
+       হচ্ছে (নিচের notifyBtn যেভাবে কাজ করে ঠিক সেভাবেই) — এটা শুধু ব্রাউজার
+       পারমিশন নয়, সাবস্ক্রাইবার হিসেবে সার্ভারে (Firestore) সংরক্ষিতও হয়। */
+    if(typeof window.srFcmSubscribe==='function'){
+      window.srFcmSubscribe({
+        onSubscribed:function(){
+          say('✅ Notification চালু হয়েছে! এখন থেকে নতুন কালেকশন ও অফারের খবর সবার আগে পাবেন।');
+          if(popupBtn){ popupBtn.textContent='🔔 Subscribed!'; popupBtn.disabled=true; }
+        },
+        onError:function(msg){ say('⚠️ '+msg); }
+      });
+    } else {
+      say('দুঃখিত, এখন Notification সিস্টেম লোড হয়নি — একটু পরে আবার চেষ্টা করুন।');
+    }
+  };
 })();
 </script>
 </body>
