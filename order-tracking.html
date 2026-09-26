@@ -14,20 +14,23 @@ header{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.97);border-bot
 .wrap{padding:18px 0 60px}h1{font-size:1.65rem;margin:22px 0 4px;color:var(--light)}.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
 .card{background:linear-gradient(145deg,#171717,#101010);border:1px solid rgba(201,162,74,.3);border-radius:18px;padding:18px;box-shadow:0 12px 35px rgba(0,0,0,.25)}
 label{display:block;color:#ddd4c6;font-size:.86rem;margin-bottom:6px}input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(201,162,74,.35);background:#0d0d0d;color:#fff;font:inherit;outline:none}button{width:100%;margin-top:12px;padding:13px;border:0;border-radius:28px;background:linear-gradient(135deg,var(--gold),var(--light));color:#111;font-weight:700;font-size:1rem;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
 #result{margin-top:16px}.empty{text-align:center;color:var(--muted);padding:12px 4px;line-height:1.7}.order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px}.id{font-weight:700;color:var(--light)}.date{color:var(--muted);font-size:.8rem}
-.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:20px 0 8px}.step{text-align:center;font-size:.68rem;color:#777}.dot{width:25px;height:25px;border-radius:50%;border:2px solid #555;margin:0 auto 6px;display:grid;place-items:center;font-size:.72rem}.step.done{color:#bfeecf}.step.done .dot{border-color:var(--green);background:rgba(53,210,122,.12);color:var(--green)}
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:20px 0 8px}.step{text-align:center;font-size:.6rem;color:#777}.dot{width:22px;height:22px;border-radius:50%;border:2px solid #555;margin:0 auto 6px;display:grid;place-items:center;font-size:.68rem}.step.done{color:#bfeecf}.step.done .dot{border-color:var(--green);background:rgba(53,210,122,.12);color:var(--green)}
+.cancelled{text-align:center;padding:14px;color:#ff8080;font-weight:700;border:1px dashed rgba(255,80,80,.4);border-radius:12px;margin:16px 0}
+.items{margin-top:14px;font-size:.85rem;color:#ddd4c6}.items div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .note{font-size:.78rem;color:var(--muted);margin-top:14px;line-height:1.7}.history{margin-top:16px}.history h2{font-size:1rem;color:var(--light);margin:0 0 10px}.history button{background:#191919;color:#eee;border:1px solid rgba(201,162,74,.25);text-align:left;margin-top:6px;font-size:.84rem}footer{text-align:center;color:#777;font-size:.75rem;margin-top:24px}
 @media(max-width:480px){.wrap,.head{width:calc(100% - 20px)}.steps{gap:2px}.step{font-size:.58rem}.dot{width:22px;height:22px}}
 </style>
 </head>
 <body>
-<header><div class="head"><div class="logo">SR · SEIROKOM FASHION</div><a class="back" href="index.html">← শপিংয়ে ফিরুন</a></div></header>
+<header><div class="head"><div class="logo">SR · SEIROKOM FASHION</div><a class="back" href="index.html">← শপিংয়ে ফিরুন</a></div></header>
 <main class="wrap">
 <h1>📦 অর্ডার ট্র্যাকিং</h1>
-<div class="sub">আপনার Order ID দিয়ে অর্ডারের বর্তমান স্ট্যাটাস দেখুন।</div>
+<div class="sub">আপনার Order ID দিয়ে অর্ডারের বর্তমান স্ট্যাটাস দেখুন।</div>
 <section class="card">
 <label for="orderId">Order ID</label>
-<input id="orderId" type="text" placeholder="যেমন: SRF-260917-1234" autocomplete="off">
+<input id="orderId" type="text" placeholder="যেমন: SRF-123456" autocomplete="off">
 <button id="trackBtn" type="button">🔎 অর্ডার ট্র্যাক করুন</button>
 <div id="result"></div>
 </section>
@@ -37,33 +40,92 @@ label{display:block;color:#ddd4c6;font-size:.86rem;margin-bottom:6px}input{width
 <footer>SeiRokom Fashion — Style For Everyone ❤️</footer>
 </main>
 <script src="cart.js"></script>
-<script>
-(function(){
-var states=['Order Confirmed','Processing','Packed','Shipped','Delivered'];
-var labels=['অর্ডার নিশ্চিত','প্রসেসিং','প্যাক করা','শিপড','ডেলিভার্ড'];
-var input=document.getElementById('orderId'),result=document.getElementById('result');
-function esc(s){return String(s).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
-function show(id){
-id=(id||'').trim().toUpperCase();
-if(!id){result.innerHTML='<div class="empty">দয়া করে Order ID লিখুন।</div>';return}
-var orders=window.SRFCart&&SRFCart.getMyOrders?SRFCart.getMyOrders():[];
-var found=orders.find(function(o){return String(o.orderId||'').toUpperCase()===id});
-if(!found){result.innerHTML='<div class="empty">এই ডিভাইসে Order ID-টি পাওয়া যায়নি। সঠিক Order ID দিয়ে আবার চেষ্টা করুন।<br>Server-side tracking পরে Firebase/backend যুক্ত করা যাবে।</div>';return}
-var html='<div class="order-head"><span class="id">'+esc(found.orderId)+'</span><span class="date">'+new Date(found.date).toLocaleString('bn-BD')+'</span></div>';
-html+='<div class="steps">'+states.map(function(s,i){return '<div class="step '+(i===0?'done':'')+'"><div class="dot">'+(i===0?'✓':i+1)+'</div>'+labels[i]+'</div>'}).join('')+'</div>';
-html+='<div class="note">বর্তমানে সংরক্ষিত অর্ডার রেকর্ড অনুযায়ী স্ট্যাটাস: <b style="color:#bfeecf">অর্ডার নিশ্চিত</b>। Firebase/backend যুক্ত হলে Processing, Packed, Shipped ও Delivered status প্রশাসনিকভাবে আপডেট করা যাবে।</div>';
-result.innerHTML=html}
-function history(){
-var box=document.getElementById('historyBox'),list=document.getElementById('historyList');
-var orders=window.SRFCart&&SRFCart.getMyOrders?SRFCart.getMyOrders():[];
-if(!orders.length)return;
-box.style.display='block';
-list.innerHTML=orders.slice(0,5).map(function(o){return '<button type="button" data-id="'+esc(o.orderId)+'">📦 '+esc(o.orderId)+'</button>'}).join('');
-list.querySelectorAll('button').forEach(function(b){b.onclick=function(){input.value=this.dataset.id;show(this.dataset.id)}})}
-document.getElementById('trackBtn').onclick=function(){show(input.value)};
-input.onkeydown=function(e){if(e.key==='Enter')show(input.value)};
-var q=new URLSearchParams(location.search).get('id');history();if(q){input.value=q;show(q)}
-})();
+<script type="module">
+import { db, collection, query, where, getDocs } from "./firebase-config.js";
+
+var STATUS_STEPS = ['Pending', 'Confirmed', 'Processing', 'Packed', 'Shipped', 'Delivered'];
+var STATUS_LABELS = { Pending: 'অর্ডার নিশ্চিত', Confirmed: 'কনফার্মড', Processing: 'প্রসেসিং', Packed: 'প্যাক করা', Shipped: 'শিপড', Delivered: 'ডেলিভার্ড', Cancelled: 'বাতিল করা হয়েছে' };
+
+var input = document.getElementById('orderId'), result = document.getElementById('result'), btn = document.getElementById('trackBtn');
+
+function esc(s) { return String(s).replace(/[&<>'"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c] }) }
+
+function fmtTaka(n) { return "৳ " + Number(n || 0).toLocaleString("en-US") }
+
+async function show(rawId) {
+  var id = (rawId || '').trim().toUpperCase();
+  if (!id) { result.innerHTML = '<div class="empty">দয়া করে Order ID লিখুন।</div>'; return }
+
+  btn.disabled = true; btn.textContent = "খোঁজা হচ্ছে...";
+  result.innerHTML = '<div class="empty">অর্ডার খোঁজা হচ্ছে...</div>';
+
+  try {
+    var q = query(collection(db, "orders"), where("orderId", "==", id));
+    var snap = await getDocs(q);
+
+    if (snap.empty) {
+      result.innerHTML = '<div class="empty">এই Order ID খুঁজে পাওয়া যায়নি। সঠিক Order ID দিয়ে আবার চেষ্টা করুন।</div>';
+      return;
+    }
+
+    var data = snap.docs[0].data();
+    var status = data.status || 'Pending';
+    var stepIndex = STATUS_STEPS.indexOf(status);
+    if (stepIndex < 0) stepIndex = 0;
+
+    var dateStr = '';
+    if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+      dateStr = data.createdAt.toDate().toLocaleString('bn-BD');
+    }
+
+    var html = '<div class="order-head"><span class="id">' + esc(data.orderId) + '</span><span class="date">' + dateStr + '</span></div>';
+
+    if (status === 'Cancelled') {
+      html += '<div class="cancelled">❌ এই অর্ডারটি বাতিল করা হয়েছে</div>';
+    } else {
+      html += '<div class="steps">' + STATUS_STEPS.map(function (s, i) {
+        return '<div class="step ' + (i <= stepIndex ? 'done' : '') + '"><div class="dot">' + (i <= stepIndex ? '✓' : i + 1) + '</div>' + STATUS_LABELS[s] + '</div>';
+      }).join('') + '</div>';
+    }
+
+    if (Array.isArray(data.items)) {
+      html += '<div class="items">' + data.items.map(function (it) {
+        var opt = '';
+        if (it.size) opt += ' | সাইজ: ' + it.size;
+        if (it.color) opt += ' | রং: ' + it.color;
+        return '<div><span>' + esc(it.name) + opt + ' × ' + it.qty + '</span><span>' + fmtTaka(Number(it.price || 0) * Number(it.qty || 0)) + '</span></div>';
+      }).join('') + '<div style="display:flex;justify-content:space-between;padding-top:8px;font-weight:700;color:#e9cd8b"><span>সর্বমোট</span><span>' + fmtTaka(data.totalAmount) + '</span></div></div>';
+    }
+
+    html += '<div class="note">বর্তমান স্ট্যাটাস: <b style="color:#bfeecf">' + STATUS_LABELS[status] + '</b></div>';
+    result.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    result.innerHTML = '<div class="empty">অর্ডার খুঁজতে সমস্যা হয়েছে, একটু পর আবার চেষ্টা করুন।</div>';
+  } finally {
+    btn.disabled = false; btn.textContent = "🔎 অর্ডার ট্র্যাক করুন";
+  }
+}
+
+function history() {
+  var box = document.getElementById('historyBox'), list = document.getElementById('historyList');
+  var orders = window.SRFCart && SRFCart.getMyOrders ? SRFCart.getMyOrders() : [];
+  if (!orders.length) return;
+  box.style.display = 'block';
+  list.innerHTML = orders.slice(0, 5).map(function (o) {
+    return '<button type="button" data-id="' + esc(o.orderId) + '">📦 ' + esc(o.orderId) + '</button>';
+  }).join('');
+  list.querySelectorAll('button').forEach(function (b) {
+    b.onclick = function () { input.value = this.dataset.id; show(this.dataset.id) };
+  });
+}
+
+btn.onclick = function () { show(input.value) };
+input.onkeydown = function (e) { if (e.key === 'Enter') show(input.value) };
+
+var q0 = new URLSearchParams(location.search).get('id');
+history();
+if (q0) { input.value = q0; show(q0) }
 </script>
 </body>
 </html>

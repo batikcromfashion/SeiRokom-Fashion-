@@ -25,8 +25,6 @@ export async function processOrder(customerData, cartItems, totalAmount, payment
 
   try {
     const docRef = await addDoc(collection(db, "orders"), orderPayload);
-    localStorage.removeItem("cart");
-    window.location.href = `order-tracking.html?id=${orderId}`;
     return { success: true, orderId: orderId };
   } catch (error) {
     console.error("Error adding order: ", error);

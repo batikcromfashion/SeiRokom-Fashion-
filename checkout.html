@@ -42,7 +42,8 @@ label{display:block;font-size:.85rem;color:#cfc9bd;margin:14px 0 6px}input,texta
 </form>
 </div>
 <script src="cart.js"></script>
-<script>
+<script type="module">
+import { processOrder } from "./checkout.js";
 (function(){
   const buyNowMode=new URLSearchParams(location.search).get("buyNow")==="1";
   const wrap=document.getElementById("checkout-wrap"), summary=document.getElementById("order-summary");
@@ -77,14 +78,26 @@ label{display:block;font-size:.85rem;color:#cfc9bd;margin:14px 0 6px}input,texta
     }else{box.style.display="none";tx.required=false;}
   }));
 
-  form.addEventListener("submit",function(e){
+  form.addEventListener("submit",async function(e){
     e.preventDefault();
     const name=document.getElementById("name").value.trim(), phone=document.getElementById("phone").value.trim(), address=document.getElementById("address").value.trim(), note=document.getElementById("note").value.trim();
     const method=document.querySelector('input[name="paymethod"]:checked').value, txn=document.getElementById("txnid").value.trim();
     if((method==="bkash"||method==="nagad")&&!txn){alert("অনুগ্রহ করে Transaction ID লিখুন।");return;}
-    const orderId=SRFCart.generateOrderId();
+
+    const submitBtn=form.querySelector('button[type="submit"]');
+    submitBtn.disabled=true; submitBtn.textContent="অর্ডার সেভ হচ্ছে...";
+
     const pay=method==="cod"?"ক্যাশ অন ডেলিভারি (COD)":(method==="bkash"?"বিকাশ":"নগদ")+" — Txn ID: "+txn;
     const customer={name,phone,address,note};
+    const total=items.reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0);
+
+    const result=await processOrder(customer,items,total,pay);
+    if(!result.success){
+      submitBtn.disabled=false; submitBtn.textContent="অর্ডার কনফার্ম করুন (WhatsApp-এ পাঠান)";
+      return; // processOrder() already shows an alert on failure
+    }
+    const orderId=result.orderId;
+
     let text="*নতুন অর্ডার - SeiRokom Fashion*\\nঅর্ডার আইডি: "+orderId+"\\n";
     text+=SRFCart.buildWhatsAppOrderText(customer,items);
     text+="\\nপেমেন্ট: "+pay;

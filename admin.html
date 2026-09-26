@@ -18,13 +18,29 @@
     .status-select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
     .btn-refresh { background: #c9a24a; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
     .btn-refresh:hover { background: #b08b38; }
+    #login-gate { max-width: 360px; margin: 80px auto; }
+    #login-gate input { width: 100%; padding: 10px 12px; margin-top: 10px; border-radius: 6px; border: 1px solid #ccc; }
+    #login-gate button { width: 100%; margin-top: 14px; padding: 11px; background: #c9a24a; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    #login-error { color: #c0392b; font-size: 13px; margin-top: 8px; display: none; }
   </style>
 </head>
 <body>
 
+  <div id="login-gate" class="card">
+    <h2 style="margin-top:0">Admin Login</h2>
+    <input id="login-email" type="email" placeholder="Email">
+    <input id="login-pass" type="password" placeholder="Password">
+    <button onclick="doLogin()">Login</button>
+    <div id="login-error"></div>
+  </div>
+
+  <div id="admin-app" style="display:none">
   <header>
     <h1>SeiRokom Fashion — Admin Panel</h1>
-    <button class="btn-refresh" onclick="loadOrders()">🔄 Refresh Orders</button>
+    <div>
+      <button class="btn-refresh" onclick="loadOrders()">🔄 Refresh Orders</button>
+      <button class="btn-refresh" style="background:#555;margin-left:8px" onclick="doLogout()">Logout</button>
+    </div>
   </header>
 
   <div class="container">
@@ -50,9 +66,39 @@
       </div>
     </div>
   </div>
+  </div>
 
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { db, collection, getDocs, doc, updateDoc, query, orderBy } from "./firebase-config.js";
+
+    const authApp = initializeApp({
+      apiKey: "AIzaSyCdDiP0NAtmSQt5a8I-DEY8G44rAp4z_-M",
+      authDomain: "seirokom-fashion.firebaseapp.com",
+      projectId: "seirokom-fashion",
+    }, "admin-auth");
+    const auth = getAuth(authApp);
+
+    window.doLogin = async function () {
+      const email = document.getElementById("login-email").value.trim();
+      const pass = document.getElementById("login-pass").value;
+      const errEl = document.getElementById("login-error");
+      errEl.style.display = "none";
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (e) {
+        errEl.textContent = "লগইন ব্যর্থ — ইমেইল বা পাসওয়ার্ড ভুল।";
+        errEl.style.display = "block";
+      }
+    };
+    window.doLogout = function () { signOut(auth); };
+
+    onAuthStateChanged(auth, (user) => {
+      document.getElementById("login-gate").style.display = user ? "none" : "block";
+      document.getElementById("admin-app").style.display = user ? "block" : "none";
+      if (user) loadOrders();
+    });
 
     const statusOptions = ["Pending", "Confirmed", "Processing", "Packed", "Shipped", "Delivered", "Cancelled"];
 
@@ -120,8 +166,6 @@
 
     window.loadOrders = loadOrders;
     window.updateOrderStatus = updateOrderStatus;
-
-    loadOrders();
   </script>
 </body>
 </html>
