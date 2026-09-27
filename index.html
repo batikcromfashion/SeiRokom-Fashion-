@@ -5511,17 +5511,80 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
 })();
 </script>
 
+<style id="sr-ai-help-chat-style">
+  #srAiHelpModal .sr-simple-modal{display:flex;flex-direction:column;height:min(78vh,560px);padding:16px 16px 12px;}
+  #srAiHelpModal h3{flex:0 0 auto;}
+  .sr-ai-help-body{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px;margin-bottom:8px;}
+  .sr-ai-help-msg{max-width:85%;padding:10px 13px;border-radius:14px;font-size:.88rem;line-height:1.55;white-space:pre-line;}
+  .sr-ai-help-msg.bot{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;}
+  .sr-ai-help-msg.user{align-self:flex-end;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:600;}
+  .sr-ai-help-msg.typing{opacity:.7;font-style:italic;}
+  .sr-ai-help-inputrow{flex:0 0 auto;display:flex;gap:8px;}
+  .sr-ai-help-inputrow input{flex:1;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,215,100,.4);background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:.88rem;}
+  .sr-ai-help-inputrow input::placeholder{color:rgba(255,255,255,.5);}
+  .sr-ai-help-inputrow button{flex:0 0 auto;border:0;border-radius:12px;padding:0 16px;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:800;cursor:pointer;}
+</style>
+
 <div id="srAiHelpModal" class="sr-simple-overlay" aria-hidden="true">
   <div class="sr-simple-modal">
     <button type="button" class="sr-simple-close" aria-label="বন্ধ করুন" onclick="srClosePopups()">×</button>
     <h3>🤖 SeiRokom AI Help Centre</h3>
-    <p>এই <b>SeiRokom AI</b> দ্বারা SeiRokom Fashion-এর জন্য সকলেই সাপোর্ট পাবে — প্রোডাক্ট, অর্ডার, সাইজ, ডেলিভারি বা যেকোনো প্রশ্নে সবসময় সাহায্য পাওয়া যাবে ইনশাআল্লাহ।</p>
-    <div class="sr-simple-actions">
-      <a class="sr-simple-btn sr-simple-btn-outline" href="https://github.com/batikcromfashion/seirokom-ai-app" target="_blank" rel="noopener noreferrer">🔗 GitHub-এ দেখুন</a>
-      <a class="sr-simple-btn sr-simple-btn-solid" href="app-release.apk" download>⬇️ APK ডাউনলোড</a>
+    <div class="sr-ai-help-body" id="srAiHelpBody">
+      <div class="sr-ai-help-msg bot">হ্যালো! SeiRokom Fashion AI Help Centre-এ স্বাগতম। প্রোডাক্ট, সাইজ, অর্ডার, ডেলিভারি — যেকোনো প্রশ্ন লিখুন, সাথে সাথে সাহায্য করার চেষ্টা করব।</div>
+    </div>
+    <div class="sr-ai-help-inputrow">
+      <input type="text" id="srAiHelpInput" placeholder="আপনার প্রশ্ন লিখুন..." onkeypress="if(event.key==='Enter') srSendAiHelp()">
+      <button type="button" onclick="srSendAiHelp()">পাঠান</button>
     </div>
   </div>
 </div>
+
+<script id="sr-ai-help-chat-js">
+(function(){
+  'use strict';
+  /* ⚠️ এখানে আপনার Cloudflare Worker-এর আসল URL বসান (ডিপ্লয়ের পর)।
+     এখনো বসানো না হলে বাটনটি একটি সতর্কবার্তা দেখাবে, ভুল/ভুয়া উত্তর দেবে না। */
+  var AI_HELP_ENDPOINT = "https://seirokom-ai.seirokomfashion.workers.dev";
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+  }
+  function addMsg(text,cls){
+    var body=document.getElementById('srAiHelpBody');
+    var div=document.createElement('div');
+    div.className='sr-ai-help-msg '+cls;
+    div.innerHTML=escapeHtml(text);
+    body.appendChild(div);
+    body.scrollTop=body.scrollHeight;
+    return div;
+  }
+  window.srSendAiHelp=function(){
+    var input=document.getElementById('srAiHelpInput');
+    var text=input.value.trim();
+    if(!text) return;
+    addMsg(text,'user');
+    input.value='';
+
+    if(!AI_HELP_ENDPOINT || AI_HELP_ENDPOINT.indexOf('REPLACE-WITH-YOUR-WORKER-URL')!==-1){
+      addMsg('⚠️ AI ব্যাকএন্ড এখনো সেটআপ করা হয়নি। Worker ডিপ্লয় করে endpoint বসালেই এটি কাজ করবে।','bot');
+      return;
+    }
+
+    var typing=addMsg('লিখছি…','bot typing');
+    fetch(AI_HELP_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:text})
+    }).then(function(r){ return r.json(); }).then(function(data){
+      typing.remove();
+      addMsg(data && data.reply ? data.reply : 'দুঃখিত, উত্তর পাওয়া যায়নি। একটু পর আবার চেষ্টা করুন।','bot');
+    }).catch(function(){
+      typing.remove();
+      addMsg('⚠️ সংযোগে সমস্যা হয়েছে। একটু পর আবার চেষ্টা করুন।','bot');
+    });
+  };
+})();
+</script>
 
 <div id="srPaymentModal" class="sr-simple-overlay" aria-hidden="true">
   <div class="sr-simple-modal">
