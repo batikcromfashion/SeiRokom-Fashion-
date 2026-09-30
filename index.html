@@ -3075,7 +3075,7 @@ body.sr-modal-active #srMainHeader{
           <div style="color:#8a857a;font-size:0.65rem;">সেকেন্ড</div>
         </div>
       </div>
-      <a href="#collections" style="background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;padding:11px 20px;border-radius:30px;text-decoration:none;font-size:0.88rem;white-space:nowrap;">এখনই দেখুন</a>
+      <a href="#collections" id="srFlashSeeBtn" onclick="srOpenPopup('srGiftModal');return false;" style="background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#0d0d0d;font-weight:700;padding:11px 20px;border-radius:30px;text-decoration:none;font-size:0.88rem;white-space:nowrap;">এখনই দেখুন</a>
     </div>
   </div>
 </section>
@@ -5663,6 +5663,39 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
     }
   };
 })();
+</script>
+<style id="sr-gift-popup-style">
+  #srGiftModal .sr-simple-modal{text-align:center;background:#0f0c08;border:1px solid rgba(201,162,74,.55);border-radius:24px;padding:26px 20px 22px;}
+  #srGiftModal h3{font-size:1.45rem;line-height:1.5;color:#f0d68a;margin:0 0 14px;}
+  #srGiftModal p{color:#e8e2d2;line-height:1.8;font-size:.98rem;margin:0 0 16px;}
+  #srGiftCode{display:inline-block;background:linear-gradient(135deg,#c9a24a,#e9cd8b);color:#1a1408;font-weight:800;letter-spacing:.14em;font-size:1.35rem;padding:14px 34px;border-radius:14px;border:0;cursor:pointer;margin-bottom:12px;}
+  #srGiftHint{font-size:.9rem;color:#d8d2c2;margin:0 0 18px;}
+  #srGiftWa{display:block;background:#25d366;color:#fff;font-weight:800;text-decoration:none;padding:16px 10px;border-radius:40px;font-size:1.02rem;}
+</style>
+<div id="srGiftModal" class="sr-simple-overlay" aria-hidden="true">
+  <div class="sr-simple-modal">
+    <button type="button" class="sr-simple-close" aria-label="বন্ধ করুন" onclick="srClosePopups()">×</button>
+    <h3>🎉 আপনার জন্য বিশেষ উপহার!</h3>
+    <p>প্রথমবার অর্ডার করছেন? নিচের কোডটি WhatsApp-এ অর্ডারের সময় উল্লেখ করুন এবং পেয়ে যান বিশেষ ছাড়।</p>
+    <button type="button" id="srGiftCode" onclick="srCopyGiftCode()">WELCOME10</button>
+    <div id="srGiftHint">কোডে ট্যাপ করলে কপি হয়ে যাবে। শর্ত প্রযোজ্য।</div>
+    <a id="srGiftWa" href="https://wa.me/8801645008919?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20WELCOME10%20%E0%A6%95%E0%A7%8B%E0%A6%A1%20%E0%A6%A6%E0%A6%BF%E0%A6%AF%E0%A6%BC%E0%A7%87%20%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A1%E0%A6%BE%E0%A6%B0%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%87%E0%A5%A4" target="_blank" rel="noopener noreferrer">WhatsApp-এ অর্ডার করুন</a>
+  </div>
+</div>
+<script id="sr-gift-popup-js">
+window.srCopyGiftCode=function(){
+  var code='WELCOME10', hint=document.getElementById('srGiftHint');
+  function ok(){ if(hint) hint.textContent='✅ কোড কপি হয়েছে!'; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(code).then(ok).catch(fallback);
+  } else { fallback(); }
+  function fallback(){
+    var t=document.createElement('textarea'); t.value=code; t.style.position='fixed'; t.style.opacity='0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); ok(); }catch(e){}
+    document.body.removeChild(t);
+  }
+};
 </script>
 </body>
 </html>
