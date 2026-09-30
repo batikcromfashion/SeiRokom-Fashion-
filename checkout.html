@@ -49,7 +49,7 @@ import { processOrder } from "./checkout.js";
   const wrap=document.getElementById("checkout-wrap"), summary=document.getElementById("order-summary");
   const form=document.getElementById("checkout-form");
   const sub=document.getElementById("checkout-sub");
-  let items=buyNowMode ? (SRFCart.getBuyNow()? [SRFCart.getBuyNow()]:[]) : SRFCart.getCart();
+  let items=buyNowMode ? (SRFCart.getBuyNow() ? [SRFCart.getBuyNow()] : []) : SRFCart.getCart();
 
   if(buyNowMode) sub.textContent="আপনি যে পণ্যটি এখনই কিনতে চেয়েছেন, সেটির অর্ডার নিশ্চিত করুন।";
 
