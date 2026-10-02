@@ -49,7 +49,7 @@ import { processOrder } from "./checkout.js";
   const wrap=document.getElementById("checkout-wrap"), summary=document.getElementById("order-summary");
   const form=document.getElementById("checkout-form");
   const sub=document.getElementById("checkout-sub");
-  let items=buyNowMode ? (SRFCart.getBuyNow() ? [SRFCart.getBuyNow()] : []) : SRFCart.getCart();
+  let items=buyNowMode ? (SRFCart.getBuyNow()? [SRFCart.getBuyNow()]:[]) : SRFCart.getCart();
 
   if(buyNowMode) sub.textContent="আপনি যে পণ্যটি এখনই কিনতে চেয়েছেন, সেটির অর্ডার নিশ্চিত করুন।";
 
@@ -94,13 +94,13 @@ import { processOrder } from "./checkout.js";
     const result=await processOrder(customer,items,total,pay);
     if(!result.success){
       submitBtn.disabled=false; submitBtn.textContent="অর্ডার কনফার্ম করুন (WhatsApp-এ পাঠান)";
-      return;
+      return; // processOrder() already shows an alert on failure
     }
     const orderId=result.orderId;
 
-    let text="*নতুন অর্ডার - SeiRokom Fashion*\nঅর্ডার আইডি: "+orderId+"\n\n";
+    let text="*নতুন অর্ডার - SeiRokom Fashion*\\nঅর্ডার আইডি: "+orderId+"\\n";
     text+=SRFCart.buildWhatsAppOrderText(customer,items);
-    text+="\nপেমেন্ট: "+pay;
+    text+="\\nপেমেন্ট: "+pay;
     window.open("https://wa.me/8801645008919?text="+encodeURIComponent(text),"_blank");
 
     SRFCart.saveMyOrder(orderId);
