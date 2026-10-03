@@ -203,32 +203,21 @@
 
   function doAddToCart(){
     if (typeof SRFCart !== 'undefined') {
-      SRFCart.addToCart('product-polo-tshirt', fullName(), 580, qty);
+      SRFCart.addToCart('product-polo-tshirt', 'পোলো টি-শার্ট', 580, qty, {size:selectedSize, color:selectedColor});
     }
   }
-  
+
   function doBuyNow(){
     if (typeof SRFCart !== 'undefined') {
-      SRFCart.buyNow('product-polo-tshirt', fullName(), 580, qty);
+      SRFCart.buyNow('product-polo-tshirt', 'পোলো টি-শার্ট', 580, qty, {size:selectedSize, color:selectedColor});
     }
   }
 
+  /* WhatsApp-এ অর্ডার করুন বাটন এখন সরাসরি WhatsApp না খুলে আগে checkout.html-এ
+     নিয়ে যাবে (নাম, ফোন, ঠিকানা নেওয়ার জন্য) — সেখানে ফর্ম পূরণ করে
+     "অর্ডার কনফার্ম করুন" চাপলেই WhatsApp খুলবে, অর্ডার আইডিসহ। */
   function orderOnWhatsApp(){
-    var phone = "8801645008919";
-    var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
-               "📌 *প্রোডাক্ট:* পোলো টি-শার্ট\n" +
-               "📏 *সাইজ:* " + selectedSize + "\n" +
-               "🎨 *রং:* " + selectedColor + "\n" +
-               "🔢 *পরিমাণ:* " + qty + "\n" +
-               "💰 *মোট দাম:* ৳" + (580 * qty) + "\n\n" +
-               "---------------------------\n" +
-               "👤 *আপনার নাম:* \n" +
-               "📞 *মোবাইল নম্বর:* \n" +
-               "📍 *ডেলিভারি ঠিকানা (লোকেশন):* \n" +
-               "---------------------------\n" +
-               "*(দয়া করে নাম, নম্বর ও ঠিকানা লিখে মেসেজটি সেন্ড করুন)*";
-
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank");
+    doBuyNow();
   }
 
   document.addEventListener('DOMContentLoaded', function(){
