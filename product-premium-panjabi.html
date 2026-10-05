@@ -197,38 +197,23 @@
     document.getElementById('qty-val').textContent = qty;
   }
 
-  function fullName(){
-    return "প্রিমিয়াম পাঞ্জাবি (সাইজ: " + selectedSize + ", রং: " + selectedColor + ")";
-  }
-
   function doAddToCart(){
     if (typeof SRFCart !== 'undefined') {
-      SRFCart.addToCart('product-premium-panjabi', fullName(), 1250, qty);
+      SRFCart.addToCart('product-premium-panjabi', 'প্রিমিয়াম পাঞ্জাবি', 1250, qty, {size:selectedSize, color:selectedColor});
     }
   }
-  
+
   function doBuyNow(){
     if (typeof SRFCart !== 'undefined') {
-      SRFCart.buyNow('product-premium-panjabi', fullName(), 1250, qty);
+      SRFCart.buyNow('product-premium-panjabi', 'প্রিমিয়াম পাঞ্জাবি', 1250, qty, {size:selectedSize, color:selectedColor});
     }
   }
 
+  /* WhatsApp-এ অর্ডার করুন বাটন এখন সরাসরি WhatsApp না খুলে আগে checkout.html-এ
+     নিয়ে যাবে (নাম, ফোন, ঠিকানা নেওয়ার জন্য) — সেখানে ফর্ম পূরণ করে
+     "অর্ডার কনফার্ম করুন" চাপলেই WhatsApp খুলবে, অর্ডার আইডিসহ। */
   function orderOnWhatsApp(){
-    var phone = "8801645008919";
-    var text = "🛍️ *নতুন অর্ডার মেসেজ - SeiRokom Fashion*\n\n" +
-               "📌 *প্রোডাক্ট:* প্রিমিয়াম কটন পাঞ্জাবি\n" +
-               "📏 *সাইজ:* " + selectedSize + "\n" +
-               "🎨 *রং:* " + selectedColor + "\n" +
-               "🔢 *পরিমাণ:* " + qty + "\n" +
-               "💰 *মোট দাম:* ৳" + (1250 * qty) + "\n\n" +
-               "---------------------------\n" +
-               "👤 *আপনার নাম:* \n" +
-               "📞 *মোবাইল নম্বর:* \n" +
-               "📍 *ডেলিভারি ঠিকানা (লোকেশন):* \n" +
-               "---------------------------\n" +
-               "*(দয়া করে নাম, নম্বর ও ঠিকানা লিখে মেসেজটি সেন্ড করুন)*";
-
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank");
+    doBuyNow();
   }
 
   document.addEventListener('DOMContentLoaded', function(){
