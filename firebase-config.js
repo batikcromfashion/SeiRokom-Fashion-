@@ -1,26 +1,26 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  getDoc, 
-  getDocs, 
-  doc, 
-  updateDoc, 
-  query, 
-  where, 
-  orderBy, 
-  serverTimestamp 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // SeiRokom Fashion - Firebase Configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCdDiP0NAtmSQt5a8I-DEY8G44rAp4z_-M",
+  apiKey: "AIzaSyC5bDIPONAtmSQ5a81-DEY8G4ArApdZ_-M",
   authDomain: "seirokom-fashion.firebaseapp.com",
   projectId: "seirokom-fashion",
   storageBucket: "seirokom-fashion.firebasestorage.app",
-  messagingSenderId: "1051300000338",
-  appId: "1:1051300000338:web:39bac8b1926eac61fc658b",
+  messagingSenderId: "105130000338",
+  appId: "1:105130000338:web:30bac8b1926eac61fc658b",
   measurementId: "G-TB2Y5T78JD"
 };
 
@@ -44,16 +44,21 @@ window.SRF_Firestore = {
 };
 
 // ES Module Export
-export { 
-  db, 
-  collection, 
-  addDoc, 
-  getDoc, 
-  getDocs, 
-  doc, 
-  updateDoc, 
-  query, 
-  where, 
-  orderBy, 
-  serverTimestamp 
+export {
+  db,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp
 };
+
+// Load Messenger Float Button
+const _srf_float = document.createElement('script');
+_srf_float.src = './messenger-float.js';
+document.head.appendChild(_srf_float);
