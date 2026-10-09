@@ -3911,11 +3911,19 @@ function closeBarakahModal(){
 
 
 <script>
-  /* Google Maps / Review destination — single source of truth */
+  /* Google Maps / Review destination — আলাদা আলাদা লিংক */
   window.SEIROKOM_GOOGLE_MAPS_URL = "https://maps.app.goo.gl/V7oz8MYkwuSWp8sA9";
+  /* ⚠️ এখানে আপনার Google Business Profile-এর আসল "Write a review" লিংক বসান
+     (যেমন https://g.page/r/XXXXXXXXXXXX/review) — তাহলেই "Google-এ Review দিন"
+     বাটনে ক্লিক করলে সরাসরি ৫-স্টার + ছবি আপলোড + কমেন্ট লেখার ফর্ম আসবে,
+     Maps পেজে না গিয়ে। এখনো বসানো না হলে আপাতত Maps পেজেই যাবে। */
+  window.SEIROKOM_GOOGLE_REVIEW_URL = "https://share.google/PnS4oEx0cxpkl7Dwu";
   function openGoogleReview(event){
     if(event) event.preventDefault();
-    window.open(window.SEIROKOM_GOOGLE_MAPS_URL, "_blank", "noopener,noreferrer");
+    var url = (window.SEIROKOM_GOOGLE_REVIEW_URL && window.SEIROKOM_GOOGLE_REVIEW_URL.indexOf('REPLACE-WITH-YOUR-GOOGLE-REVIEW-LINK')===-1)
+      ? window.SEIROKOM_GOOGLE_REVIEW_URL
+      : window.SEIROKOM_GOOGLE_MAPS_URL;
+    window.open(url, "_blank", "noopener,noreferrer");
     return false;
   }
   function openGoogleMaps(event){
@@ -5523,6 +5531,9 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
   .sr-ai-help-inputrow input{flex:1;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,215,100,.4);background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:.88rem;}
   .sr-ai-help-inputrow input::placeholder{color:rgba(255,255,255,.5);}
   .sr-ai-help-inputrow button{flex:0 0 auto;border:0;border-radius:12px;padding:0 16px;background:linear-gradient(135deg,#c9a24a,#ffe7a0);color:#111;font-weight:800;cursor:pointer;}
+  .sr-ai-help-cta{display:inline-block;margin-top:10px;padding:9px 14px;border-radius:10px;font-weight:800;font-size:.82rem;text-decoration:none;}
+  .sr-ai-help-cta.site{background:linear-gradient(135deg,#2563eb,#38bdf8);color:#fff;}
+  .sr-ai-help-cta.wa{background:#25D366;color:#fff;}
 </style>
 
 <div id="srAiHelpModal" class="sr-simple-overlay" aria-hidden="true">
@@ -5549,11 +5560,19 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
   function escapeHtml(s){
     return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
   }
-  function addMsg(text,cls){
+  var SITE_URL = "https://batikcromfashion.github.io/SeiRokom-Fashion-/";
+  var WA_URL = "https://wa.me/8801645008919?text=" + encodeURIComponent("আসসালামু আলাইকুম, SeiRokom AI Help Centre থেকে একটা প্রশ্ন নিয়ে যোগাযোগ করছি।");
+
+  function addMsg(text,cls,cta){
     var body=document.getElementById('srAiHelpBody');
     var div=document.createElement('div');
     div.className='sr-ai-help-msg '+cls;
     div.innerHTML=escapeHtml(text);
+    if(cta==='website'){
+      div.innerHTML+='<br><a class="sr-ai-help-cta site" href="'+SITE_URL+'" target="_blank" rel="noopener noreferrer">🔗 বিস্তারিত দেখুন</a>';
+    } else if(cta==='whatsapp'){
+      div.innerHTML+='<br><a class="sr-ai-help-cta wa" href="'+WA_URL+'" target="_blank" rel="noopener noreferrer">💬 সরাসরি WhatsApp-এ যোগাযোগ করুন</a>';
+    }
     body.appendChild(div);
     body.scrollTop=body.scrollHeight;
     return div;
@@ -5577,7 +5596,9 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComplai
       body:JSON.stringify({message:text})
     }).then(function(r){ return r.json(); }).then(function(data){
       typing.remove();
-      addMsg(data && data.reply ? data.reply : 'দুঃখিত, উত্তর পাওয়া যায়নি। একটু পর আবার চেষ্টা করুন।','bot');
+      var reply = data && data.reply ? data.reply : 'দুঃখিত, উত্তর পাওয়া যায়নি। একটু পর আবার চেষ্টা করুন।';
+      var cta = data && data.button ? data.button : 'none';
+      addMsg(reply,'bot',cta);
     }).catch(function(){
       typing.remove();
       addMsg('⚠️ সংযোগে সমস্যা হয়েছে। একটু পর আবার চেষ্টা করুন।','bot');
